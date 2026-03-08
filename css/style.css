@@ -87,6 +87,7 @@ body {
 .legenda-cores {
     background: var(--fundo-card);
     padding: 20px;
+    border-radius: 10px;
     margin-bottom: 40px;
     border: 1px solid var(--borda-suave);
 }
@@ -97,7 +98,7 @@ body {
 .grid-legenda {
     display: flex;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: 15px;
 }
 .item-legenda {
     display: flex;
@@ -106,12 +107,24 @@ body {
     font-size: 0.9rem;
     color: var(--texto-secundario);
 }
+
+/* DOTS COM CORES SEMÂNTICAS */
 .dot {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     display: inline-block;
     border: 1px solid #555;
 }
+
+/* Cores específicas para cada dot */
+.dot.titulo-antes { background-color: var(--cor-antes); }
+.dot.titulo-alerta { background-color: var(--cor-alerta); }
+.dot.titulo-entende { background-color: var(--cor-entende); }
+.dot.titulo-consequencia { background-color: var(--cor-consequencia); }
+.dot.titulo-define { background-color: var(--cor-define); }
+.dot.titulo-naoeh { background-color: var(--cor-naoeh); }
+.dot.titulo-consequencia-ruim { background-color: var(--cor-consequencia-ruim); }
+.dot.titulo-pratica { background-color: var(--cor-pratica); }
 
 /* Capítulos */
 .capitulo {

@@ -31,16 +31,18 @@ function toggleAudio(id) {
     }
 }
 
-// Compartilhar
-function compartilhar(plataforma) {
+// Compartilhar com link direto para o capítulo
+function compartilhar(plataforma, capituloId) {
     let texto = "Estou lendo 'Perdão, por que não?': ";
-    let url = window.location.href;
+    // Pega a URL atual + o ID do capítulo (ex: site.com/#cap7)
+    let url = window.location.href.split('#')[0] + '#' + capituloId;
     
     if(plataforma === 'whatsapp') {
         window.open(`https://wa.me/?text=${encodeURIComponent(texto + url)}`, '_blank');
     } else if(plataforma === 'instagram') {
-        // Instagram não permite share direto com texto via web, então copiamos o link
         navigator.clipboard.writeText(url);
-        alert("Link copiado! Abra o Instagram e cole no seu Story ou Direct.");
+        alert("Link do capítulo copiado! Abra o Instagram e cole no seu Story ou Direct.");
+    } else if(plataforma === 'twitter') {
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(texto)}&url=${encodeURIComponent(url)}`, '_blank');
     }
 }
