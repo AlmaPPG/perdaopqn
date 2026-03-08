@@ -1,0 +1,249 @@
+:root {
+    /* Paleta de Cores Semânticas (Sua tabela original) */
+    --cor-antes: #6496C8;
+    --cor-alerta: #FF6633;
+    --cor-entende: #99FFFF;
+    --cor-consequencia: #CCFF66;
+    --cor-define: #FFFFFF;
+    --cor-naoeh: #FFCC00;
+    --cor-consequencia-ruim: #FFFF66;
+    --cor-pratica: #FFFFFF;
+    --cor-padrao: #CCCCCC;
+
+    /* Tema Escuro */
+    --fundo-site: #121212;
+    --fundo-card: #121212;
+    --fundo-card-hover: #252525;
+    --texto-principal: #E0E0E0;
+    --texto-secundario: #B0B0B0;
+    --borda-suave: #333333;
+    
+    /* Tipografia */
+    --fonte-titulo: 'Roboto Condensed', sans-serif;
+    --fonte-corpo: 'Ubuntu', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--fonte-corpo);
+    background-color: var(--fundo-site);
+    color: var(--texto-principal);
+    line-height: 1.8;
+    font-size: 18px;
+}
+
+/* Barra de Progresso de Leitura */
+.progress-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 5px;
+    background: #1a1a1a;
+    z-index: 1000;
+}
+.progress-bar {
+    height: 5px;
+    background: linear-gradient(90deg, var(--cor-antes), var(--cor-consequencia));
+    width: 0%;
+    transition: width 0.2s;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0px;
+}
+
+/* Hero / Capa */
+.hero {
+    text-align: center;
+    background: #121212);
+    margin-bottom: 40px;
+}
+.hero h1 {
+    font-family: var(--fonte-titulo);
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: #FFFFFF;
+    text-shadow: 0 2px 10px rgba(100, 150, 200, 0.3);
+}
+.hero .subtitle {
+    font-size: 1.2rem;
+    color: var(--texto-secundario);
+}
+.meta-info {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+}
+
+/* Legenda de Cores */
+.legenda-cores {
+    background: var(--fundo-card);
+    padding: 20px;
+    margin-bottom: 40px;
+    border: 1px solid var(--borda-suave);
+}
+.legenda-cores h3 {
+    color: var(--texto-principal);
+    margin-bottom: 15px;
+}
+.grid-legenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.item-legenda {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+}
+.dot {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    border: 1px solid #555;
+}
+
+/* Capítulos */
+.capitulo {
+    background: var(--fundo-card);
+    padding: 30px;
+    margin-bottom: 30px;
+    border: 1px solid var(--borda-suave);
+    scroll-margin-top: 100px;
+    transition: transform 0.3s, background 0.3s;
+}
+.capitulo:hover {
+    background: var(--fundo-card-hover);
+    transform: translateY(-2px);
+}
+
+/* Títulos Semânticos */
+.capitulo h2 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Aplicação das Cores Semânticas (Fundo Escuro) */
+.titulo-antes { color: var(--cor-antes); }
+.titulo-alerta { color: var(--cor-alerta); }
+.titulo-entende { color: var(--cor-entende); }
+.titulo-consequencia { color: var(--cor-consequencia); }
+.titulo-define {
+    background: #121212;
+    color: var(--cor-define);
+    padding: 5px 15px;
+    display: inline-block;
+    font-weight: 700;
+}
+.titulo-naoeh { color: var(--cor-naoeh); }
+.titulo-consequencia-ruim { color: var(--cor-consequencia-ruim); }
+.titulo-pratica {
+    background: #121212;
+    color: var(--cor-pratica);
+    padding: 5px 5px;
+    display: inline-block;
+    font-weight: 700;
+}
+.titulo-padrao { color: var(--cor-padrao); }
+
+/* Player de Áudio */
+.capitulo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.btn-audio {
+    background: #2a2a2a;
+    border: 1px solid var(--borda-suave);
+    color: var(--texto-principal);
+    padding: 8px 15px;
+    cursor: pointer;
+    font-family: var(--fonte-corpo);
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+.btn-audio:hover {
+    background: #3a3a3a;
+    border-color: var(--cor-antes);
+}
+audio {
+    width: 100%;
+    margin-top: 15px;
+    display: none;
+}
+audio.active {
+    display: block;
+}
+/* Estilizar o player de áudio nativo para tema escuro */
+audio::-webkit-media-controls-panel {
+    background-color: #2a2a2a;
+}
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+    color: var(--texto-principal);
+}
+
+/* Compartilhamento */
+.acoes-compartilhamento {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--borda-suave);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.btn-share {
+    background: transparent;
+    border: 1px solid var(--borda-suave);
+    color: var(--texto-secundario);
+    padding: 5px 12px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.3s;
+}
+.btn-share:hover {
+    background: #2a2a2a;
+    color: var(--texto-principal);
+    border-color: var(--cor-antes);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--texto-secundario);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--borda-suave);
+    margin-top: 40px;
+}
+
+/* Links no texto */
+a {
+    color: var(--cor-antes);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+a:hover {
+    color: var(--cor-entende);
+    text-decoration: underline;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    .hero h1 { font-size: 2rem; }
+    .capitulo h2 { font-size: 1.4rem; }
+    .capitulo-header { flex-direction: column; align-items: flex-start; }
+    .btn-audio { width: 100%; text-align: center; }
+}
