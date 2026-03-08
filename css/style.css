@@ -16,6 +16,8 @@
     --fundo-card-hover: #252525;
     --texto-principal: #E0E0E0;
     --texto-secundario: #B0B0B0;
+    --texto-destaque: #FFFFFF;
+    
     --borda-suave: #333333;
     
     /* Tipografia */
@@ -113,6 +115,7 @@ body {
 
 /* Capítulos */
 .capitulo {
+    text-align: left;
     background: var(--fundo-card);
     padding: 30px;
     margin-bottom: 30px;
@@ -195,6 +198,9 @@ audio::-webkit-media-controls-panel {
 audio::-webkit-media-controls-current-time-display,
 audio::-webkit-media-controls-time-remaining-display {
     color: var(--texto-principal);
+}
+.texto-destaque {
+    color: var(--texto-destaque);
 }
 
 /* Compartilhamento */
