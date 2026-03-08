@@ -61,7 +61,7 @@ body {
 /* Hero / Capa */
 .hero {
     text-align: center;
-    background: #121212;
+    background: #121212);
     margin-bottom: 0px;
 }
 .hero h1 {
@@ -112,6 +112,7 @@ body {
 .dot {
     width: 14px;
     height: 14px;
+    border-radius: 0; /* Garante que são quadrados */
     display: inline-block;
     border: 1px solid #555;
 }
@@ -267,4 +268,84 @@ a:hover {
     .capitulo h2 { font-size: 1.4rem; }
     .capitulo-header { flex-direction: column; align-items: flex-start; }
     .btn-audio { width: 100%; text-align: center; }
+}
+
+/* ============================================
+   CURTIDAS
+   ============================================ */
+.curtidas-container {
+    margin-top: 20px;
+    padding: 15px;
+    background: #1a1a1a;
+    border: 1px solid var(--borda-suave);
+    border-radius: 0; /* Mantém sem arredondamento */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-curtir {
+    background: transparent;
+    border: 1px solid var(--borda-suave);
+    color: var(--texto-principal);
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: var(--fonte-corpo);
+    font-size: 1rem;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+}
+
+.btn-curtir:hover {
+    background: #2a2a2a;
+    border-color: #e25555;
+}
+
+.btn-curtir.curtido {
+    border-color: #e25555;
+    background: #2a1a1a;
+}
+
+.icone-curtida {
+    font-size: 1.2rem;
+}
+
+.aviso-curtidas {
+    color: var(--texto-secundario);
+    font-size: 0.75rem;
+}
+
+/* ============================================
+   COMENTÁRIOS
+   ============================================ */
+.comentarios-section {
+    margin-top: 20px;
+}
+
+.btn-comentarios {
+    background: transparent;
+    border: 1px solid var(--borda-suave);
+    color: var(--texto-secundario);
+    padding: 10px 15px;
+    cursor: pointer;
+    font-family: var(--fonte-corpo);
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    width: 100%;
+    text-align: left;
+}
+
+.btn-comentarios:hover {
+    background: #2a2a2a;
+    color: var(--texto-principal);
+}
+
+.giscus-container {
+    margin-top: 15px;
+    padding: 15px;
+    background: #1a1a1a;
+    border: 1px solid var(--borda-suave);
 }
