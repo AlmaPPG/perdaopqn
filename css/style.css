@@ -87,13 +87,12 @@ body {
 .legenda-cores {
     background: var(--fundo-card);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 0px;
     margin-bottom: 40px;
     border: 1px solid var(--borda-suave);
 }
 .legenda-cores h3 {
     color: var(--texto-principal);
-    margin-bottom: 15px;
 }
 .grid-legenda {
     display: flex;
