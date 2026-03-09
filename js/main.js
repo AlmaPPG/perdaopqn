@@ -3,7 +3,7 @@
 // ============================================
 
 // URL do Webhook (Google Apps Script) - SUBSTITUA PELA SUA URL REAL
-const WEBHOOK_URL = 'https://script.google.com/macros/s/SEU-CODIGO-AQUI/exec';
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzNu0_x-ilJ7cEpjsvo8rgSmTRW2g8-nbnWhpmnewsqvhgfrGhVTu4fb_6P60tbvD2P/exec';
 
 // IDs do Giscus - SUBSTITUA PELOS SEUS IDs REAIS
 const GISCUS_CONFIG = {
