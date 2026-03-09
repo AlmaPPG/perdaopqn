@@ -123,11 +123,11 @@ function toggleComentarios(capituloId) {
         if(!container.querySelector('script')) {
             let script = document.createElement('script');
             script.src = 'https://giscus.app/client.js';
-            script.setAttribute('data-repo', 'SEU-USUARIO/SEU-REPO');
-            script.setAttribute('data-repo-id', 'SEU-REPO-ID');
-            script.setAttribute('data-category', 'Comentários');
-            script.setAttribute('data-category-id', 'SEU-CATEGORY-ID');
-            script.setAttribute('data-mapping', 'specific');
+            script.setAttribute('data-repo', 'AlmaPPG/perdaopqn');
+            script.setAttribute('data-repo-id', 'R_kgDORhRRvA');
+            script.setAttribute('data-category', 'Announcements');
+            script.setAttribute('data-category-id', 'DIC_kwDORhRRvM4C39qt');
+            script.setAttribute('data-mapping', 'pathname');
             script.setAttribute('data-term', capituloId);
             script.setAttribute('data-strict', '0');
             script.setAttribute('data-reactions-enabled', '1');
@@ -223,7 +223,3 @@ function enviarWebhook(tipo, capituloId) {
 function enviarCurtidaWebhook(capituloId) {
     enviarWebhook('curtida', capituloId);
 }
-script.setAttribute('data-repo', 'SEU-USUARIO/perdao-por-que-nao');
-script.setAttribute('data-repo-id', 'R_kgDORhRRvA'); // Copie do giscus.app
-script.setAttribute('data-category', 'Comentários');
-script.setAttribute('data-category-id', 'DIC_kwDORhRRvM4C39qt'); // Copie do giscus.app
