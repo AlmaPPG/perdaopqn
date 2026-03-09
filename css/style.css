@@ -269,15 +269,12 @@ a:hover {
     .btn-audio { width: 100%; text-align: center; }
 }
 
-/* ============================================
-   CURTIDAS
-   ============================================ */
+/* CURTIDAS */
 .curtidas-container {
     margin-top: 20px;
     padding: 15px;
     background: #1a1a1a;
     border: 1px solid var(--borda-suave);
-    border-radius: 0; /* Mantém sem arredondamento */
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -317,9 +314,7 @@ a:hover {
     font-size: 0.75rem;
 }
 
-/* ============================================
-   COMENTÁRIOS
-   ============================================ */
+/* COMENTÁRIOS */
 .comentarios-section {
     margin-top: 20px;
 }
