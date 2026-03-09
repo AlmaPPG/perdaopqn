@@ -60,8 +60,32 @@ function compartilhar(plataforma, capituloId) {
 }
 
 // ============================================
-// SISTEMA DE CURTIDAS
+// SISTEMA DE CURTIDAS (CORRIGIDO)
 // ============================================
+
+// Inicializa contadores de curtidas
+function inicializarCurtidas() {
+    document.querySelectorAll('.capitulo').forEach(artigo => {
+        let capId = artigo.id;
+        let chave = 'curtida_' + capId;
+        let btn = document.getElementById('btn-curtida-' + capId);
+        let contador = document.getElementById('curtidas-' + capId);
+        let icone = btn.querySelector('.icone-curtida');
+        
+        if(!btn || !contador || !icone) return;
+        
+        // Verifica se usuário já curtiu
+        if(localStorage.getItem(chave)) {
+            icone.textContent = '❤️';
+            btn.classList.add('curtido');
+        } else {
+            icone.textContent = '🤍';
+            btn.classList.remove('curtido');
+        }
+    });
+}
+
+// Toggle de curtida
 function toggleCurtida(capituloId) {
     let chave = 'curtida_' + capituloId;
     let jaCurtiu = localStorage.getItem(chave);
@@ -69,17 +93,20 @@ function toggleCurtida(capituloId) {
     let contador = document.getElementById('curtidas-' + capituloId);
     let icone = btn.querySelector('.icone-curtida');
     
+    if(!btn || !contador || !icone) return;
+    
+    // Pega o valor atual do contador
+    let valorAtual = parseInt(contador.textContent) || 0;
+    
     if(jaCurtiu) {
         // Remove curtida
         localStorage.removeItem(chave);
-        let valorAtual = parseInt(contador.textContent);
         contador.textContent = valorAtual - 1;
         icone.textContent = '🤍';
         btn.classList.remove('curtido');
     } else {
         // Adiciona curtida
         localStorage.setItem(chave, 'true');
-        let valorAtual = parseInt(contador.textContent);
         contador.textContent = valorAtual + 1;
         icone.textContent = '❤️';
         btn.classList.add('curtido');
@@ -87,24 +114,9 @@ function toggleCurtida(capituloId) {
         // Registra no analytics
         registrarEvento('curtida', capituloId);
         
-        // Envia para webhook (opcional - ver instrução abaixo)
+        // Envia para webhook (opcional)
         enviarCurtidaWebhook(capituloId);
     }
-}
-
-// Inicializa contadores de curtidas (simulado - em produção viria do backend)
-function inicializarCurtidas() {
-    document.querySelectorAll('.capitulo').forEach(artigo => {
-        let capId = artigo.id;
-        let chave = 'curtida_' + capId;
-        let btn = document.getElementById('btn-curtida-' + capId);
-        let icone = btn.querySelector('.icone-curtida');
-        
-        if(localStorage.getItem(chave)) {
-            icone.textContent = '❤️';
-            btn.classList.add('curtido');
-        }
-    });
 }
 
 // ============================================
@@ -144,7 +156,26 @@ function toggleComentarios(capituloId) {
         btn.textContent = '💬 Comentários (' + (contador ? contador.textContent : '0') + ')';
     }
 }
-
+// Define valor inicial do contador baseado no localStorage
+function inicializarContadores() {
+    document.querySelectorAll('.capitulo').forEach(artigo => {
+        let capId = artigo.id;
+        let chave = 'curtida_' + capId;
+        let contador = document.getElementById('curtidas-' + capId);
+        
+        if(!contador) return;
+        
+        // Simula um valor base (em produção viria do backend)
+        let valorBase = 0;
+        
+        // Se usuário curtiu, adiciona 1 ao valor base
+        if(localStorage.getItem(chave)) {
+            contador.textContent = valorBase + 1;
+        } else {
+            contador.textContent = valorBase;
+        }
+    });
+}
 // ============================================
 // ANALYTICS DE LEITURA
 // ============================================
@@ -223,3 +254,12 @@ function enviarWebhook(tipo, capituloId) {
 function enviarCurtidaWebhook(capituloId) {
     enviarWebhook('curtida', capituloId);
 }
+
+// Aplica observer a todos os capítulos
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.capitulo').forEach(cap => {
+        observer.observe(cap);
+    });
+    inicializarCurtidas();
+    inicializarContadores(); // ← Adicione esta linha
+});
