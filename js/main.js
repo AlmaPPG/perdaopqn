@@ -290,20 +290,17 @@ document.addEventListener('DOMContentLoaded', function() {
 function togglePainelInteracao() {
     const painel = document.getElementById('painelInteracao');
     const overlay = document.getElementById('overlay');
-    const btnFlutuante = document.querySelector('.btn-flutuante');
     
     if (painel.classList.contains('active')) {
         // Fechar
         painel.classList.remove('active');
         overlay.classList.remove('active');
-        btnFlutuante.textContent = '💬 Interação';
-        document.body.style.overflow = 'auto'; // Volta o scroll da página
+        document.body.style.overflow = 'auto';
     } else {
         // Abrir
         painel.classList.add('active');
         overlay.classList.add('active');
-        btnFlutuante.textContent = '✕ Fechar';
-        document.body.style.overflow = 'hidden'; // Trava o scroll da página
+        document.body.style.overflow = 'hidden';
     }
 }
 

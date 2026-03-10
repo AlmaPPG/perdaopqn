@@ -610,3 +610,82 @@ a:hover {
         text-align: center;
     }
 }
+
+
+
+
+/*------------------*/
+/* ============================================
+   LINHA DE INTERAÇÃO (No capítulo)
+   ============================================ */
+.interacao-linha {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--borda-suave);
+    flex-wrap: wrap; /* Permite quebrar em telas muito pequenas */
+}
+
+/* Curtida inline */
+.btn-curtir-inline {
+    background: transparent;
+    border: 1px solid var(--borda-suave);
+    color: var(--texto-principal);
+    padding: 10px 18px;
+    cursor: pointer;
+    font-family: var(--fonte-corpo);
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap; /* Não quebra o texto */
+}
+
+.btn-curtir-inline:hover {
+    border-color: #e25555;
+    background: #2a1a1a;
+}
+
+.btn-curtir-inline.curtido {
+    border-color: #e25555;
+    background: #2a1a1a;
+}
+
+.icone-curtida {
+    font-size: 1.2rem;
+}
+
+/* Botão do Painel (inline no capítulo) */
+.btn-painel-capitulo {
+    background: var(--cor-antes);
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 18px;
+    cursor: pointer;
+    font-family: var(--fonte-corpo);
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.btn-painel-capitulo:hover {
+    background: #5a8ab8;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .interacao-linha {
+        gap: 10px;
+    }
+    
+    .btn-curtir-inline,
+    .btn-painel-capitulo {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+        flex: 1 1 auto; /* Crescem igualmente */
+        justify-content: center;
+    }
+}
