@@ -136,10 +136,6 @@ body {
     scroll-margin-top: 100px;
     transition: transform 0.3s, background 0.3s;
 }
-.capitulo:hover {
-    background: var(--fundo-card-hover);
-    transform: translateY(-2px);
-}
 
 /* Títulos Semânticos */
 .capitulo h2 {
