@@ -283,3 +283,36 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('✅ Site carregado com todas as funcionalidades');
 });
+// ============================================
+// PAINEL FLUTUANTE DE INTERAÇÃO
+// ============================================
+
+function togglePainelInteracao() {
+    const painel = document.getElementById('painelInteracao');
+    const overlay = document.getElementById('overlay');
+    const btnFlutuante = document.querySelector('.btn-flutuante');
+    
+    if (painel.classList.contains('active')) {
+        // Fechar
+        painel.classList.remove('active');
+        overlay.classList.remove('active');
+        btnFlutuante.textContent = '💬 Interação';
+        document.body.style.overflow = 'auto'; // Volta o scroll da página
+    } else {
+        // Abrir
+        painel.classList.add('active');
+        overlay.classList.add('active');
+        btnFlutuante.textContent = '✕ Fechar';
+        document.body.style.overflow = 'hidden'; // Trava o scroll da página
+    }
+}
+
+// Toggle de Formulário (dentro do painel)
+function toggleFormulario(formId) {
+    const form = document.getElementById(formId);
+    if (form.style.display === 'none' || !form.style.display) {
+        form.style.display = 'block';
+    } else {
+        form.style.display = 'none';
+    }
+}

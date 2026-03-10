@@ -60,6 +60,36 @@
 
 <!-- CAPÍTULO 1 -->
 <article class="capitulo" id="cap1">
+<div class="capitulo-header"><!-- seria interessante se abrisse um player com a opção de ouvir o próximo capítulo  -->
+<h2 class="titulo-antes">(1) Prefácio</h2>
+<button class="btn-audio" onclick="toggleAudio('audio1')">🔊 Ouvir</button>
+</div>
+<audio id="audio1" src="assets/audio/cap1.mp3" preload="none"></audio>
+<div class="conteudo">
+<p>Ensinar é um dos meus prazeres e, com o interesse de ajudar alguém a aprender como perdoar, resolvi perguntar ao próprio Deus como isso funcionava; afinal, ninguém melhor do que Ele entende esse assunto.</p>
+</div>
+
+<!-- CURTIDAS -->
+<div class="curtidas-container"><!-- a curtida não é uma distração crítica -->
+<button class="btn-curtir" id="btn-curtida-cap1" onclick="toggleCurtida('cap1')">
+<span class="icone-curtida">🤍</span>
+<span class="contador" id="curtidas-cap1">0</span>
+</button>
+<small class="aviso-curtidas">Você vê apenas o total.</small>
+</div>
+
+<!-- COMENTÁRIOS -->
+<div class="comentarios-section">
+  <button class="btn-flutuante" onclick="togglePainelInteracao()">
+    💬 Compartilhe/Comente
+  </button>
+</div>
+</article>
+  
+  
+
+<!-- CAPÍTULO inutilizado 1
+<article class="capitulo" id="cap1">
 <div class="capitulo-header">
 <h2 class="titulo-antes">(1) Prefácio</h2>
 <button class="btn-audio" onclick="toggleAudio('audio1')">🔊 Ouvir</button>
@@ -76,30 +106,30 @@
 <p>Para aprender bem, o melhor ainda continua sendo buscar a Deus e à sua Palavra; desejo, porém, que Ele use essa cartilha para abençoar você e que, ao final, tenhamos mais um testemunho de vitória.</p>
 </div>
 
-<!-- CURTIDAS -->
+<!-- CURTIDAS 
 <div class="curtidas-container">
 <button class="btn-curtir" id="btn-curtida-cap1" onclick="toggleCurtida('cap1')">
 <span class="icone-curtida">🤍</span>
 <span class="contador" id="curtidas-cap1">0</span>
 </button>
 <small class="aviso-curtidas">Você vê apenas o total.</small>
-</div>
+</div> -->
 
-<!-- COMENTÁRIOS -->
+<!-- COMENTÁRIOS 
 <div class="comentarios-section">
 <button class="btn-comentarios" id="btn-comentarios-cap1" onclick="toggleComentarios('cap1')">
 💬 Comentários
 </button>
 <div class="giscus-container" id="comentarios-cap1" style="display: none;"></div>
-</div>
+</div> -->
 
-<!-- COMPARTILHAMENTO -->
+<!-- COMPARTILHAMENTO 
 <div class="acoes-compartilhamento">
 <button class="btn-share" onclick="compartilhar('whatsapp', 'cap1')">WhatsApp</button>
 <button class="btn-share" onclick="compartilhar('instagram', 'cap1')">Instagram</button>
 <button class="btn-share" onclick="compartilhar('twitter', 'cap1')">X (Twitter)</button>
 </div>
-</article>
+</article> -->
 
 <!-- CAPÍTULO 2 -->
 <article class="capitulo" id="cap2">
@@ -995,5 +1025,82 @@ Quando queremos lembrar algum fato, data ou qualquer outra coisa, a melhor forma
 </footer>
 
 <script src="js/main.js"></script>
+<!-- PAINEL FLUTUANTE DE INTERAÇÃO -->
+<div class="interacao-flutuante">
+    <button class="btn-flutuante" onclick="togglePainelInteracao()">
+        💬 Interação
+    </button>
+    
+    <!-- OVERLAY (Fundo escuro 50%) -->
+    <div class="overlay" id="overlay" onclick="togglePainelInteracao()"></div>
+    
+    <!-- PAINEL DE INTERAÇÃO -->
+    <div class="painel-interacao" id="painelInteracao">
+        <div class="painel-header">
+            <h3>Interação</h3>
+            <button class="btn-fechar" onclick="togglePainelInteracao()">✕ Voltar à leitura</button>
+        </div>
+        
+        <div class="painel-conteudo">
+            <!-- Curtidas -->
+            <div class="interacao-item">
+                <h4>❤️ Curtir este capítulo</h4>
+                <button class="btn-curtir" id="btn-curtida-cap1" onclick="toggleCurtida('cap1')">
+                    <span class="icone-curtida">🤍</span>
+                    <span class="contador" id="curtidas-cap1">0</span>
+                </button>
+                <small class="aviso-curtidas">Você vê apenas o total.</small>
+            </div>
+            
+            <!-- Comentários GitHub -->
+            <div class="interacao-item">
+                <h4>💬 Comentários via GitHub</h4>
+                <button class="btn-comentarios" id="btn-comentarios-cap1" onclick="toggleComentarios('cap1')">
+                    Abrir Comentários
+                </button>
+                <div class="giscus-container" id="comentarios-cap1" style="display: none;"></div>
+            </div>
+            
+            <!-- Formulário Formspree -->
+            <div class="interacao-item">
+                <h4>✉️ Enviar Feedback ao Autor</h4>
+                <button class="btn-formulario" onclick="toggleFormulario('form-cap1')">
+                    Abrir Formulário
+                </button>
+                <div class="formulario-content" id="form-cap1" style="display: none;">
+                    <form action="https://formspree.io/f/xyknkqbj" method="POST">
+                        <input type="hidden" name="capitulo" value="cap1">
+                        <input type="text" name="nome" placeholder="Seu nome (opcional)" class="form-input">
+                        <input type="email" name="email" placeholder="Seu e-mail (para resposta)" class="form-input">
+                        <textarea name="mensagem" placeholder="Sua mensagem, dúvida ou testemunho..." class="form-textarea" required></textarea>
+                        <button type="submit" class="btn-enviar">Enviar Mensagem</button>
+                    </form>
+                    <small class="aviso-form">* Você receberá uma cópia no seu e-mail.</small>
+                </div>
+            </div>
+            
+            <!-- Fale com o Autor (WhatsApp) -->
+            <div class="interacao-item">
+                <h4>📞 Fale com o Autor</h4>
+                <a href="https://wa.me/5511997979597?text=Olá, li o livro Perdão, por que não? e gostaria de perguntar..." 
+                   target="_blank" 
+                   class="btn-whatsapp">
+                    Enviar mensagem no WhatsApp
+                </a>
+                <small class="aviso-whatsapp">* Clique para abrir o WhatsApp diretamente.</small>
+            </div>
+            
+            <!-- Compartilhamento -->
+            <div class="interacao-item">
+                <h4>🔗 Compartilhar</h4>
+                <div class="btn-share-group">
+                    <button class="btn-share" onclick="compartilhar('whatsapp', 'cap1')">WhatsApp</button>
+                    <button class="btn-share" onclick="compartilhar('instagram', 'cap1')">Instagram</button>
+                    <button class="btn-share" onclick="compartilhar('twitter', 'cap1')">X (Twitter)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
