@@ -313,3 +313,46 @@ function toggleFormulario(formId) {
         form.style.display = 'none';
     }
 }
+
+// ============================================
+// PAINEL FLUTUANTE - TOGGLES
+// ============================================
+
+function togglePainelInteracao() {
+    const painel = document.getElementById('painelInteracao');
+    const overlay = document.getElementById('overlay');
+    
+    if (painel.classList.contains('active')) {
+        painel.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    } else {
+        painel.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function toggleFormulario() {
+    const form = document.getElementById('conteudo-formulario');
+    const git = document.getElementById('conteudo-github');
+    
+    if (form.classList.contains('ativo')) {
+        form.classList.remove('ativo');
+    } else {
+        form.classList.add('ativo');
+        git.classList.remove('ativo');
+    }
+}
+
+function toggleGithub() {
+    const form = document.getElementById('conteudo-formulario');
+    const git = document.getElementById('conteudo-github');
+    
+    if (git.classList.contains('ativo')) {
+        git.classList.remove('ativo');
+    } else {
+        git.classList.add('ativo');
+        form.classList.remove('ativo');
+    }
+}

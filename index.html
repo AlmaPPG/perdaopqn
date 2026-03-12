@@ -985,64 +985,85 @@ Quando queremos lembrar algum fato, data ou qualquer outra coisa, a melhor forma
 </footer>
 
 <script src="js/main.js"></script>
-<!-- OVERLAY (Fundo escuro 50%) -->
+
+<!-- OVERLAY -->
 <div class="overlay" id="overlay" onclick="togglePainelInteracao()"></div>
 
 <!-- PAINEL DE INTERAÇÃO -->
 <div class="painel-interacao" id="painelInteracao">
-    <div class="painel-header">
-        <img src="div_flutuante.png" width="300px">
-        <button class="btn-fechar" onclick="togglePainelInteracao()">✕ Voltar à leitura</button>
-    </div>
+    <!-- Imagem de Capa com Degradê (exportada do Corel) -->
+    <img src="assets/painel-capa-degrade.png" alt="Capa do Livro" class="painel-capa">
     
-<!--    <div class="painel-conteudo">
-        <!-- Comentários GitHub -->
-<!--        <div class="interacao-item">
-            <h4>💬 Comentários via GitHub</h4>
-            <button class="btn-comentarios" id="btn-comentarios-cap1" onclick="toggleComentarios('cap1')">
-                Abrir Comentários
-            </button>
-            <div class="giscus-container" id="comentarios-cap1" style="display: none;"></div>
-        </div> -->
-        
-        <!-- Formulário Formspree -->
-<!--        <div class="interacao-item">
-            <h4>✉️ Enviar Feedback ao Autor</h4>
-            <button class="btn-formulario" onclick="toggleFormulario('form-cap1')">
-                Abrir Formulário
-            </button>
-            <div class="formulario-content" id="form-cap1" style="display: none;">
-                <form action="https://formspree.io/f/SEU-CODIGO-AQUI" method="POST">
-                    <input type="hidden" name="capitulo" value="cap1">
-                    <input type="text" name="nome" placeholder="Seu nome (opcional)" class="form-input">
-                    <input type="email" name="email" placeholder="Seu e-mail (para resposta)" class="form-input">
-                    <textarea name="mensagem" placeholder="Sua mensagem, dúvida ou testemunho..." class="form-textarea" required></textarea>
-                    <button type="submit" class="btn-enviar">Enviar Mensagem</button>
-                </form>
-                <small class="aviso-form">* Você receberá uma cópia no seu e-mail.</small>
+    <div class="painel-conteudo">
+        <!-- SEÇÃO A: Toggles -->
+        <div class="secao-a">
+            <div class="toggles-container">
+                <button class="toggle-btn" onclick="toggleFormulario()">
+                    <span class="texto-superior">Formulário</span>
+                    <span class="texto-inferior">FORM</span>
+                </button>
+                <button class="toggle-btn" onclick="toggleGithub()">
+                    <span class="texto-superior">GitHub</span>
+                    <span class="texto-inferior">GIT</span>
+                </button>
             </div>
-        </div> -->
-        
-        <!-- Fale com o Autor (WhatsApp) -->
-<!--        <div class="interacao-item">
-            <h4>📞 Fale com o Autor</h4>
-            <a href="https://wa.me/5511999999999?text=Olá, li o livro Perdão, por que não? e gostaria de comentar..." 
-               target="_blank" 
-               class="btn-whatsapp">
-                Enviar mensagem no WhatsApp
-            </a>
-            <small class="aviso-whatsapp">* Clique para abrir o WhatsApp diretamente.</small>
-        </div> -->
-        
-        <!-- Compartilhamento -->
-<!--        <div class="interacao-item">
-            <h4>🔗 Compartilhar</h4>
-            <div class="btn-share-group">
-                <button class="btn-share" onclick="compartilhar('whatsapp', 'cap1')">WhatsApp</button>
-                <button class="btn-share" onclick="compartilhar('instagram', 'cap1')">Instagram</button>
-                <button class="btn-share" onclick="compartilhar('twitter', 'cap1')">X (Twitter)</button>
+            
+            <!-- Toggle Formulário -->
+            <div class="toggle-conteudo" id="conteudo-formulario">
+                <div class="form-div">
+                    <input type="text" class="form-input" placeholder="Seu nome">
+                </div>
+                <div class="form-div">
+                    <input type="email" class="form-input" placeholder="Seu e-mail">
+                </div>
+                <div class="form-div">
+                    <textarea class="form-input" placeholder="Sua mensagem" rows="3"></textarea>
+                </div>
             </div>
-        </div> -->
+            
+            <!-- Toggle GitHub -->
+            <div class="toggle-conteudo" id="conteudo-github">
+                <div class="form-div">
+                    <p style="font-family: 'Myriad Pro Cond', sans-serif; font-size: 48pt; color: rgba(198, 199, 109, 0.7);">
+                        Comentários via GitHub Discussions
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SEÇÃO B: Compartilhamento -->
+        <div class="secao-b">
+            <div class="coluna-share">
+                <span class="texto-compartilhar">C O M</span>
+                <img src="assets/logo-whatsapp.png" alt="WhatsApp" class="logo-rede">
+                <span class="texto-rede">WhatsApp</span>
+            </div>
+            <div class="coluna-share">
+                <span class="texto-compartilhar">P A R</span>
+                <img src="assets/logo-instagram.png" alt="Instagram" class="logo-rede">
+                <span class="texto-rede">Instagram</span>
+            </div>
+            <div class="coluna-share">
+                <span class="texto-compartilhar">T I L</span>
+                <img src="assets/logo-facebook.png" alt="Facebook" class="logo-rede">
+                <span class="texto-rede">Facebook</span>
+            </div>
+            <div class="coluna-share">
+                <span class="texto-compartilhar">H A R</span>
+                <img src="assets/logo-x.png" alt="X (Twitter)" class="logo-rede">
+                <span class="texto-rede">X</span>
+            </div>
+        </div>
+        
+        <!-- SEÇÃO C: Fale com o Autor -->
+        <div class="secao-c">
+            <h3>Fale direto<br>com o autor</h3>
+        </div>
+        
+        <!-- SEÇÃO D: Voltar à Leitura -->
+        <div class="secao-d" onclick="togglePainelInteracao()">
+            <p>Clique aqui para <em>voltar à leitura</em></p>
+        </div>
     </div>
 </div>
 </body>
