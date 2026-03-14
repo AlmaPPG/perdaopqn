@@ -6,7 +6,8 @@
 
 body {
     background-color: rgba(0, 0, 0, 0.75);
-    min-height: 100vh;
+    min-height: 640px;
+    padding: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,6 +50,7 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     padding: 7px;
+    margin-bottom: 7px;
 }
 
 .AAA-Form, .AAA-Git {
