@@ -5,8 +5,8 @@
 }
 
 body {
-    background-color: rgba(0, 0, 0, 0.5);
-    height: 95vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -14,7 +14,7 @@ body {
 }
 
 .fundo {
-    max-width: 100w;        /* ✅ Limite celular */
+    max-width: 100vw;        /* ✅ Limite celular */
     max-height: 100vh;       /* ✅ Limite celular */
     background-color: rgba(0, 0, 0, 0.5);
     position: relative;
@@ -70,7 +70,6 @@ body {
 }
 
 .BBB-1, .BBB-2, .BBB-3, .BBB-4 {
-    width: 73.8px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -87,8 +86,8 @@ body {
 
 .texto-rede {
     font-family: 'Fira Sans Extra Condensed', sans-serif;
-    font-size: 16px;
-    font-weight: 300;
+    font-size: 15px;
+    font-weight: 400;
     color: #C6C76D;
     text-align: center;
     position: absolute;
