@@ -242,7 +242,7 @@ function fecharPainel() {
 }
 
 // ============================================
-// PAINEL FLUTUANTE - TOGGLES
+// PAINEL FLUTUANTE - TOGGLES (Formulário / GitHub)
 // ============================================
 function toggleFormulario() {
     const form = document.getElementById('conteudo-formulario');
@@ -273,7 +273,7 @@ function toggleGithub() {
 }
 
 // ============================================
-// COMPARTILHAMENTO (PAINEL) - URL CORRIGIDA
+// COMPARTILHAMENTO (PAINEL) - URL PRINCIPAL CORRIGIDA
 // ============================================
 function compartilharWhatsApp() {
     const url = encodeURIComponent(URL_PRINCIPAL);
