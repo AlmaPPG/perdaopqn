@@ -2,6 +2,7 @@
 // CONFIGURAÇÕES GERAIS
 // ============================================
 const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzNu0_x-ilJ7cEpjsvo8rgSmTRW2g8-nbnWhpmnewsqvhgfrGhVTu4fb_6P60tbvD2P/exec';
+
 const GISCUS_CONFIG = {
     repo: 'AlmaPPG/perdaopqn',
     repoId: 'R_kgDORhRRvA',
@@ -9,8 +10,11 @@ const GISCUS_CONFIG = {
     categoryId: 'DIC_kwDORhRRvM4C39qt'
 };
 
+// ✅ URL PRINCIPAL DO SITE (para compartilhamento correto)
+const URL_PRINCIPAL = 'https://almappg.github.io/perdaopqn/index.html';
+
 // ============================================
-// BARRA DE PROGRESSO
+// BARRA DE PROGRESSO DE LEITURA
 // ============================================
 function atualizarProgressBar() {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -21,7 +25,9 @@ function atualizarProgressBar() {
         progressBar.style.width = scrolled + '%';
     }
 }
-window.onscroll = function() { atualizarProgressBar(); };
+window.onscroll = function() {
+    atualizarProgressBar();
+};
 
 // ============================================
 // PLAYER DE ÁUDIO
@@ -35,9 +41,12 @@ function toggleAudio(id) {
             if (btn) btn.textContent = '🔊 Ouvir';
         }
     });
+    
     const audio = document.getElementById(id);
     const btn = event.target;
+    
     if (!audio || !btn) return;
+    
     if (audio.paused) {
         audio.play();
         audio.classList.add('active');
@@ -55,12 +64,13 @@ function toggleAudio(id) {
 function compartilhar(plataforma, capituloId) {
     const texto = "Estou lendo 'Perdão, por que não?': ";
     const url = window.location.href.split('#')[0] + '#' + capituloId;
+    
     if (plataforma === 'whatsapp') {
         window.open(`https://wa.me/?text=${encodeURIComponent(texto + url)}`, '_blank');
         registrarEvento('compartilhamento_whatsapp', capituloId);
     } else if (plataforma === 'instagram') {
         navigator.clipboard.writeText(url).then(() => {
-            alert("Link do capítulo copiado!");
+            alert("Link do capítulo copiado! Abra o Instagram e cole no seu Story ou Direct.");
         });
         registrarEvento('compartilhamento_instagram', capituloId);
     } else if (plataforma === 'twitter') {
@@ -70,7 +80,7 @@ function compartilhar(plataforma, capituloId) {
 }
 
 // ============================================
-// CURTIDAS
+// SISTEMA DE CURTIDAS
 // ============================================
 function inicializarCurtidas() {
     document.querySelectorAll('.capitulo').forEach(artigo => {
@@ -79,8 +89,11 @@ function inicializarCurtidas() {
         const btn = document.getElementById('btn-curtida-' + capId);
         const contador = document.getElementById('curtidas-' + capId);
         const icone = btn?.querySelector('.icone-curtida');
+        
         if (!btn || !contador || !icone) return;
+        
         let valorBase = 0;
+        
         if (localStorage.getItem(chave)) {
             icone.textContent = '❤️';
             btn.classList.add('curtido');
@@ -99,8 +112,11 @@ function toggleCurtida(capituloId) {
     const btn = document.getElementById('btn-curtida-' + capituloId);
     const contador = document.getElementById('curtidas-' + capituloId);
     const icone = btn?.querySelector('.icone-curtida');
+    
     if (!btn || !contador || !icone) return;
+    
     let valorAtual = parseInt(contador.textContent) || 0;
+    
     if (jaCurtiu) {
         localStorage.removeItem(chave);
         valorAtual = Math.max(0, valorAtual - 1);
@@ -119,7 +135,7 @@ function toggleCurtida(capituloId) {
 }
 
 // ============================================
-// ANALYTICS
+// ANALYTICS DE LEITURA
 // ============================================
 const capitulosLidos = new Set();
 const eventosEnviados = new Set();
@@ -135,6 +151,7 @@ function registrarEvento(tipo, capituloId) {
     const chaveEvento = tipo + '_' + capituloId + '_' + new Date().toDateString();
     if (eventosEnviados.has(chaveEvento)) return;
     eventosEnviados.add(chaveEvento);
+    
     if (typeof gtag !== 'undefined') {
         gtag('event', tipo, {
             'event_category': 'Engajamento',
@@ -142,6 +159,7 @@ function registrarEvento(tipo, capituloId) {
             'value': 1
         });
     }
+    
     enviarWebhook(tipo, capituloId);
 }
 
@@ -154,16 +172,18 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 
 // ============================================
-// WEBHOOK
+// WEBHOOK PARA GOOGLE SHEETS
 // ============================================
 function enviarWebhook(tipo, capituloId) {
     if (WEBHOOK_URL.includes('SEU-CODIGO-AQUI')) {
-        console.log('Webhook não configurado.');
+        console.log('Webhook não configurado. Configure a URL no main.js');
         return;
     }
+    
     const urlParams = new URLSearchParams(window.location.search);
     const utmSource = urlParams.get('utm_source') || 'direto';
     const utmCampaign = urlParams.get('utm_campaign') || 'nenhuma';
+    
     fetch(WEBHOOK_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -184,42 +204,104 @@ function enviarCurtidaWebhook(capituloId) {
 }
 
 // ============================================
-// PAINEL FLUTUANTE
+// PAINEL FLUTUANTE - ABERTURA/FECHAMENTO
 // ============================================
 function togglePainelInteracao() {
     const painel = document.getElementById('painelInteracao');
     const overlay = document.getElementById('overlay');
+    
+    if (!painel || !overlay) return;
+    
     if (painel.classList.contains('active')) {
-        painel.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
+        fecharPainel();
     } else {
-        painel.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        abrirPainel();
     }
 }
 
+function abrirPainel() {
+    const painel = document.getElementById('painelInteracao');
+    const overlay = document.getElementById('overlay');
+    
+    if (!painel || !overlay) return;
+    
+    painel.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function fecharPainel() {
+    const painel = document.getElementById('painelInteracao');
+    const overlay = document.getElementById('overlay');
+    
+    if (!painel || !overlay) return;
+    
+    painel.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// ============================================
+// PAINEL FLUTUANTE - TOGGLES
+// ============================================
 function toggleFormulario() {
     const form = document.getElementById('conteudo-formulario');
     const git = document.getElementById('conteudo-github');
-    if (form.style.display === 'block') {
-        form.style.display = 'none';
+    
+    if (!form || !git) return;
+    
+    if (form.classList.contains('ativo')) {
+        form.classList.remove('ativo');
     } else {
-        form.style.display = 'block';
-        git.style.display = 'none';
+        form.classList.add('ativo');
+        git.classList.remove('ativo');
     }
 }
 
 function toggleGithub() {
     const form = document.getElementById('conteudo-formulario');
     const git = document.getElementById('conteudo-github');
-    if (git.style.display === 'block') {
-        git.style.display = 'none';
+    
+    if (!form || !git) return;
+    
+    if (git.classList.contains('ativo')) {
+        git.classList.remove('ativo');
     } else {
-        git.style.display = 'block';
-        form.style.display = 'none';
+        git.classList.add('ativo');
+        form.classList.remove('ativo');
     }
+}
+
+// ============================================
+// COMPARTILHAMENTO (PAINEL) - ✅ URL CORRIGIDA
+// ============================================
+function compartilharWhatsApp() {
+    const url = encodeURIComponent(URL_PRINCIPAL);
+    const texto = encodeURIComponent('📖 Estou lendo "Perdão, por que não?"\nUm guia prático para descomplicar o perdão.\nConfira: ');
+    window.open(`https://wa.me/?text=${texto}${url}`, '_blank');
+    registrarEvento('compartilhamento_whatsapp', 'painel');
+}
+
+function compartilharInstagram() {
+    const texto = '📖 "Perdão, por que não?" - Um guia prático para descomplicar o perdão.\n\n' + URL_PRINCIPAL;
+    navigator.clipboard.writeText(texto).then(() => {
+        alert('Link + texto copiados! Cole no Instagram Story ou Direct.');
+    });
+    registrarEvento('compartilhamento_instagram', 'painel');
+}
+
+function compartilharFacebook() {
+    const url = encodeURIComponent(URL_PRINCIPAL);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    registrarEvento('compartilhamento_facebook', 'painel');
+}
+
+function copiarLink() {
+    const texto = '📖 "Perdão, por que não?"\nUm guia prático para descomplicar o perdão.\n\n' + URL_PRINCIPAL;
+    navigator.clipboard.writeText(texto).then(() => {
+        alert('Link + texto copiados! Agora é só colar onde quiser.');
+    });
+    registrarEvento('copiar_link', 'painel');
 }
 
 // ============================================
@@ -229,42 +311,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.capitulo').forEach(cap => {
         observer.observe(cap);
     });
+    
     inicializarCurtidas();
     atualizarProgressBar();
+    
     console.log('✅ Site carregado com todas as funcionalidades');
 });
-/* ============================================
-COMPARTILHAMENTO - MENSAGENS OTIMIZADAS
-============================================ */
-function compartilharWhatsApp() {
-    const url = encodeURIComponent(encodeURIComponent('https://almappg.github.io/perdaopqn/index.html');
-    const texto = encodeURIComponent(
-        '📖 Estou lendo "Perdão, por que não?"\n' +
-        'Um guia prático para descomplicar o perdão.\n' +
-        'Confira: '
-    );
-    window.open(`https://wa.me/?text=${texto}${url}`, '_blank');
-    registrarEvento('compartilhamento_whatsapp', 'painel');
-}
-
-function compartilharInstagram() {
-    const texto = '📖 "Perdão, por que não?" - Um guia prático para descomplicar o perdão.\n' + window.location.href;
-    navigator.clipboard.writeText(texto).then(() => {
-        alert('Link + texto copiados! Cole no Instagram Story ou Direct.');
-    });
-    registrarEvento('compartilhamento_instagram', 'painel');
-}
-
-function compartilharFacebook() {
-    const url = encodeURIComponent('https://almappg.github.io/perdaopqn/index.html');
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-    registrarEvento('compartilhamento_facebook', 'painel');
-}
-
-function copiarLink() {
-    const texto = '📖 "Perdão, por que não?"\nUm guia prático para descomplicar o perdão.\n' + window.location.href;
-    navigator.clipboard.writeText(texto).then(() => {
-        alert('Link + texto copiados! Agora é só colar na conversa.');
-    });
-    registrarEvento('copiar_link', 'painel');
-}
