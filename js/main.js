@@ -109,8 +109,8 @@ function inicializarCurtidas() {
 function toggleCurtida(capituloId) {
     const chave = 'curtida_' + capituloId;
     const jaCurtiu = localStorage.getItem(chave);
-    const btn = document.getElementById('btn-curtida-' + capituloId);
-    const contador = document.getElementById('curtidas-' + capituloId);
+    const btn = document.getElementById('btn-curtida-' + capId);
+    const contador = document.getElementById('curtidas-' + capId);
     const icone = btn?.querySelector('.icone-curtida');
     
     if (!btn || !contador || !icone) return;
@@ -273,7 +273,7 @@ function toggleGithub() {
 }
 
 // ============================================
-// COMPARTILHAMENTO (PAINEL) - ✅ URL CORRIGIDA
+// COMPARTILHAMENTO (PAINEL) - URL CORRIGIDA
 // ============================================
 function compartilharWhatsApp() {
     const url = encodeURIComponent(URL_PRINCIPAL);
