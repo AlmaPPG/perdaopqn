@@ -1,20 +1,16 @@
 // ============================================
 // CONFIGURAÇÕES GERAIS
 // ============================================
-
-// URL do Webhook (Google Apps Script) - SUBSTITUA PELA SUA URL REAL
 const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzNu0_x-ilJ7cEpjsvo8rgSmTRW2g8-nbnWhpmnewsqvhgfrGhVTu4fb_6P60tbvD2P/exec';
-
-// IDs do Giscus - SUBSTITUA PELOS SEUS IDs REAIS
 const GISCUS_CONFIG = {
     repo: 'AlmaPPG/perdaopqn',
-    repoId: 'R_kgDORhRRvA', // Copie do giscus.app
+    repoId: 'R_kgDORhRRvA',
     category: 'Comentários do livro',
-    categoryId: 'DIC_kwDORhRRvM4C39qt' // Copie do giscus.app
+    categoryId: 'DIC_kwDORhRRvM4C39qt'
 };
 
 // ============================================
-// BARRA DE PROGRESSO DE LEITURA
+// BARRA DE PROGRESSO
 // ============================================
 function atualizarProgressBar() {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -25,32 +21,23 @@ function atualizarProgressBar() {
         progressBar.style.width = scrolled + '%';
     }
 }
-
-window.onscroll = function() {
-    atualizarProgressBar();
-};
+window.onscroll = function() { atualizarProgressBar(); };
 
 // ============================================
 // PLAYER DE ÁUDIO
 // ============================================
 function toggleAudio(id) {
-    // Para todos os outros áudios
     document.querySelectorAll('audio').forEach(audio => {
         if (audio.id !== id) {
             audio.pause();
             audio.classList.remove('active');
-            // Reseta o botão dos outros áudios
             const btn = audio.previousElementSibling?.querySelector('.btn-audio');
             if (btn) btn.textContent = '🔊 Ouvir';
         }
     });
-
-    // Alterna o atual
     const audio = document.getElementById(id);
     const btn = event.target;
-    
     if (!audio || !btn) return;
-    
     if (audio.paused) {
         audio.play();
         audio.classList.add('active');
@@ -63,21 +50,17 @@ function toggleAudio(id) {
 }
 
 // ============================================
-// COMPARTILHAMENTO COM LINK DO CAPÍTULO
+// COMPARTILHAMENTO (CAPÍTULOS)
 // ============================================
 function compartilhar(plataforma, capituloId) {
     const texto = "Estou lendo 'Perdão, por que não?': ";
-    // URL completa com âncora do capítulo (ex: site.com/#cap7)
     const url = window.location.href.split('#')[0] + '#' + capituloId;
-    
     if (plataforma === 'whatsapp') {
         window.open(`https://wa.me/?text=${encodeURIComponent(texto + url)}`, '_blank');
         registrarEvento('compartilhamento_whatsapp', capituloId);
     } else if (plataforma === 'instagram') {
         navigator.clipboard.writeText(url).then(() => {
-            alert("Link do capítulo copiado! Abra o Instagram e cole no seu Story ou Direct.");
-        }).catch(err => {
-            alert("Não foi possível copiar o link. Copie manualmente da barra de endereço.");
+            alert("Link do capítulo copiado!");
         });
         registrarEvento('compartilhamento_instagram', capituloId);
     } else if (plataforma === 'twitter') {
@@ -87,10 +70,8 @@ function compartilhar(plataforma, capituloId) {
 }
 
 // ============================================
-// SISTEMA DE CURTIDAS (CORRIGIDO)
+// CURTIDAS
 // ============================================
-
-// Inicializa contadores de curtidas
 function inicializarCurtidas() {
     document.querySelectorAll('.capitulo').forEach(artigo => {
         const capId = artigo.id;
@@ -98,13 +79,8 @@ function inicializarCurtidas() {
         const btn = document.getElementById('btn-curtida-' + capId);
         const contador = document.getElementById('curtidas-' + capId);
         const icone = btn?.querySelector('.icone-curtida');
-        
         if (!btn || !contador || !icone) return;
-        
-        // Valor base (em produção, isso viria do backend)
         let valorBase = 0;
-        
-        // Verifica se usuário já curtiu
         if (localStorage.getItem(chave)) {
             icone.textContent = '❤️';
             btn.classList.add('curtido');
@@ -117,84 +93,33 @@ function inicializarCurtidas() {
     });
 }
 
-// Toggle de curtida
 function toggleCurtida(capituloId) {
     const chave = 'curtida_' + capituloId;
     const jaCurtiu = localStorage.getItem(chave);
     const btn = document.getElementById('btn-curtida-' + capituloId);
     const contador = document.getElementById('curtidas-' + capituloId);
     const icone = btn?.querySelector('.icone-curtida');
-    
     if (!btn || !contador || !icone) return;
-    
-    // Pega o valor atual do contador
     let valorAtual = parseInt(contador.textContent) || 0;
-    
     if (jaCurtiu) {
-        // Remove curtida
         localStorage.removeItem(chave);
-        valorAtual = Math.max(0, valorAtual - 1); // Evita negativos
+        valorAtual = Math.max(0, valorAtual - 1);
         contador.textContent = valorAtual;
         icone.textContent = '🤍';
         btn.classList.remove('curtido');
     } else {
-        // Adiciona curtida
         localStorage.setItem(chave, 'true');
         valorAtual = valorAtual + 1;
         contador.textContent = valorAtual;
         icone.textContent = '❤️';
         btn.classList.add('curtido');
-        
-        // Registra no analytics
         registrarEvento('curtida', capituloId);
-        
-        // Envia para webhook
         enviarCurtidaWebhook(capituloId);
     }
 }
 
 // ============================================
-// COMENTÁRIOS (GISCUS)
-// ============================================
-function toggleComentarios(capituloId) {
-    const container = document.getElementById('comentarios-' + capituloId);
-    const btn = document.getElementById('btn-comentarios-' + capituloId);
-    
-    if (!container || !btn) return;
-    
-    if (container.style.display === 'none' || !container.style.display) {
-        container.style.display = 'block';
-        btn.textContent = '💬 Fechar Comentários';
-        
-        // Carrega script do Giscus se ainda não carregou
-        if (!container.querySelector('script')) {
-            const script = document.createElement('script');
-            script.src = 'https://giscus.app/client.js';
-            script.setAttribute('data-repo', GISCUS_CONFIG.repo);
-            script.setAttribute('data-repo-id', GISCUS_CONFIG.repoId);
-            script.setAttribute('data-category', GISCUS_CONFIG.category);
-            script.setAttribute('data-category-id', GISCUS_CONFIG.categoryId);
-            script.setAttribute('data-mapping', 'specific');
-            script.setAttribute('data-term', capituloId);
-            script.setAttribute('data-strict', '0');
-            script.setAttribute('data-reactions-enabled', '1');
-            script.setAttribute('data-emit-metadata', '0');
-            script.setAttribute('data-input-position', 'bottom');
-            script.setAttribute('data-theme', 'dark');
-            script.setAttribute('data-lang', 'pt');
-            script.setAttribute('data-origin', window.location.origin);
-            script.setAttribute('crossorigin', 'anonymous');
-            script.setAttribute('async', '');
-            container.appendChild(script);
-        }
-    } else {
-        container.style.display = 'none';
-        btn.textContent = '💬 Comentários';
-    }
-}
-
-// ============================================
-// ANALYTICS DE LEITURA
+// ANALYTICS
 // ============================================
 const capitulosLidos = new Set();
 const eventosEnviados = new Set();
@@ -208,11 +133,8 @@ function registrarLeitura(capituloId) {
 
 function registrarEvento(tipo, capituloId) {
     const chaveEvento = tipo + '_' + capituloId + '_' + new Date().toDateString();
-    
     if (eventosEnviados.has(chaveEvento)) return;
     eventosEnviados.add(chaveEvento);
-    
-    // Google Analytics (se configurado)
     if (typeof gtag !== 'undefined') {
         gtag('event', tipo, {
             'event_category': 'Engajamento',
@@ -220,12 +142,9 @@ function registrarEvento(tipo, capituloId) {
             'value': 1
         });
     }
-    
-    // Webhook para Google Sheets
     enviarWebhook(tipo, capituloId);
 }
 
-// Observer para detectar capítulos visíveis
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
@@ -235,18 +154,16 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 
 // ============================================
-// WEBHOOK PARA GOOGLE SHEETS
+// WEBHOOK
 // ============================================
 function enviarWebhook(tipo, capituloId) {
     if (WEBHOOK_URL.includes('SEU-CODIGO-AQUI')) {
-        console.log('Webhook não configurado. Configure a URL no main.js');
+        console.log('Webhook não configurado.');
         return;
     }
-    
     const urlParams = new URLSearchParams(window.location.search);
     const utmSource = urlParams.get('utm_source') || 'direto';
     const utmCampaign = urlParams.get('utm_campaign') || 'nenhuma';
-    
     fetch(WEBHOOK_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -267,61 +184,11 @@ function enviarCurtidaWebhook(capituloId) {
 }
 
 // ============================================
-// INICIALIZAÇÃO
+// PAINEL FLUTUANTE
 // ============================================
-document.addEventListener('DOMContentLoaded', function() {
-    // Aplica observer a todos os capítulos
-    document.querySelectorAll('.capitulo').forEach(cap => {
-        observer.observe(cap);
-    });
-    
-    // Inicializa curtidas
-    inicializarCurtidas();
-    
-    // Atualiza barra de progresso inicialmente
-    atualizarProgressBar();
-    
-    console.log('✅ Site carregado com todas as funcionalidades');
-});
-// ============================================
-// PAINEL FLUTUANTE DE INTERAÇÃO
-// ============================================
-
 function togglePainelInteracao() {
     const painel = document.getElementById('painelInteracao');
     const overlay = document.getElementById('overlay');
-    
-    if (painel.classList.contains('active')) {
-        // Fechar
-        painel.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    } else {
-        // Abrir
-        painel.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-// Toggle de Formulário (dentro do painel)
-function toggleFormulario(formId) {
-    const form = document.getElementById(formId);
-    if (form.style.display === 'none' || !form.style.display) {
-        form.style.display = 'block';
-    } else {
-        form.style.display = 'none';
-    }
-}
-
-// ============================================
-// PAINEL FLUTUANTE - TOGGLES
-// ============================================
-
-function togglePainelInteracao() {
-    const painel = document.getElementById('painelInteracao');
-    const overlay = document.getElementById('overlay');
-    
     if (painel.classList.contains('active')) {
         painel.classList.remove('active');
         overlay.classList.remove('active');
@@ -336,23 +203,68 @@ function togglePainelInteracao() {
 function toggleFormulario() {
     const form = document.getElementById('conteudo-formulario');
     const git = document.getElementById('conteudo-github');
-    
-    if (form.classList.contains('ativo')) {
-        form.classList.remove('ativo');
+    if (form.style.display === 'block') {
+        form.style.display = 'none';
     } else {
-        form.classList.add('ativo');
-        git.classList.remove('ativo');
+        form.style.display = 'block';
+        git.style.display = 'none';
     }
 }
 
 function toggleGithub() {
     const form = document.getElementById('conteudo-formulario');
     const git = document.getElementById('conteudo-github');
-    
-    if (git.classList.contains('ativo')) {
-        git.classList.remove('ativo');
+    if (git.style.display === 'block') {
+        git.style.display = 'none';
     } else {
-        git.classList.add('ativo');
-        form.classList.remove('ativo');
+        git.style.display = 'block';
+        form.style.display = 'none';
     }
+}
+
+// ============================================
+// INICIALIZAÇÃO
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.capitulo').forEach(cap => {
+        observer.observe(cap);
+    });
+    inicializarCurtidas();
+    atualizarProgressBar();
+    console.log('✅ Site carregado com todas as funcionalidades');
+});
+/* ============================================
+COMPARTILHAMENTO - MENSAGENS OTIMIZADAS
+============================================ */
+function compartilharWhatsApp() {
+    const url = encodeURIComponent(encodeURIComponent('https://almappg.github.io/perdaopqn/index.html');
+    const texto = encodeURIComponent(
+        '📖 Estou lendo "Perdão, por que não?"\n' +
+        'Um guia prático para descomplicar o perdão.\n' +
+        'Confira: '
+    );
+    window.open(`https://wa.me/?text=${texto}${url}`, '_blank');
+    registrarEvento('compartilhamento_whatsapp', 'painel');
+}
+
+function compartilharInstagram() {
+    const texto = '📖 "Perdão, por que não?" - Um guia prático para descomplicar o perdão.\n' + window.location.href;
+    navigator.clipboard.writeText(texto).then(() => {
+        alert('Link + texto copiados! Cole no Instagram Story ou Direct.');
+    });
+    registrarEvento('compartilhamento_instagram', 'painel');
+}
+
+function compartilharFacebook() {
+    const url = encodeURIComponent('https://almappg.github.io/perdaopqn/index.html');
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    registrarEvento('compartilhamento_facebook', 'painel');
+}
+
+function copiarLink() {
+    const texto = '📖 "Perdão, por que não?"\nUm guia prático para descomplicar o perdão.\n' + window.location.href;
+    navigator.clipboard.writeText(texto).then(() => {
+        alert('Link + texto copiados! Agora é só colar na conversa.');
+    });
+    registrarEvento('copiar_link', 'painel');
 }
