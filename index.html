@@ -72,6 +72,7 @@
                 </button>
                 <button class="btn-painel-capitulo" onclick="togglePainelInteracao()">💬 Compartilhe/Comente</button>
             </div>
+            
         </article>
 
         <!-- (Repita a estrutura acima para os capítulos 2 a 23, mudando o ID: cap2, cap3, etc.) -->
@@ -90,79 +91,86 @@
          ============================================ -->
     <div id="overlay" class="overlay" onclick="togglePainelInteracao()"></div>
 
-    <div id="painelInteracao" class="painel-interacao">
-        <div class="fundo">
-            <img src="assets/painel-capa-degrade.png" class="img-fundo" alt="Fundo do painel">
+    <!-- BOTÃO DE TESTE - PAINEL COMO PÁGINA SEPARADA -->
+    <a href="div_flutuante.html" target="_self" 
+       style="position: fixed; bottom: 20px; left: 20px; z-index: 99999; 
+              background: #C6C76D; color: #000; text-decoration: none;
+              padding: 15px 25px; font-weight: 700; 
+              box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+              font-family: 'Fira Sans Extra Condensed', sans-serif;">
+        🧪 TESTAR PAINEL (LINK)
+    </a>
+    <!-- ============================================
+     PAINEL FLUTUANTE DE INTERAÇÃO (df-)
+     ============================================ -->
+<div id="overlay" class="df-overlay" onclick="fecharPainel()"></div>
+
+<div id="painelInteracao" class="df-painel-interacao">
+    <div class="df-fundo">
+        <img src="assets/painel-capa-degrade.png" class="df-img-fundo" alt="Fundo do painel">
+        
+        <div class="df-container">
+            <!-- Seção AA: Toggles -->
+            <div class="df-AA">
+                <div class="df-AAA-Form" onclick="toggleFormulario()">
+                    <span class="df-texto-superior">Enviar feedback</span>
+                    <span class="df-texto-inferior">Feedback</span>
+                </div>
+                <div class="df-AAA-Git" onclick="toggleGithub()">
+                    <span class="df-texto-superior">Enviar mensagem no</span>
+                    <span class="df-texto-inferior">GitHub</span>
+                </div>
+            </div>
             
-            <div class="container">
-                <!-- SEÇÃO AA: Toggles -->
-                <div class="AA">
-                    <div class="AAA-Form" onclick="toggleFormulario()">
-                        <span class="texto-superior">Enviar feedback</span>
-                        <span class="texto-inferior">Feedback</span>
-                    </div>
-                    <div class="AAA-Git" onclick="toggleGithub()">
-                        <span class="texto-superior">Enviar mensagem no</span>
-                        <span class="texto-inferior">GitHub</span>
-                    </div>
+            <!-- Seção BB: Compartilhamento -->
+            <div class="df-BB">
+                <div class="df-BBB-1" onclick="compartilharWhatsApp()">
+                    <img src="./assets/share-whatsapp.png" alt="WhatsApp">
+                    <span class="df-texto-rede">WhatsApp</span>
                 </div>
-                
-                <!-- SEÇÃO BB: Compartilhamento -->
-                <div class="BB">
-                    <div class="BBB-1" onclick="compartilharWhatsApp()">
-                        <img src="./assets/share-whatsapp.png" alt="WhatsApp">
-                        <span class="texto-rede">WhatsApp</span>
-                    </div>
-                    <div class="BBB-2" onclick="compartilharInstagram()">
-                        <img src="./assets/share-instagram.png" alt="Instagram">
-                        <span class="texto-rede">Instagram</span>
-                    </div>
-                    <div class="BBB-3" onclick="compartilharFacebook()">
-                        <img src="./assets/share-facebook.png" alt="Facebook">
-                        <span class="texto-rede">Facebook</span>
-                    </div>
-                    <div class="BBB-4" onclick="copiarLink()">
-                        <img src="./assets/share-link.png" alt="Copiar Link">
-                        <span class="texto-rede">Copiar Link</span>
-                    </div>
+                <div class="df-BBB-2" onclick="compartilharInstagram()">
+                    <img src="./assets/share-instagram.png" alt="Instagram">
+                    <span class="df-texto-rede">Instagram</span>
                 </div>
-                
-                <!-- SEÇÃO CC: Fale com o Autor -->
-                <div class="CC">
-                    <img src="./assets/fale-com.png" alt="Fale com o autor">
-                    <span class="texto-whats">Fale direto<br>com o autor</span>
+                <div class="df-BBB-3" onclick="compartilharFacebook()">
+                    <img src="./assets/share-facebook.png" alt="Facebook">
+                    <span class="df-texto-rede">Facebook</span>
                 </div>
-                
-                <!-- SEÇÃO DD: Voltar à Leitura -->
-                <div class="DD" onclick="togglePainelInteracao()">
-                    <p>Clique aqui para <strong>voltar à leitura</strong></p>
+                <div class="df-BBB-4" onclick="copiarLink()">
+                    <img src="./assets/share-link.png" alt="Copiar Link">
+                    <span class="df-texto-rede">Copiar Link</span>
                 </div>
+            </div>
+            
+            <!-- Seção CC: Fale com o Autor -->
+            <div class="df-CC">
+                <img src="./assets/fale-com.png" alt="Fale com o autor">
+                <span class="df-texto-whats">Fale direto<br>com o autor</span>
+            </div>
+            
+            <!-- Seção DD: Voltar à Leitura -->
+            <div class="df-DD" onclick="fecharPainel()">
+                <p>Clique aqui para <strong>voltar à leitura</strong></p>
+            </div>
 
-                <!-- CONTEÚDOS OCULTOS (Formulário / GitHub) -->
-                <div id="conteudo-formulario" class="toggle-conteudo" style="display:none; position:absolute; top:10%; left:5%; width:90%; background:#000; padding:10px; z-index:10;">
-                    <input type="text" class="form-input" placeholder="Seu nome">
-                    <input type="email" class="form-input" placeholder="Seu email">
-                    <textarea class="form-input" placeholder="Sua mensagem" style="min-height:80px;"></textarea>
-                    <button class="btn-enviar" onclick="alert('Enviado!')">ENVIAR</button>
-                </div>
+            <!-- Conteúdos Ocultos -->
+            <div id="conteudo-formulario" class="df-toggle-conteudo">
+                <input type="text" class="df-form-input" placeholder="Seu nome">
+                <input type="email" class="df-form-input" placeholder="Seu email">
+                <textarea class="df-form-input" placeholder="Sua mensagem" style="min-height:80px;"></textarea>
+                <button class="df-btn-enviar" onclick="event.stopPropagation(); alert('Enviado!')">ENVIAR</button>
+            </div>
 
-                <div id="conteudo-github" class="toggle-conteudo" style="display:none; position:absolute; top:10%; left:5%; width:90%; background:#000; padding:10px; z-index:10;">
-                    <p style="color:#C6C76D; margin-bottom:10px;">Redirecionando para o GitHub...</p>
-                    <a href="https://github.com/AlmaPPG/perdaopqn" target="_blank" style="color:#fff;">Abrir Issues</a>
-                </div>
+            <div id="conteudo-github" class="df-toggle-conteudo">
+                <p style="color:#C6C76D; margin-bottom:10px;">Redirecionando para o GitHub...</p>
+                <a href="https://github.com/AlmaPPG/perdaopqn" target="_blank" style="color:#fff;" onclick="event.stopPropagation();">Abrir Issues</a>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- BOTÃO DE TESTE - PAINEL COMO PÁGINA SEPARADA -->
-<a href="div_flutuante.html" target="_blank" 
-   style="position: fixed; bottom: 20px; left: 20px; z-index: 99999; 
-          background: #C6C76D; color: #000; text-decoration: none;
-          padding: 15px 25px; font-weight: 700; 
-          box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-          font-family: 'Fira Sans Extra Condensed', sans-serif;">
-    🧪 TESTAR PAINEL (LINK)
-</a>
+<!-- Link do CSS do Painel (df-) -->
+<link rel="stylesheet" href="css/df-div_flutuante.css">
     <script src="js/main.js"></script>
 </body>
 </html>
