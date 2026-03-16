@@ -308,7 +308,7 @@ FALE COM O AUTOR (Seção CC)
 ============================================ */
 function faleComAutor() {
     // Substitua pelo número real do autor
-    const numeroWhatsApp = '5511999999999';
+    const numeroWhatsApp = '5511997979597';
     const texto = encodeURIComponent('Olá! Vim pelo site "Perdão, por que não?"');
     window.open(`https://wa.me/${numeroWhatsApp}?text=${texto}`, '_blank');
     registrarEvento('fale_com_autor', 'painel');
