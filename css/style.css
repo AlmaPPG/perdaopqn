@@ -20,11 +20,14 @@
     --borda-suave: #333333;
     
     /* Tipografia */
-    --fonte-titulo: 'Roboto Condensed', sans-serif;
-    --fonte-corpo: 'Ubuntu', sans-serif;
+    --fonte-titulo: 'Fira Sans Extra Condensed', sans-serif;
+    --fonte-corpo: 'Fira Sans Condensed', sans-serif;
+
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+
 
 body {
     font-family: var(--fonte-corpo);
@@ -118,6 +121,7 @@ body {
 /* Capítulos */
 .capitulo {
     text-align: left;
+    font-weight: 300;
     background: var(--fundo-card);
     padding: 30px;
     margin-bottom: 30px;
@@ -127,6 +131,7 @@ body {
 }
 .capitulo h2 {
     font-family: var(--fonte-titulo);
+    font-weight: 400;
     font-size: 1.8rem;
     margin-bottom: 20px;
     text-transform: uppercase;
