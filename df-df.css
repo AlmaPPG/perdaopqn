@@ -1,0 +1,147 @@
+*{
+    font-family: 'Fira Sans Extra Condensed', sans-serif;
+    margin: 0;
+}
+
+/*--- 738x1315px (alinhado pelo topo) ---*/
+.df-fundo{
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: block;
+    z-index: 0;
+}
+.df-img-fundo{
+    width: 56.1dvh;
+    display: flex;
+    position: relative;
+    margin: 0 auto;
+}
+
+/*--- 711.69x1315px (alinhado pelo topo) ---*/
+.df-container{
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 96dvh;
+    width: 54.1dvh;
+    top: 1dvh;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1dvh;
+    z-index: 1;
+}
+
+/*--- 711,69 x497,27px (alinhado pelo topo) ---*/
+.df-AA{
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 36.8dvh;
+    width: 54.1dvh;
+    display: flex;
+    flex-direction: column;
+    gap: 1dvh;
+}
+.df-AAA-toggle{
+    background-color: rgba(0, 0, 0, 0.0);
+    height: 4.6dvh;
+    width: 52.1dvh;
+    display: flex;
+    gap: 1dvh;
+    left: 1dvh;
+    top: 1dvh;
+    position: relative;
+    padding-bottom: 1dvh;
+}
+.df-AAA-left{
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #C6C76D;
+    height: 2.6dvh;
+    width: 33.1dvh;
+    position: relative;
+    padding: 1dvh;
+}
+.df-AAA-right{
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #C6C76D;
+    height: 2.6dvh;
+    width: 18.1dvh;
+    position: relative;
+    padding: 1dvh;
+}
+.df-AAA{
+    background-color: rgba(0, 0, 0, 0.3);
+    color:rgba(255, 255, 255, 0.35);
+    height: 2.6dvh;
+    width: 50.1dvh;
+    display: flex;
+    flex-direction: column;
+    gap: 1dvh;
+    left: 2dvh;
+    padding: 1dvh;
+    margin-left: 1dvh;
+}
+.df-AAA-msg{
+    background-color: rgba(0, 0, 0, 0.3);
+    color:rgba(255, 255, 255, 0.35);
+    height: 11.6dvh;
+    width: 50.1dvh;
+    display: flex;
+    flex-direction: column;
+    gap: 1dvh;
+    left: 2dvh;
+    padding: 1dvh;
+    margin-left: 1dvh;
+}
+/*--- 711,69 x406,2px (alinhado pela base) ---*/
+.df-BB{
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 30.9dvh; 
+    width: 54.1dvh;
+    display: flex;
+    gap: 1dvh;
+}
+
+/*--- 168,06x406,2px ---*/
+.df-BBB{
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 30.9dvh; 
+    width: 12.8dvh;
+}
+
+/*--- 711,69 x192,88 px (alinhado pela base) ---*/
+.df-CC{
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 14.7dvh;
+    width: 54.1dvh;
+    display: flex;
+}
+.df-texto-whats {
+    font-family: 'Fira Sans Extra Condensed', sans-serif;
+    font-size: 3.6dvh;
+    font-weight: 400;
+    color: #000000;
+    text-align: left;
+    position: absolute;
+    padding: 3.2dvh;
+    padding-left: 4dvh;
+}
+.df-texto-voltar{
+    font-family: 'Fira Sans Extra Condensed', sans-serif;
+    font-size: 3.8dvh;
+    font-weight: 400;
+    color: #000000;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3dvh;
+}
+/*--- 711,69 x153,41 px (alinhado pela base) ---*/
+.df-DD{
+    background-color: #C6C76D;
+    font-size: 3.8dvh;
+    height: 10.7dvh;
+    width: 54.1dvh;
+    text-align: center;
+}
