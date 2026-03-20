@@ -7,37 +7,39 @@
 .df-fundo{
     background-color: rgba(0, 0, 0, 0.9);
     width: 100%;
+    
     height: 100%;
     position: absolute;
-    display: block;
+    display: flex;
     z-index: 0;
 }
 .df-img-fundo{
     width: 56.1dvh;
+    height: 56.1dvh;
     display: flex;
-    position: relative;
     margin: 0 auto;
+    position: relative;
+
 }
 
 /*--- 711.69x1315px (alinhado pelo topo) ---*/
 .df-container{
-    background-color: rgba(0, 0, 0, 0.1);
-    height: 96dvh;
-    width: 54.1dvh;
-    top: 1dvh;
+    height: 92dvh;
+    width: 50.1dvh;
+    top: 3dvh;
     position: relative;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
     gap: 1dvh;
     z-index: 1;
 }
 
 /*--- 711,69 x497,27px (alinhado pelo topo) ---*/
 .df-AA{
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.0);
     height: 36.8dvh;
-    width: 54.1dvh;
+    width: 50.1dvh;
     display: flex;
     flex-direction: column;
     gap: 1dvh;
@@ -45,25 +47,41 @@
 .df-AAA-toggle{
     background-color: rgba(0, 0, 0, 0.0);
     height: 4.6dvh;
-    width: 52.1dvh;
+    width: 50.1dvh;
     display: flex;
-    gap: 1dvh;
-    left: 1dvh;
-    top: 1dvh;
     position: relative;
-    padding-bottom: 1dvh;
 }
 .df-AAA-left{
     background-color: rgba(0, 0, 0, 0.7);
     color: #C6C76D;
     height: 2.6dvh;
-    width: 33.1dvh;
+    width: 28.1dvh;
     position: relative;
     padding: 1dvh;
 }
 .df-AAA-right{
     background-color: #C6C76D;
     color: rgba(0, 0, 0, 0.7);
+    height: 2.6dvh;
+    width: 17.1dvh;
+    margin-left: 1dvh;
+    position: relative;
+    padding: 1dvh;
+    text-align: center;
+}
+.df-AAA-clique{
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #C6C76D;
+    text-align: right;
+    height: 2.6dvh;
+    width: 30.1dvh;
+    position: relative;
+    padding: 1dvh;
+}
+.df-AAA-enviar{
+    font-weight: 500;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #C6C76D;
     height: 2.6dvh;
     width: 18.1dvh;
     position: relative;
@@ -73,47 +91,44 @@
     background-color: rgba(0, 0, 0, 0.3);
     color:rgba(255, 255, 255, 0.35);
     height: 2.6dvh;
-    width: 50.1dvh;
+    width: 48.1dvh;
     display: flex;
     flex-direction: column;
     gap: 1dvh;
-    left: 2dvh;
     padding: 1dvh;
-    margin-left: 1dvh;
 }
 .df-AAA-msg{
     background-color: rgba(0, 0, 0, 0.3);
-    color:rgba(255, 255, 255, 0.35);
-    height: 11.6dvh;
-    width: 50.1dvh;
+    color: rgba(255, 255, 255, 0.35);
+    height: 13.6dvh;
+    width: 48.1dvh;
     display: flex;
     flex-direction: column;
     gap: 1dvh;
-    left: 2dvh;
     padding: 1dvh;
-    margin-left: 1dvh;
 }
 /*--- 711,69 x406,2px (alinhado pela base) ---*/
 .df-BB{
-    background-color: rgba(0, 0, 0, 0.1);
-    height: 30.9dvh; 
-    width: 54.1dvh;
+    background-color: rgba(200, 0, 0, 0.0);
+    height: auto; 
+    width: 100%;
     display: flex;
+    flex-wrap: wrap;
     gap: 1dvh;
 }
 
 /*--- 168,06x406,2px ---*/
 .df-BBB{
-    background-color: rgba(0, 0, 0, 0.1);
-    height: 30.9dvh; 
-    width: 12.8dvh;
+    background-color: rgba(0, 0, 0, 0.0);
+    height: 28.4dvh; 
+    width: 11.77dvh;
 }
 
 /*--- 711,69 x192,88 px (alinhado pela base) ---*/
 .df-CC{
     background-color: rgba(0, 0, 0, 0.1);
-    height: 14.7dvh;
-    width: 54.1dvh;
+    height: 13.59dvh;
+    width: 100%;
     display: flex;
 }
 .df-texto-whats {
@@ -123,8 +138,8 @@
     color: #000000;
     text-align: left;
     position: absolute;
-    padding: 3.2dvh;
-    padding-left: 4dvh;
+    padding: 3.0dvh;
+    padding-left: 3dvh;
 }
 .df-texto-voltar{
     font-family: 'Fira Sans Extra Condensed', sans-serif;
@@ -135,13 +150,13 @@
     text-align: center;
     justify-content: center;
     align-items: center;
-    padding-top: 3dvh;
+    height: 10.7dvh;
 }
 /*--- 711,69 x153,41 px (alinhado pela base) ---*/
 .df-DD{
     background-color: #C6C76D;
     font-size: 3.8dvh;
     height: 10.7dvh;
-    width: 54.1dvh;
+    width: 50.1dvh;
     text-align: center;
 }
