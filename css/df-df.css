@@ -62,8 +62,8 @@
     padding: 1dvh;
 }
 .df-AAA-right{
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #C6C76D;
+    background-color: #C6C76D;
+    color: rgba(0, 0, 0, 0.7);
     height: 2.6dvh;
     width: 18.1dvh;
     position: relative;
