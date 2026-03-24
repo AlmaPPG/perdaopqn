@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    .pai {
+        display: flex;
+        gap: 10px;
+        background: #333;
+        padding: 10px;
+    }
+    
+    .filho {
+        background: #C6C76D;
+        color: black;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    /* Teste 1: Todos iguais */
+    .teste1 .filho { flex: 1; }
+    
+    /* Teste 2: Tamanhos diferentes */
+    .teste2 .filho:nth-child(1) { flex: 1; }
+    .teste2 .filho:nth-child(2) { flex: 2; }
+    .teste2 .filho:nth-child(3) { flex: 1; }
+</style>
+</head>
+<body>
+
+<h3>Teste 1: Todos Iguais (flex: 1)</h3>
+<div class="pai teste1">
+    <div class="filho">A</div>
+    <div class="filho">B</div>
+    <div class="filho">C</div>
+</div>
+
+<h3>Teste 2: B é 2x Maior</h3>
+<div class="pai teste2">
+    <div class="filho">A</div>
+    <div class="filho">B</div>
+    <div class="filho">C</div>
+</div>
+
+</body>
+</html>

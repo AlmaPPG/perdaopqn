@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perdão, por que não? - versão digital</title>
+    <link rel="stylesheet" href="./css/perdaopqn-style.css">
+    <link rel="icon" type="image/png" href="assets/perdao-capa-site.png">
+    <meta name="description" content="Perdão, por que não? - ...um guia prático para descomplicar o perdão.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fira+Sans+Extra+Condensed:wght@300;400;500;600;700;800&family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Barra de Progresso -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Overlay (Fundo escuro flexível) -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Container Principal -->
+    <div class="container">
+        <!-- Hero / Capa -->
+        <section class="hero">
+            <img src="assets/perdao-capa-site.png" alt="Capa do livro Perdão, por que não?" style="width: 100%; max-width: 400px; margin: 20px auto; display: block;">
+            <h1>Perdão, por que não?</h1>
+            <p class="subtitle">...um guia prático para descomplicar o perdão.</p>
+            <div class="meta-info">
+                <p>Livro: Perdão, por que não? - Edição 3.0📚 Autor: Heitor Nickel (@heitornickel)⏱️ 40 min de leitura</p>
+            </div>
+        </section>
+
+        <!-- Legenda de Cores -->
+        <section class="legenda-cores">
+            <h3>Guia de Cores</h3>
+            <div class="grid-legenda">
+                <div class="item-legenda"><span class="dot titulo-antes"></span>Fundamentos</div>
+                <div class="item-legenda"><span class="dot titulo-alerta"></span>Alertas</div>
+                <div class="item-legenda"><span class="dot titulo-entende"></span>Entendimento</div>
+                <div class="item-legenda"><span class="dot titulo-consequencia"></span>Consequências Boas</div>
+                <div class="item-legenda"><span class="dot titulo-define"></span>O que é</div>
+                <div class="item-legenda"><span class="dot titulo-naoeh"></span>O que não é</div>
+                <div class="item-legenda"><span class="dot titulo-consequencia-ruim"></span>Consequências Ruins</div>
+                <div class="item-legenda"><span class="dot titulo-pratica"></span>Prática</div>
+            </div>
+        </section>
+
+        <!-- Capítulo 1 -->
+        <article id="capitulo-1" class="capitulo">
+            <h2 class="titulo-antes">(1) Prefácio</h2>
+            <div class="capitulo-header">
+                <button class="btn-audio" onclick="toggleAudio('audio-capitulo-1')">🔊 Ouvir</button>
+            </div>
+            <audio id="audio-capitulo-1" src="assets/audio/capitulo-1.mp3"></audio>
+            
+            <div class="conteudo">
+                <p>Ensinar é um dos meus prazeres e, com o interesse de ajudar alguém a aprender como perdoar, resolvi perguntar ao próprio Deus como isso funcionava; afinal, ninguém melhor do que Ele entende esse assunto.</p>
+                <p>Como parte do meu estudo, preparei uma lista com textos bíblicos que falavam do relacionamento interpessoal e, um deles, Mateus 6:15, me fez perceber que quem precisava perdoar era eu.</p>
+                <p>Duas semanas perdoando a tudo e a todos me proporcionaram olhar para trás e não ver mais ninguém para ser perdoado...</p>
+                <p>...Agradeci a Deus e então voltei ao estudo.</p>
+                <p>O bem-estar que isso me causou virou assunto de conversas nos dias seguintes e eu, percebendo que à minha volta existia um número muito grande de pessoas envolvidas por problemas com a falta de perdão, passei a me aprofundar cada vez mais no assunto.</p>
+                <p>A simples prática de perdoar sempre e logo e o entendimento do que era e, especialmen-te, do que não era perdão, começaram a me trazer novas sensações: minha alma estava leve e pessoas que não viviam estavam, por causa do perdão, passando a viver.</p>
+                <p>Com a visão que Deus me acrescentava dia após dia, ensinar sobre o perdão ganhou uma nova dimensão quando eu comecei a escrever o que pretendia ser "Perdão, por que não? - o livro", com muitas páginas, experiências e o assunto aprofundado; a orientação divina, porém, me fez enxergar a urgência e a necessidade de algo rápido, simples e prático, capaz de levar as pessoas ao perdão em poucos minutos de leitura; nasceu, então, "Perdão, por que não? - a cartilha", esse material que eu espero que seja capaz de imprimir leveza à sua alma.</p>
+                <p>Para aprender bem, o melhor ainda continua sendo buscar a Deus e à sua Palavra; desejo, porém, que Ele use essa cartilha para abençoar você e que, ao final, tenhamos mais um testemunho de vitória.</p>
+            </div>
+
+            <!-- Interação no Capítulo -->
+            <div class="interacao-linha">
+                <button id="btn-curtida-capitulo-1" class="btn-curtir-inline" onclick="toggleCurtida('capitulo-1')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-1">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="togglePainelInteracao()">💬 Compartilhe/Comente</button>
+            </div>
+        </article>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2024 Perdão, por que não? - Todos os direitos reservados.</p>
+            <p>Desenvolvido com ❤ para facilitar o perdão.</p>
+            <div style="margin-top: 15px;">
+                <a href="mailto:contato@almappg.com" style="margin: 0 10px;">Enviar feedback</a>
+                <a href="https://github.com/AlmaPPG/perdaopqn" target="_blank" style="margin: 0 10px;">GitHub</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Botão Flutuante -->
+    <div class="interacao-flutuante">
+        <button class="btn-flutuante-fix" onclick="togglePainelInteracao()">💬 Compartilhe/Comente</button>
+    </div>
+
+    <!-- Painel Flutuante (ESTRUTURA A/B/C/D - PROPORCIONAL) -->
+    <div class="painel-interacao" id="painelInteracao">
+        <img class="painel-capa" src="assets/perdao-capa-site.png" alt="Capa">
+        
+        <div class="painel-conteudo">
+            <!-- Seção A: Formulário (FLEXÍVEL) -->
+            <div class="secao-a">
+                <div class="toggles-container">
+                    <button class="toggle-btn" onclick="toggleFormulario()">
+                        <span class="texto-superior">Mande sua mensagem aqui</span>
+                        <span class="texto-inferior">FEEDBACK</span>
+                    </button>
+                    <button class="toggle-btn" onclick="toggleGithub()">
+                        <span class="texto-superior">Clique aqui se preferir</span>
+                        <span class="texto-inferior">GitHub</span>
+                    </button>
+                </div>
+                
+                <div id="conteudo-formulario" class="toggle-conteudo ativo">
+                    <div class="form-div">
+                        <input class="form-input" type="text" placeholder="Seu nome (opcional)" id="form-nome">
+                        <input class="form-input" type="email" placeholder="Seu e-mail (para resposta)" id="form-email">
+                        <input class="form-input" type="text" placeholder="Sua mensagem, dúvida ou testemunho" id="form-mensagem">
+                    </div>
+                    <button class="df-AAA-clique" onclick="enviarFormulario()">
+                        Clique aqui para <strong>enviar</strong>
+                    </button>
+                </div>
+                
+                <div id="conteudo-github" class="toggle-conteudo">
+                    <div class="form-div">
+                        <p style="color: #C6C76D; font-size: 17px;">Redirecionando para o GitHub...</p>
+                        <a href="https://github.com/AlmaPPG/perdaopqn/issues" style="color: #C6C76D;">[Abrir Issues]</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção B: Compartilhamento (FIXA) -->
+            <div class="secao-b">
+                <div class="coluna-share" onclick="compartilharWhatsApp()">
+                    <img class="logo-rede" src="assets/share-whatsapp.png" alt="WhatsApp">
+                    <span class="texto-rede">WhatsApp</span>
+                </div>
+                <div class="coluna-share" onclick="compartilharInstagram()">
+                    <img class="logo-rede" src="assets/share-instagram.png" alt="Instagram">
+                    <span class="texto-rede">Instagram</span>
+                </div>
+                <div class="coluna-share" onclick="compartilharFacebook()">
+                    <img class="logo-rede" src="assets/share-facebook.png" alt="Facebook">
+                    <span class="texto-rede">Facebook</span>
+                </div>
+                <div class="coluna-share" onclick="copiarLink()">
+                    <img class="logo-rede" src="assets/share-link.png" alt="Copiar Link">
+                    <span class="texto-rede">Copiar Link</span>
+                </div>
+            </div>
+
+            <!-- Seção C: Fale com Autor (DEFINE LARGURA) -->
+            <div class="secao-c" onclick="faleComAutor()">
+                <img src="assets/fale-com.png" alt="Fale com o autor">
+            </div>
+
+            <!-- Seção D: Voltar (FIXA) -->
+            <div class="secao-d" onclick="fecharPainel()">
+                <p>Clique aqui para <em>voltar à leitura</em></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/main.js"></script>
+</body>
+</html>
