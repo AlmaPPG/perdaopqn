@@ -1,0 +1,266 @@
+/* ===== 1. RESET ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===== 2. VARIÁVEIS ===== */
+:root {
+    --fonte-tamanho: 120%;
+    --fonte-site: 'Fira Sans Extra Condensed', sans-serif;
+    --fonte-leitura: 'Fira Sans Condensed', sans-serif;
+}
+
+/* ===== 3. BODY ===== */
+body {
+    background-color: #e8e8e8;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: var(--fonte-site);
+    overflow-y: auto; /* ✅ Scrollbar do navegador */
+}
+
+/* ===== 4. CONTAINER ===== */
+.container-geral {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== 5. MAIN ===== */
+.main {
+    height: min(98dvh, 98dvw * 1.78);
+    width: min(98dvw, 98dvh / 1.78);
+    background-color: #d4e5f7;
+    display: flex;
+    flex-direction: column;
+    font-size: min(2.2dvw, 2.2dvh);
+    height: auto;
+    min-height: 100dv;
+}
+
+/* ===== 6. HEADER ===== */
+.main-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5dvh;
+}
+
+.main-capa {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.main-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5em;
+    flex-wrap: wrap;
+    font-family: var(--fonte-leitura);
+    font-size: 0.93em;
+}
+.main-meta {
+    font-size: calc(1.1em * var(--fonte-tamanho));
+}
+
+.capitulo-titulo {
+    font-size: calc(1.4em * var(--fonte-tamanho));
+}
+
+.main-meta span {
+    white-space: nowrap;
+}
+
+/* ===== 7. CONTEÚDO ===== */
+.main-conteudo {
+    flex: 1;
+    padding: 2dvh;
+    font-family: var(--fonte-leitura);
+    font-size: calc(1.2em * var(--fonte-tamanho));
+    line-height: 1.8;
+}
+
+/* ===== 8. CAPÍTULO ===== */
+.capitulo { margin-bottom: 3dvh; }
+.capitulo-titulo { margin-bottom: 1.5dvh; font-size: 1.4em; }
+.capitulo-texto { margin-bottom: 2dvh; }
+.texto-paragrafo { margin-bottom: 1.2em; }
+
+/* ===== 9. BOTÕES DO CAPÍTULO ===== */
+.capitulo-botoes {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+}
+
+.capitulo-botoes button,
+.btn-abrir-modal,
+.btn-fechar-modal {
+    cursor: pointer;
+    padding: 0.6em 1.2em;
+    background-color: transparent;
+    border: 1px solid currentColor;
+    color: inherit;
+    font-family: var(--fonte-site);
+    font-size: 1.1em;
+    border-radius: 0;
+}
+
+.capitulo-botoes button:hover,
+.btn-abrir-modal:hover,
+.btn-fechar-modal:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+.capitulo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5dvh;
+}
+
+.capitulo-titulo {
+    font-size: 1.4em;
+    margin: 0;
+}
+
+.capitulo-botoes-topo {
+    display: flex;
+    gap: 0.5em;
+}
+
+.capitulo-botoes-topo button {
+    cursor: pointer;
+    padding: 0.4em 0.8em;
+    background-color: transparent;
+    border: 1px solid currentColor;
+    color: inherit;
+    font-family: var(--fonte-site);
+    font-size: 0.9em;
+    border-radius: 0;
+}
+
+.capitulo-botoes-topo button:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+.btn-curte {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    cursor: pointer;
+    padding: 0.6em 1em;
+    background-color: transparent;
+    border: 1px solid currentColor;
+    color: inherit;
+    font-family: var(--fonte-site);
+    font-size: 1.1em;
+    border-radius: 0;
+}
+
+.btn-curte-icono {
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+.btn-curte.curtiu .btn-curte-icono {
+    color: #e74c3c; /* ❤ vermelho quando curtido */
+}
+
+.btn-curte-contador {
+    font-size: 0.9em;
+    font-weight: 700;
+}
+
+.btn-curte:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+/* Botões de interação (ficam embaixo do texto) */
+.capitulo-botoes {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    margin-top: 2dvh;
+}
+/* ===== 10. FOOTER ===== */
+.main-footer {
+    background-color: #b8d4f0;
+    padding: 1dvh;
+    display: flex;
+    justify-content: center;
+}
+
+/* ===== 11. MODAL ===== */
+.df-modal {
+    display: none;
+    position: fixed;
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background-color: #f0f0f0;
+    height: min(98dvh, 98dvw * 1.78);
+    width: min(98dvw, 98dvh / 1.78);
+    flex-direction: column;
+    font-size: min(2dvw, 2dvh);
+}
+
+.df-modal-fundo {
+    background-color: rgba(0,0,0,1);
+    position: absolute;
+    top: -1dvh;           /* 1dvh acima do container */
+    left: -1dvh;          /* 1dvh à esquerda do container */
+    width: calc(100% + 2dvh);  /* 1dvh extra em cada lado horizontal */
+    height: calc(100% + 2dvh); /* 1dvh extra apenas em cima */
+    background-image: url('../assets/painel-capa-degrade.png');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: -1;
+}
+
+.df-secao-a { height: 38.57%; flex-shrink: 0; }
+.df-secao-b { 
+    height: 30.9%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.df-secao-c {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.df-secao-d {
+    height: 11.84%;
+    background-color: #ffffba;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.df-share-item { width: 23.34%; display: flex; justify-content: center; align-items: center; }
+.df-share-img, .df-secao-c-img { width: 100%; height: auto; display: block; }
+
+/* ===== 12. AVISO DE ROTAÇÃO ===== */
+.aviso-rotacao {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100dvw; height: 100dvh;
+    background-color: #1a1a2e;
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+.aviso-conteudo { text-align: center; color: #fff; padding: 2em; }
+.aviso-conteudo p { font-size: 1.5em; margin-bottom: 1em; }
+.icone-rotacao { font-size: 4em; display: block; }
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .aviso-rotacao { display: flex; }
+    .container-geral { display: none; }
+}
