@@ -50,6 +50,9 @@ function toggleCurtir(capitulo) {
     } else {
         btn.classList.add('curtiu');
         salvarCurtidas(capitulo, curtidas + 1);
+        
+        // ✅ Adicionar esta linha (só envia quando curte):
+        enviarCurtidaWebhook(capitulo);
     }
     
     atualizarContador(capitulo);
@@ -151,4 +154,31 @@ function toggleAudio(capituloId) {
         audioAtual = null;
         botaoAtual = null;
     });
+}
+
+/* ===== WEBHOOK DE CURTIDAS ===== */
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzNu0_x-ilJ7cEpjsvo8rgSmTRW2g8-nbnWhpmnewsqvhgfrGhVTu4fb_6P60tbvD2P/exec';
+
+function enviarCurtidaWebhook(capituloId) {
+    if (!WEBHOOK_URL || WEBHOOK_URL.includes('SEU-CODIGO-AQUI')) {
+        console.log('Webhook não configurado');
+        return;
+    }
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmSource = urlParams.get('utm_source') || 'direto';
+    const utmCampaign = urlParams.get('utm_campaign') || 'nenhuma';
+    
+    fetch(WEBHOOK_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            tipo: 'curtida',
+            capitulo: capituloId,
+            timestamp: new Date().toISOString(),
+            utm_source: utmSource,
+            utm_campaign: utmCampaign
+        })
+    }).catch(err => console.log('Curtida registrada apenas localmente'));
 }

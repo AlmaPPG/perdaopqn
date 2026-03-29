@@ -215,6 +215,28 @@ body {
     justify-content: center;
     margin-top: 2dvh;
 }
+/* ===== BOTÃO DE ÁUDIO (toggle) ===== */
+.btn-audio {
+    cursor: pointer;
+    padding: 0.4em 0.8em;
+    background-color: transparent;
+    border: 1px solid currentColor;
+    color: inherit;
+    font-family: var(--fonte-site);
+    font-size: 0.9em;
+    border-radius: 0;
+    transition: background-color 0.2s;
+}
+
+.btn-audio:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.btn-audio.tocando {
+    background-color: rgba(0,0,0,0.15);
+}
+
+
 /* ===== 10. FOOTER ===== */
 .main-footer {
     background-color: #b8d4f0;
