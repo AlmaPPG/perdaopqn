@@ -24,15 +24,19 @@ function ajustarFonte(delta) {
 }
 
 /* ===== CURTIDAS ===== */
+
+// Carregar valor do localStorage
 function carregarCurtidas(capitulo) {
     const salvas = localStorage.getItem(`curtidas-${capitulo}`);
     return salvas ? parseInt(salvas) : 0;
 }
 
+// Salvar no localStorage
 function salvarCurtidas(capitulo, valor) {
     localStorage.setItem(`curtidas-${capitulo}`, valor);
 }
 
+// Atualizar o texto do contador
 function atualizarContador(capitulo) {
     const contador = document.querySelector(`.btn-curte-contador[data-capitulo="${capitulo}"]`);
     if (contador) {
@@ -40,23 +44,57 @@ function atualizarContador(capitulo) {
     }
 }
 
+// Toggle curtir (COM CORREÇÕES)
 function toggleCurtir(capitulo) {
     const btn = document.querySelector(`.btn-curte[data-capitulo="${capitulo}"]`);
-    const curtidas = carregarCurtidas(capitulo);
+    const icone = btn?.querySelector('.btn-curte-icono');
+    const contador = btn?.querySelector('.btn-curte-contador');
+    
+    if (!btn || !icone || !contador) return;
+    
+    const chave = 'curtida_' + capitulo;
+    let valor = parseInt(contador.textContent) || 0;
     
     if (btn.classList.contains('curtiu')) {
+        // === REMOVER CURTIDA ===
         btn.classList.remove('curtiu');
-        salvarCurtidas(capitulo, curtidas - 1);
+        localStorage.removeItem(chave);
+        valor = Math.max(0, valor - 1);
+        icone.textContent = '🤍';  // ← Emoji branco (não depende de CSS)
     } else {
+        // === ADICIONAR CURTIDA ===
         btn.classList.add('curtiu');
-        salvarCurtidas(capitulo, curtidas + 1);
-        
-        // ✅ Adicionar esta linha (só envia quando curte):
-        enviarCurtidaWebhook(capitulo);
+        localStorage.setItem(chave, 'true');
+        valor = valor + 1;
+        icone.textContent = '❤';  // ← Emoji vermelho (visível sem CSS)
+        enviarCurtidaWebhook(capitulo);  // ← Webhook só no "curtir"
     }
     
-    atualizarContador(capitulo);
+    contador.textContent = valor;
 }
+
+// === NOVO: Inicializar visual das curtidas ao carregar ===
+function inicializarCurtidas() {
+    document.querySelectorAll('.btn-curte').forEach(btn => {
+        const capitulo = btn.getAttribute('data-capitulo');
+        const chave = 'curtida_' + capitulo;
+        const icone = btn.querySelector('.btn-curte-icono');
+        
+        if (!icone) return;
+        
+        if (localStorage.getItem(chave)) {
+            btn.classList.add('curtiu');
+            icone.textContent = '❤';  // ← Restaura emoji vermelho
+        } else {
+            btn.classList.remove('curtiu');
+            icone.textContent = '🤍';  // ← Restaura emoji branco
+        }
+    });
+}
+
+
+
+
 
 /* ===== EVENTOS (Delegação) ===== */
 document.querySelector('.main-conteudo')?.addEventListener('click', (e) => {
@@ -81,28 +119,28 @@ document.querySelector('.main-conteudo')?.addEventListener('click', (e) => {
 
 /* ===== INICIALIZAÇÃO ===== */
 window.addEventListener('load', () => {
-     // 1. Aplicar valor padrão se não houver salvo
+    // 1. Fonte: aplicar valor padrão ou salvo
     if (!localStorage.getItem('fonte-tamanho')) {
         document.documentElement.style.setProperty('--fonte-tamanho', '120');
     }
-    
-    // 2. Carregar preferência salva (se houver)
     const salvo = localStorage.getItem('fonte-tamanho');
     if (salvo) {
         fonteTamanho = parseInt(salvo);
         document.documentElement.style.setProperty('--fonte-tamanho', salvo);
     }
-    
-    // 3. Forçar aplicação imediata (evita salto inicial)
     document.querySelectorAll('.main-conteudo p').forEach(p => {
         p.style.fontSize = `calc(16px * var(--fonte-tamanho) / 100)`;
     });
     
-    // Carregar contadores de curtidas
+    // 2. Curtidas: atualizar contadores E restaurar visual
     document.querySelectorAll('.btn-curte-contador').forEach(contador => {
         const capitulo = contador.dataset.capitulo;
         atualizarContador(capitulo);
     });
+    inicializarCurtidas();  // ← NOVO: restaura emoji + classe
+    
+    // 3. Barra de progresso
+    atualizarProgressBar();
 });
 
 /* ===== BARRA DE PROGRESSO ===== */
