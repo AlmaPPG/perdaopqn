@@ -326,3 +326,29 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('✅ Site carregado com todas as funcionalidades');
 });
+/* ===== A+/A- (AJUSTE DE FONTE) ===== */
+let fonteEscala = 1;
+
+function ajustarFonte(delta) {
+    fonteEscala = Math.max(0.8, Math.min(1.5, fonteEscala + (delta * 0.02)));
+    document.documentElement.style.setProperty('--fonte-escala', fonteEscala);
+    localStorage.setItem('fonte-escala', fonteEscala);
+}
+
+/* ===== INICIALIZAÇÃO (atualizar) ===== */
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.capitulo').forEach(cap => {
+        observer.observe(cap);
+    });
+    inicializarCurtidas();
+    atualizarProgressBar();
+    
+    // ✅ Carregar escala de fonte salva
+    const salva = localStorage.getItem('fonte-escala');
+    if (salva) {
+        fonteEscala = parseFloat(salva);
+        document.documentElement.style.setProperty('--fonte-escala', fonteEscala);
+    }
+    
+    console.log('✅ Site carregado com todas as funcionalidades');
+});
