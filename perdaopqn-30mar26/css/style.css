@@ -55,7 +55,7 @@ body {
 
 /* Container */
 .container {
-    max-width: 800px;
+    max-width: 550px;
     margin: 0 auto;
     padding: 0px;
 }
@@ -258,6 +258,74 @@ footer {
     white-space: nowrap;
 }
 .btn-painel-capitulo:hover { background: #5a8ab8; }
+
+
+/* ======= alterações 30mar26 ======= */
+/* ===== BOTÕES DE FONTE (A+/A-) ===== */
+.btn-fonte {
+    background: #2a2a2a;
+    border: 1px solid var(--borda-suave);
+    color: var(--texto-principal);
+    padding: 8px 15px;
+    cursor: pointer;
+    font-family: var(--fonte-titulo);
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.btn-fonte:hover {
+    background: #3a3a3a;
+    border-color: var(--cor-antes);
+}
+
+/* ===== TEXTO DO CAPÍTULO (só parágrafos escalam) ===== */
+.capitulo-texto {
+    font-family: var(--fonte-corpo);
+    line-height: 1.8;
+}
+
+.capitulo-texto p {
+    font-size: calc(18px * var(--fonte-escala, 1));
+    margin-bottom: 1.2em;
+}
+
+/* ===== HEADER DO CAPÍTULO (título + botões na mesma linha) ===== */
+.capitulo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.capitulo-header h2 {
+    font-family: var(--fonte-titulo);
+    font-weight: 400;
+    font-size: 1.8rem;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    /* ✅ Título NÃO escala */
+}
+
+.capitulo-botoes {
+    display: flex;
+    gap: 8px;
+    /* ✅ Botões NÃO escalam */
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /* ============================================
    PAINEL FLUTUANTE DE INTERAÇÃO (VISUAL APROVADO)
