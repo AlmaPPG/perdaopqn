@@ -35,7 +35,6 @@
                 
                 <div class="main-meta">
                     <span class="texto-leitura">Livro: <strong>Perdão, por que não?</strong> v3.0</span>
-                    <span></span>
                     <span class="texto-leitura">Autor: <strong>Heitor Nickel</strong></span>
                     <span class="texto-leitura">⏱️ 40 min</span>
                 </div>
@@ -43,19 +42,20 @@
             
             <main class="main-conteudo">
                 <!-- Template de Capítulo -->
-                <article class="capitulo" data-capitulo="1">
-<div class="capitulo-header">
-    <h2 class="capitulo-titulo">(1) Prefácio</h2>
-    <div class="capitulo-botoes-topo">
-        <!-- Botões de fonte no header do capítulo -->
+                <!-- Template de Capítulo -->
+<article class="capitulo" data-capitulo="1">
+    
+    <!-- Header do capítulo (título + botões topo) -->
+    <div class="capitulo-header">
+        <h2 class="capitulo-titulo">(1) Prefácio</h2>
         <div class="capitulo-botoes-topo">
-        <button class="btn-audio" onclick="toggleAudio(1)" id="btn-audio-1">🔊 Ouvir</button>
-            <button onclick="ajustarFonte(25)">A+</button>
-            <button onclick="ajustarFonte(-25)">A-</button>
+            <button class="btn-audio" onclick="toggleAudio(1)" id="btn-audio-1">🔊 Ouvir</button>
+            <button class="btn-fonte-maior" onclick="ajustarFonte(5)">A+</button>
+            <button class="btn-fonte-menor" onclick="ajustarFonte(-5)">A-</button>
         </div>
     </div>
-</div>
     
+    <!-- Texto do capítulo (só isso escala) -->
     <div class="capitulo-texto">
         <p class="texto-paragrafo" data-id="c1-p1">
 Ensinar é um dos meus prazeres e, com o interesse de ajudar alguém a aprender como perdoar, resolvi perguntar ao próprio Deus como isso funcionava; afinal, ninguém melhor do que Ele entende esse assunto.
@@ -64,21 +64,24 @@ Duas semanas perdoando a tudo e a todos me proporcionaram olhar para trás e nã
 ...Agradeci a Deus e então voltei ao estudo.
 O bem-estar que isso me causou virou assunto de conversas nos dias seguintes e eu, percebendo que à minha volta existia um número muito grande de pessoas envolvidas por problemas com a falta de perdão, passei a me aprofundar cada vez mais no assunto.
 A simples prática de perdoar sempre e logo e o entendimento do que era e, especialmen-te, do que não era perdão, começaram a me trazer novas sensações: minha alma estava leve e pessoas que não viviam estavam, por causa do perdão, passando a viver.
-Com a visão que Deus me acrescentava dia após dia, ensinar sobre o perdão ganhou uma nova dimensão quando eu comecei a escrever o que pretendia ser “Perdão, por que não? - o livro”, com muitas páginas, experiências e o assunto aprofundado; a orientação divina, porém, me fez enxergar a urgência e a necessidade de algo rápido, simples e prático, capaz de levar as pessoas ao perdão em poucos minutos de leitura; nasceu, então, “Perdão, por que não? - a cartilha”, esse material que eu espero que seja capaz de imprimir leveza à sua alma.
+Com a visão que Deus me acrescentava dia após dia, ensinar sobre o perdão ganhou uma nova dimensão quando eu comecei a escrever o que pretendia ser "Perdão, por que não? - o livro", com muitas páginas, experiências e o assunto aprofundado; a orientação divina, porém, me fez enxergar a urgência e a necessidade de algo rápido, simples e prático, capaz de levar as pessoas ao perdão em poucos minutos de leitura; nasceu, então, "Perdão, por que não? - a cartilha", esse material que eu espero que seja capaz de imprimir leveza à sua alma.
 Para aprender bem, o melhor ainda continua sendo buscar a Deus e à sua Palavra; desejo, porém, que Ele use essa cartilha para abençoar você e que, ao final, tenhamos mais um testemunho de vitória.
         </p>
     </div>
-                    
+    
+    <!-- Botões de feedback (fixos) -->
     <div class="capitulo-botoes">
-    <button class="btn-curte" data-acao="curtir" data-capitulo="1">
-        <span class="btn-curte-icono">❤</span>
-        <span class="btn-curte-contador" data-capitulo="1">0</span>
-    </button>
-    <button class="btn-nao-curte" data-acao="nao-curtir" data-capitulo="1">👎</button>
-    <button class="btn-modal" data-acao="abrir-modal">💬</button>
-</div>
-                    <!-- Elemento de áudio (invisível) -->
-<audio id="audio-1" src="audios/1%20Pref%C3%A1cio.mp3" preload="none"></audio>
+        <button class="btn-curte" data-acao="curtir" data-capitulo="1">
+            <span class="btn-curte-icono">❤</span>
+            <span class="btn-curte-contador" data-capitulo="1">0</span>
+        </button>
+        <button class="btn-nao-curte" data-acao="nao-curtir" data-capitulo="1">👎</button>
+        <button class="btn-modal" data-acao="abrir-modal">💬</button>
+    </div>
+    
+    <!-- Elemento de áudio (invisível) -->
+    <audio id="audio-1" src="audios/1%20Pref%C3%A1cio.mp3" preload="none"></audio>
+    
 </article>
                 <!-- Fim do Template -->
             </main>

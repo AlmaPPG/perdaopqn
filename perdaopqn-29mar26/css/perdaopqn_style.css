@@ -3,7 +3,7 @@
 
 /* ===== 2. VARIÁVEIS ===== */
 :root {
-    --fonte-tamanho: 120%;
+    --fonte-tamanho: 120;
     --fonte-site: 'Fira Sans Extra Condensed', sans-serif;
     --fonte-leitura: 'Fira Sans Condensed', sans-serif;
 }
@@ -16,7 +16,7 @@ body {
     justify-content: center;
     align-items: flex-start;
     font-family: var(--fonte-site);
-    overflow-y: auto; /* ✅ Scrollbar do navegador */
+    overflow-y: auto;
 }
 
 /* ===== 4. CONTAINER ===== */
@@ -28,14 +28,12 @@ body {
 
 /* ===== 5. MAIN ===== */
 .main {
-    height: min(98dvh, 98dvw * 1.78);
     width: min(98dvw, 98dvh / 1.78);
+    height: min(98dvh, 98dvw * 1.78);
     background-color: #d4e5f7;
     display: flex;
     flex-direction: column;
     font-size: min(2.2dvw, 2.2dvh);
-    height: auto;
-    min-height: 100dv;
 }
 
 /* ===== 6. HEADER ===== */
@@ -44,6 +42,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 1.5dvh;
+    padding: 2dvh;
 }
 
 .main-capa {
@@ -56,31 +55,25 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 0.5em;
-    flex-wrap: wrap;
+    gap: 1em; /* ← Um pouco maior para separar os itens */
+    flex-wrap: nowrap; /* ← Força uma linha só */
     font-family: var(--fonte-leitura);
-    font-size: 14px;
-}
-.main-meta {
-    font-size: 14px;
-}
-
-.capitulo-titulo {
-    font-size: 20px;
+    font-size: 12px;
+    width: 100%; /* ← Garante que ocupe toda a largura */
 }
 
 .main-meta span {
-    white-space: nowrap;
+    white-space: nowrap; /* ← Evita quebra dentro de cada span */
 }
 
-/* ===== BARRA DE PROGRESSO (colorida) ===== */
+/* ===== BARRA DE PROGRESSO ===== */
 .progress-bar-container {
     position: fixed;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     width: min(98dvw, 98dvh / 1.78);
-    height: 4px; /* ← Um pouco mais grossa */
+    height: 4px;
     background-color: rgba(0,0,0,0.15);
     z-index: 1000;
 }
@@ -88,64 +81,28 @@ body {
 .progress-bar-fill {
     height: 100%;
     width: 0%;
-    /* ← Escolha UMA das cores abaixo */
-    background-color: #3498db; /* Azul vibrante */
-    /* background-color: #27ae60; */ /* Verde */
-    /* background-color: #e74c3c; */ /* Vermelho */
-    /* background-color: #9b59b6; */ /* Roxo */
+    background-color: #3498db;
     transition: width 0.05s linear;
 }
-
 
 /* ===== 7. CONTEÚDO ===== */
 .main-conteudo {
     flex: 1;
     padding: 2dvh;
     font-family: var(--fonte-leitura);
-    font-size: calc(16px * var(--fonte-tamanho) / 100); 
     line-height: 1.8;
 }
-.main-conteudo p,
-.main-conteudo span {
-    font-size: inherit;
+
+.main-conteudo p {
+    font-size: calc(16px * var(--fonte-tamanho) / 100);
+    margin-bottom: 1.2em;
 }
+
 /* ===== 8. CAPÍTULO ===== */
-.capitulo { margin-bottom: 3dvh; }
-.capitulo-titulo { margin-bottom: 1.5dvh;}
-.capitulo-texto { margin-bottom: 2dvh; }
-.texto-paragrafo { margin-bottom: 1.2em; }
-.capitulo-botoes-topo button,
-.capitulo-botoes button,
-.btn-abrir-modal,
-.btn-fechar-modal {
-    font-size: 14px; /* ← Fixo, não usa variável */
+.capitulo {
+    margin-bottom: 3dvh;
 }
 
-/* ===== 9. BOTÕES DO CAPÍTULO ===== */
-.capitulo-botoes {
-    display: flex;
-    gap: 1em;
-    justify-content: center;
-}
-
-.capitulo-botoes button,
-.btn-abrir-modal,
-.btn-fechar-modal {
-    cursor: pointer;
-    padding: 0.6em 1.2em;
-    background-color: transparent;
-    border: 1px solid currentColor;
-    color: inherit;
-    font-family: var(--fonte-site);
-    font-size: 1.1em;
-    border-radius: 0;
-}
-
-.capitulo-botoes button:hover,
-.btn-abrir-modal:hover,
-.btn-fechar-modal:hover {
-    background-color: rgba(0,0,0,0.1);
-}
 .capitulo-header {
     display: flex;
     justify-content: space-between;
@@ -156,16 +113,17 @@ body {
 .capitulo-titulo {
     font-size: 20px;
     margin: 0;
+    font-family: var(--fonte-site);
 }
 
 .capitulo-botoes-topo {
     display: flex;
-    gap: 0.5em;
+    gap: 8px;
 }
 
 .capitulo-botoes-topo button {
     cursor: pointer;
-    padding: 0.4em 0.8em;
+    padding: 6px 12px;
     background-color: transparent;
     border: 1px solid currentColor;
     color: inherit;
@@ -177,53 +135,76 @@ body {
 .capitulo-botoes-topo button:hover {
     background-color: rgba(0,0,0,0.1);
 }
-.btn-curte {
+
+/* ===== 9. BOTÕES DE FEEDBACK ===== */
+.capitulo-botoes {
     display: flex;
-    align-items: center;
-    gap: 0.3em;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 2dvh;
+}
+
+.capitulo-botoes button,
+.btn-abrir-modal,
+.btn-fechar-modal {
     cursor: pointer;
-    padding: 0.6em 1em;
+    padding: 6px 12px;
     background-color: transparent;
     border: 1px solid currentColor;
     color: inherit;
     font-family: var(--fonte-site);
-    font-size: 1.1em;
+    font-size: 14px;
+    border-radius: 0;
+}
+
+.capitulo-botoes button:hover,
+.btn-abrir-modal:hover,
+.btn-fechar-modal:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+/* ===== BOTÃO DE CURTIR ===== */
+.btn-curte {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 6px 12px;
+    background-color: transparent;
+    border: 1px solid currentColor;
+    color: inherit;
+    font-family: var(--fonte-site);
+    font-size: 14px;
     border-radius: 0;
 }
 
 .btn-curte-icono {
-    font-size: 1.2em;
+    font-size: 16px;
     transition: color 0.3s;
 }
 
 .btn-curte.curtiu .btn-curte-icono {
-    color: #e74c3c; /* ❤ vermelho quando curtido */
+    color: #e74c3c;
 }
 
 .btn-curte-contador {
-    font-size: 0.9em;
+    font-size: 14px;
     font-weight: 700;
 }
 
 .btn-curte:hover {
     background-color: rgba(0,0,0,0.1);
 }
-/* Botões de interação (ficam embaixo do texto) */
-.capitulo-botoes {
-    display: flex;
-    gap: 1em;
-    justify-content: center;
-    margin-top: 2dvh;
-}
-/* ===== BOTÃO DE ÁUDIO (toggle) ===== */
+
+/* ===== BOTÃO DE ÁUDIO ===== */
 .btn-audio {
     cursor: pointer;
-    padding: 0.4em 0.8em;
+    padding: 6px 12px;
     background-color: transparent;
     border: 1px solid currentColor;
     color: inherit;
     font-family: var(--fonte-site);
-    font-size: 0.9em;
+    font-size: 14px;
     border-radius: 0;
     transition: background-color 0.2s;
 }
@@ -235,7 +216,6 @@ body {
 .btn-audio.tocando {
     background-color: rgba(0,0,0,0.15);
 }
-
 
 /* ===== 10. FOOTER ===== */
 .main-footer {
@@ -263,10 +243,10 @@ body {
 .df-modal-fundo {
     background-color: rgba(0,0,0,1);
     position: absolute;
-    top: -1dvh;           /* 1dvh acima do container */
-    left: -1dvh;          /* 1dvh à esquerda do container */
-    width: calc(100% + 2dvh);  /* 1dvh extra em cada lado horizontal */
-    height: calc(100% + 2dvh); /* 1dvh extra apenas em cima */
+    top: -1dvh;
+    left: -1dvh;
+    width: calc(100% + 2dvh);
+    height: calc(100% + 2dvh);
     background-image: url('../assets/painel-capa-degrade.png');
     background-position: center top;
     background-repeat: no-repeat;

@@ -81,12 +81,22 @@ document.querySelector('.main-conteudo')?.addEventListener('click', (e) => {
 
 /* ===== INICIALIZAÇÃO ===== */
 window.addEventListener('load', () => {
-    // Carregar preferência de fonte
+     // 1. Aplicar valor padrão se não houver salvo
+    if (!localStorage.getItem('fonte-tamanho')) {
+        document.documentElement.style.setProperty('--fonte-tamanho', '120');
+    }
+    
+    // 2. Carregar preferência salva (se houver)
     const salvo = localStorage.getItem('fonte-tamanho');
     if (salvo) {
         fonteTamanho = parseInt(salvo);
-        document.documentElement.style.setProperty('--fonte-tamanho', salvo + '%');
+        document.documentElement.style.setProperty('--fonte-tamanho', salvo);
     }
+    
+    // 3. Forçar aplicação imediata (evita salto inicial)
+    document.querySelectorAll('.main-conteudo p').forEach(p => {
+        p.style.fontSize = `calc(16px * var(--fonte-tamanho) / 100)`;
+    });
     
     // Carregar contadores de curtidas
     document.querySelectorAll('.btn-curte-contador').forEach(contador => {
