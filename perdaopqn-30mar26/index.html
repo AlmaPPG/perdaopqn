@@ -48,14 +48,19 @@
         </section>
 
         <!-- Capítulos -->
-        <article id="cap1" class="capitulo">
-            <div class="capitulo-header">
-                <h2 class="titulo-antes">(1) Prefácio</h2>
-                <button class="btn-audio" onclick="toggleAudio('audio-cap1')">🔊 Ouvir</button>
-            </div>
-            <audio id="audio-cap1" src="assets/audio/cap1.mp3"></audio>
-            
-            <p>Ensinar é um dos meus prazeres e, com o interesse de ajudar alguém a aprender como perdoar, resolvi perguntar ao próprio Deus como isso funcionava; afinal, ninguém melhor do que Ele entende esse assunto.</p>
+        <article class="capitulo" id="capitulo-1">
+    <!-- Header: Título + Botões (Áudio, A-, A+) -->
+    <div class="capitulo-header">
+        <h2>(1) Prefácio</h2>
+        <div class="capitulo-botoes">
+            <button class="btn-audio" onclick="toggleAudio('audio-1')">🔊 Ouvir</button>
+            <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+            <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+        </div>
+    </div>
+    
+    <!-- Texto (só isso escala) -->
+    <div class="capitulo-texto"><p>Ensinar é um dos meus prazeres e, com o interesse de ajudar alguém a aprender como perdoar, resolvi perguntar ao próprio Deus como isso funcionava; afinal, ninguém melhor do que Ele entende esse assunto.</p>
             <p>Como parte do meu estudo, preparei uma lista com textos bíblicos que falavam do relacionamento interpessoal e, um deles, Mateus 6:15, me fez perceber que quem precisava perdoar era eu.</p>
             <p>Duas semanas perdoando a tudo e a todos me proporcionaram olhar para trás e não ver mais ninguém para ser perdoado...</p>
             <p>...Agradeci a Deus e então voltei ao estudo.</p>
@@ -63,17 +68,21 @@
             <p>A simples prática de perdoar sempre e logo e o entendimento do que era e, especialmen-te, do que não era perdão, começaram a me trazer novas sensações: minha alma estava leve e pessoas que não viviam estavam, por causa do perdão, passando a viver.</p>
             <p>Com a visão que Deus me acrescentava dia após dia, ensinar sobre o perdão ganhou uma nova dimensão quando eu comecei a escrever o que pretendia ser "Perdão, por que não? - o livro", com muitas páginas, experiências e o assunto aprofundado; a orientação divina, porém, me fez enxergar a urgência e a necessidade de algo rápido, simples e prático, capaz de levar as pessoas ao perdão em poucos minutos de leitura; nasceu, então, "Perdão, por que não? - a cartilha", esse material que eu espero que seja capaz de imprimir leveza à sua alma.</p>
             <p>Para aprender bem, o melhor ainda continua sendo buscar a Deus e à sua Palavra; desejo, porém, que Ele use essa cartilha para abençoar você e que, ao final, tenhamos mais um testemunho de vitória.</p>
-
-            <!-- Interações do Capítulo -->
-            <div class="interacao-linha">
-                <button id="btn-curtida-cap1" class="btn-curtir-inline" onclick="toggleCurtida('cap1')">
-                    <span class="icone-curtida">🤍</span>
-                    <span id="curtidas-cap1">0</span>
-                </button>
-                <button class="btn-painel-capitulo" onclick="togglePainelInteracao()">💬 Compartilhe/Comente</button>
-            </div>
-            
-        </article>
+        <!-- mais parágrafos -->
+    </div>
+    
+    <!-- Interação (fixo, não escala) -->
+    <div class="interacao-linha">
+        <button class="btn-curtir-inline" id="btn-curtida-capitulo-1" onclick="toggleCurtida('capitulo-1')">
+            <span class="icone-curtida">🤍</span>
+            <span id="curtidas-capitulo-1">0</span>
+        </button>
+        <button class="btn-painel-capitulo" onclick="abrirPainel()">💬 Compartilhe/Comente</button>
+    </div>
+    
+    <!-- Áudio (oculto) -->
+    <audio id="audio-1" src="./audios/1%20Pref%C3%A1cio.mp3"></audio>
+</article>
 
         <!-- (Repita a estrutura acima para os capítulos 2 a 23, mudando o ID: cap2, cap3, etc.) -->
         <!-- Para economizar espaço, estou mostrando apenas o cap1 como exemplo -->
