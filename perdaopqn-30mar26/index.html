@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perdão, por que não? - versão digital</title>
+    
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Barra de Progresso -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Hero / Capa -->
+    <header class="hero">
+        <div class="container">
+            <img src="perdao_capa_site.png" width="100%">
+            <h1>Perdão, por que não?</h1>
+            <p class="subtitle">...um guia prático para descomplicar o perdão.</p>
+            <div class="meta-info">
+                <p>Livro: Perdão, por que não? - Edição 3.0 📚 Autor: Heitor Nickel (@heitornickel) ⏱️ 40 min de leitura</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <!-- Legenda de Cores -->
+        <section class="legenda-cores">
+            <h3>Guia de Cores</h3>
+            <div class="grid-legenda">
+                <div class="item-legenda"><span class="dot titulo-antes"></span>Fundamentos</div>
+                <div class="item-legenda"><span class="dot titulo-alerta"></span>Alertas</div>
+                <div class="item-legenda"><span class="dot titulo-entende"></span>Entendimento</div>
+                <div class="item-legenda"><span class="dot titulo-consequencia"></span>Consequências Boas</div>
+                <div class="item-legenda"><span class="dot titulo-define"></span>O que é</div>
+                <div class="item-legenda"><span class="dot titulo-naoeh"></span>O que não é</div>
+                <div class="item-legenda"><span class="dot titulo-consequencia-ruim"></span>Consequências Ruins</div>
+                <div class="item-legenda"><span class="dot titulo-pratica"></span>Prática</div>
+            </div>
+        </section>
+
+        <!-- Capítulos -->
+        <article id="cap1" class="capitulo">
+            <div class="capitulo-header">
+                <h2 class="titulo-antes">(1) Prefácio</h2>
+                <button class="btn-audio" onclick="toggleAudio('audio-cap1')">🔊 Ouvir</button>
+            </div>
+            <audio id="audio-cap1" src="assets/audio/cap1.mp3"></audio>
+            
+            <p>Ensinar é um dos meus prazeres e, com o interesse de ajudar alguém a aprender como perdoar, resolvi perguntar ao próprio Deus como isso funcionava; afinal, ninguém melhor do que Ele entende esse assunto.</p>
+            <p>Como parte do meu estudo, preparei uma lista com textos bíblicos que falavam do relacionamento interpessoal e, um deles, Mateus 6:15, me fez perceber que quem precisava perdoar era eu.</p>
+            <p>Duas semanas perdoando a tudo e a todos me proporcionaram olhar para trás e não ver mais ninguém para ser perdoado...</p>
+            <p>...Agradeci a Deus e então voltei ao estudo.</p>
+            <p>O bem-estar que isso me causou virou assunto de conversas nos dias seguintes e eu, percebendo que à minha volta existia um número muito grande de pessoas envolvidas por problemas com a falta de perdão, passei a me aprofundar cada vez mais no assunto.</p>
+            <p>A simples prática de perdoar sempre e logo e o entendimento do que era e, especialmen-te, do que não era perdão, começaram a me trazer novas sensações: minha alma estava leve e pessoas que não viviam estavam, por causa do perdão, passando a viver.</p>
+            <p>Com a visão que Deus me acrescentava dia após dia, ensinar sobre o perdão ganhou uma nova dimensão quando eu comecei a escrever o que pretendia ser "Perdão, por que não? - o livro", com muitas páginas, experiências e o assunto aprofundado; a orientação divina, porém, me fez enxergar a urgência e a necessidade de algo rápido, simples e prático, capaz de levar as pessoas ao perdão em poucos minutos de leitura; nasceu, então, "Perdão, por que não? - a cartilha", esse material que eu espero que seja capaz de imprimir leveza à sua alma.</p>
+            <p>Para aprender bem, o melhor ainda continua sendo buscar a Deus e à sua Palavra; desejo, porém, que Ele use essa cartilha para abençoar você e que, ao final, tenhamos mais um testemunho de vitória.</p>
+
+            <!-- Interações do Capítulo -->
+            <div class="interacao-linha">
+                <button id="btn-curtida-cap1" class="btn-curtir-inline" onclick="toggleCurtida('cap1')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-cap1">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="togglePainelInteracao()">💬 Compartilhe/Comente</button>
+            </div>
+            
+        </article>
+
+        <!-- (Repita a estrutura acima para os capítulos 2 a 23, mudando o ID: cap2, cap3, etc.) -->
+        <!-- Para economizar espaço, estou mostrando apenas o cap1 como exemplo -->
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Perdão, por que não? - Todos os direitos reservados.</p>
+        <p>Desenvolvido com ❤ para facilitar o perdão.</p>
+    </footer>
+
+    <!-- ============================================
+         PAINEL FLUTUANTE DE INTERAÇÃO (INTEGRADO)
+         ============================================ -->
+    <div id="overlay" class="overlay" onclick="togglePainelInteracao()"></div>
+
+    <!-- BOTÃO DE TESTE - PAINEL COMO PÁGINA SEPARADA
+    <a href="div_flutuante.html" target="_self" 
+       style="position: fixed; bottom: 20px; left: 20px; z-index: 99999; 
+              background: #C6C76D; color: #000; text-decoration: none;
+              padding: 15px 25px; font-weight: 700; 
+              box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+              font-family: 'Fira Sans Extra Condensed', sans-serif;">
+        🧪 TESTAR PAINEL (LINK)
+    </a> -->
+    <!-- ============================================
+     PAINEL FLUTUANTE DE INTERAÇÃO (df-)
+     ============================================ -->
+<div id="overlay" class="df-overlay" onclick="fecharPainel()"></div>
+
+<div id="painelInteracao" class="df-painel-interacao">
+    <div class="df-fundo">
+        <img src="assets/painel-capa-degrade.png" class="df-img-fundo" alt="Fundo do painel">
+        
+        <div class="df-container">
+            <!-- Seção AA: Toggles -->
+            <div class="df-AA">
+                <div class="df-AAA-Form" onclick="toggleFormulario()">
+                    <span class="df-texto-superior">Enviar feedback</span>
+                    <span class="df-texto-inferior">Feedback</span>
+                </div>
+                <div class="df-AAA-Git" onclick="toggleGithub()">
+                    <span class="df-texto-superior">Enviar mensagem no</span>
+                    <span class="df-texto-inferior">GitHub</span>
+                </div>
+            </div>
+            
+            <!-- Seção BB: Compartilhamento -->
+            <div class="df-BB">
+                <div class="df-BBB-1" onclick="compartilharWhatsApp()">
+                    <img src="./assets/share-whatsapp.png" alt="WhatsApp">
+                    <span class="df-texto-rede">WhatsApp</span>
+                </div>
+                <div class="df-BBB-2" onclick="compartilharInstagram()">
+                    <img src="./assets/share-instagram.png" alt="Instagram">
+                    <span class="df-texto-rede">Instagram</span>
+                </div>
+                <div class="df-BBB-3" onclick="compartilharFacebook()">
+                    <img src="./assets/share-facebook.png" alt="Facebook">
+                    <span class="df-texto-rede">Facebook</span>
+                </div>
+                <div class="df-BBB-4" onclick="copiarLink()">
+                    <img src="./assets/share-link.png" alt="Copiar Link">
+                    <span class="df-texto-rede">Copiar Link</span>
+                </div>
+            </div>
+            
+            
+            <!-- Seção CC: Fale com o Autor -->
+            <div class="df-CC" onclick="faleComAutor()">
+                <img src="./assets/fale-com.png" alt="Fale com o autor">
+                <span class="df-texto-whats">Fale direto<br>com o autor</span>
+            </div>
+            
+            <!-- Seção DD: Voltar à Leitura -->
+            <div class="df-DD" onclick="fecharPainel()">
+                <p>Clique aqui para <strong>voltar à leitura</strong></p>
+            </div>
+
+            <!-- Conteúdos Ocultos -->
+            <div id="conteudo-formulario" class="df-toggle-conteudo">
+                <input type="text" class="df-form-input" placeholder="Seu nome">
+                <input type="email" class="df-form-input" placeholder="Seu email">
+                <textarea class="df-form-input" placeholder="Sua mensagem" style="min-height:80px;"></textarea>
+                <button class="df-btn-enviar" onclick="event.stopPropagation(); alert('Enviado!')">ENVIAR</button>
+            </div>
+
+            <div id="conteudo-github" class="df-toggle-conteudo">
+                <p style="color:#C6C76D; margin-bottom:10px;">Redirecionando para o GitHub...</p>
+                <a href="https://github.com/AlmaPPG/perdaopqn" target="_blank" style="color:#fff;" onclick="event.stopPropagation();">Abrir Issues</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Link do CSS do Painel (df-) -->
+<link rel="stylesheet" href="css/df-div_flutuante.css">
+    <script src="js/main.js"></script>
+</body>
+</html>
