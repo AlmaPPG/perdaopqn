@@ -5,25 +5,28 @@ const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzNu0_x-ilJ7cEpjsvo
 const URL_PRINCIPAL = 'https://almappg.github.io/perdaopqn/index.html';
 
 // ============================================
-// ✅ VARIÁVEL GLOBAL DE FONTE (FORA DE QUALQUER FUNÇÃO)
+// AJUSTE DE FONTE (A+/A-)
 // ============================================
-let fonteEscala = 1;
+let fonteEscala = parseFloat(localStorage.getItem('fonte-escala')) || 1;
+document.documentElement.style.setProperty('--fonte-escala', fonteEscala);
+
+function ajustarFonte(delta) {
+    fonteEscala = Math.max(0.8, Math.min(1.5, fonteEscala + (delta * 0.02)));
+    document.documentElement.style.setProperty('--fonte-escala', fonteEscala);
+    localStorage.setItem('fonte-escala', fonteEscala);
+}
 
 // ============================================
-// BARRA DE PROGRESSO DE LEITURA
+// BARRA DE PROGRESSO
 // ============================================
 function atualizarProgressBar() {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrolled = (winScroll / height) * 100;
     const progressBar = document.getElementById('progressBar');
-    if (progressBar) {
-        progressBar.style.width = scrolled + '%';
-    }
+    if (progressBar) progressBar.style.width = scrolled + '%';
 }
-window.onscroll = function() {
-    atualizarProgressBar();
-};
+window.onscroll = function() { atualizarProgressBar(); };
 
 // ============================================
 // PLAYER DE ÁUDIO
@@ -39,9 +42,7 @@ function toggleAudio(id) {
     });
     const audio = document.getElementById(id);
     const btn = event.target;
-
     if (!audio || !btn) return;
-
     if (audio.paused) {
         audio.play();
         audio.classList.add('active');
@@ -63,19 +64,15 @@ function inicializarCurtidas() {
         const btn = document.getElementById('btn-curtida-' + capId);
         const contador = document.getElementById('curtidas-' + capId);
         const icone = btn?.querySelector('.icone-curtida');
-
         if (!btn || !contador || !icone) return;
-
-        let valorBase = 0;
-
         if (localStorage.getItem(chave)) {
             icone.textContent = '❤️';
             btn.classList.add('curtido');
-            contador.textContent = valorBase + 1;
+            contador.textContent = 1;
         } else {
             icone.textContent = '🤍';
             btn.classList.remove('curtido');
-            contador.textContent = valorBase;
+            contador.textContent = 0;
         }
     });
 }
@@ -83,16 +80,11 @@ function inicializarCurtidas() {
 function toggleCurtida(capituloId) {
     const chave = 'curtida_' + capituloId;
     const jaCurtiu = localStorage.getItem(chave);
-    
-    // ✅ CORREÇÃO: usar capituloId (parâmetro), não capId (inexistente)
     const btn = document.getElementById('btn-curtida-' + capituloId);
     const contador = document.getElementById('curtidas-' + capituloId);
     const icone = btn?.querySelector('.icone-curtida');
-
     if (!btn || !contador || !icone) return;
-
     let valorAtual = parseInt(contador.textContent) || 0;
-
     if (jaCurtiu) {
         localStorage.removeItem(chave);
         valorAtual = Math.max(0, valorAtual - 1);
@@ -111,7 +103,7 @@ function toggleCurtida(capituloId) {
 }
 
 // ============================================
-// ANALYTICS DE LEITURA
+// ANALYTICS & WEBHOOK
 // ============================================
 const capitulosLidos = new Set();
 const eventosEnviados = new Set();
@@ -128,35 +120,20 @@ function registrarEvento(tipo, capituloId) {
     if (eventosEnviados.has(chaveEvento)) return;
     eventosEnviados.add(chaveEvento);
     if (typeof gtag !== 'undefined') {
-        gtag('event', tipo, {
-            'event_category': 'Engajamento',
-            'event_label': capituloId,
-            'value': 1
-        });
+        gtag('event', tipo, { 'event_category': 'Engajamento', 'event_label': capituloId, 'value': 1 });
     }
     enviarWebhook(tipo, capituloId);
 }
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-            registrarLeitura(entry.target.id);
-        }
+        if (entry.isIntersecting && entry.intersectionRatio > 0.5) registrarLeitura(entry.target.id);
     });
 }, { threshold: 0.5 });
 
-// ============================================
-// WEBHOOK PARA GOOGLE SHEETS
-// ============================================
 function enviarWebhook(tipo, capituloId) {
-    if (WEBHOOK_URL.includes('SEU-CODIGO-AQUI')) {
-        console.log('Webhook não configurado. Configure a URL no main.js');
-        return;
-    }
+    if (WEBHOOK_URL.includes('SEU-CODIGO-AQUI')) return;
     const urlParams = new URLSearchParams(window.location.search);
-    const utmSource = urlParams.get('utm_source') || 'direto';
-    const utmCampaign = urlParams.get('utm_campaign') || 'nenhuma';
-
     fetch(WEBHOOK_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -165,150 +142,182 @@ function enviarWebhook(tipo, capituloId) {
             tipo: tipo,
             capitulo: capituloId,
             timestamp: new Date().toISOString(),
-            utm_source: utmSource,
-            utm_campaign: utmCampaign,
+            utm_source: urlParams.get('utm_source') || 'direto',
+            utm_campaign: urlParams.get('utm_campaign') || 'nenhuma',
             user_agent: navigator.userAgent
         })
     }).catch(err => console.log('Evento registrado localmente'));
 }
 
-function enviarCurtidaWebhook(capituloId) {
-    enviarWebhook('curtida', capituloId);
-}
+function enviarCurtidaWebhook(capituloId) { enviarWebhook('curtida', capituloId); }
 
 // ============================================
-// PAINEL FLUTUANTE - ABERTURA/FECHAMENTO
+// MODAL DF- (LÓGICA LIMPA E ISOLADA)
 // ============================================
-function togglePainelInteracao() {
-    const painel = document.getElementById('painelInteracao');
-    const overlay = document.getElementById('overlay');
-    if (!painel || !overlay) return;
+const df = {
+    overlay: document.getElementById('dfOverlay'),
+    modal: document.getElementById('dfModal'),
+    toggleForm: document.getElementById('dfToggleForm'),
+    toggleGit: document.getElementById('dfToggleGit'),
+    form: document.getElementById('dfForm'),
+    githubView: document.getElementById('dfGithubView'),
+    closeBtn: document.getElementById('dfCloseModal'),
+    shareWhatsApp: document.getElementById('dfShareWhatsApp'),
+    shareInstagram: document.getElementById('dfShareInstagram'),
+    shareFacebook: document.getElementById('dfShareFacebook'),
+    shareCopy: document.getElementById('dfShareCopy'),
+    authorWhats: document.getElementById('dfAuthorWhats'),
+    formEl: document.querySelector('.df-form')
+};
 
-    if (painel.classList.contains('active')) {
-        fecharPainel();
-    } else {
-        abrirPainel();
+function abrirModal() {
+    if (!df.modal || !df.overlay) return;
+    
+    // Verifica orientação antes de abrir
+    const warning = document.getElementById('dfOrientationWarning');
+    const isMobile = window.innerWidth <= 768;
+    const isLandscape = window.matchMedia('(orientation: landscape)').matches;
+    
+    if (isMobile && isLandscape && warning?.classList.contains('active')) {
+        return; // Não abre o modal se o aviso estiver visível
+    }
+    
+    df.modal.classList.add('active');
+    df.overlay.classList.add('active');
+    df.modal.setAttribute('aria-hidden', 'false');
+    df.overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    
+    if (df.form?.classList.contains('active')) {
+        df.form.querySelector('.df-form__input')?.focus();
     }
 }
 
-function abrirPainel() {
-    const painel = document.getElementById('painelInteracao');
-    const overlay = document.getElementById('overlay');
-    if (!painel || !overlay) return;
-
-    painel.classList.add('active');
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function fecharPainel() {
-    const painel = document.getElementById('painelInteracao');
-    const overlay = document.getElementById('overlay');
-    if (!painel || !overlay) return;
-
-    painel.classList.remove('active');
-    overlay.classList.remove('active');
+function fecharModal() {
+    if (!df.modal || !df.overlay) return;
+    df.modal.classList.remove('active');
+    df.overlay.classList.remove('active');
+    df.modal.setAttribute('aria-hidden', 'true');
+    df.overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = 'auto';
 }
 
-// ============================================
-// PAINEL FLUTUANTE - TOGGLES (Formulário / GitHub)
-// ============================================
-function toggleFormulario() {
-    const form = document.getElementById('conteudo-formulario');
-    const git = document.getElementById('conteudo-github');
-    if (!form || !git) return;
-
-    if (form.classList.contains('ativo')) {
-        form.classList.remove('ativo');
-    } else {
-        form.classList.add('ativo');
-        git.classList.remove('ativo');
-    }
+function ativarFormulario() {
+    df.form?.classList.add('active');
+    df.githubView?.classList.remove('active');
+    df.toggleForm?.classList.add('df-toggle-btn--active');
+    df.toggleGit?.classList.remove('df-toggle-btn--active');
+    df.toggleForm?.setAttribute('aria-expanded', 'true');
+    df.toggleGit?.setAttribute('aria-expanded', 'false');
+    df.form?.querySelector('.df-form__input')?.focus();
 }
 
-function toggleGithub() {
-    const form = document.getElementById('conteudo-formulario');
-    const git = document.getElementById('conteudo-github');
-    if (!form || !git) return;
-
-    if (git.classList.contains('ativo')) {
-        git.classList.remove('ativo');
-    } else {
-        git.classList.add('ativo');
-        form.classList.remove('ativo');
-    }
+function ativarGithub() {
+    df.form?.classList.remove('active');
+    df.githubView?.classList.add('active');
+    df.toggleGit?.classList.add('df-toggle-btn--active');
+    df.toggleForm?.classList.remove('df-toggle-btn--active');
+    df.toggleGit?.setAttribute('aria-expanded', 'true');
+    df.toggleForm?.setAttribute('aria-expanded', 'false');
 }
 
-// ============================================
-// COMPARTILHAMENTO (PAINEL)
-// ============================================
-function compartilharWhatsApp() {
-    const url = encodeURIComponent(URL_PRINCIPAL);
-    const texto = encodeURIComponent('📖 Estou lendo "Perdão, por que não?"\nUm guia prático para descomplicar o perdão.\nConfira: ');
-    window.open(`https://wa.me/?text=${texto}${url}`, '_blank');
-    registrarEvento('compartilhamento_whatsapp', 'painel');
-}
-
-function compartilharInstagram() {
-    const texto = '📖 "Perdão, por que não?" - Um guia prático para descomplicar o perdão.\n\n' + URL_PRINCIPAL;
-    navigator.clipboard.writeText(texto).then(() => {
-        alert('Link + texto copiados! Cole no Instagram Story ou Direct.');
+function initModal() {
+    if (!df.modal) return;
+    
+    // Tornar função global para o HTML chamar
+    window.abrirModalDF = abrirModal;
+    
+    // Fechar: overlay, botão fechar ou ESC
+    df.overlay?.addEventListener('click', fecharModal);
+    df.closeBtn?.addEventListener('click', fecharModal);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && df.modal?.classList.contains('active')) {
+            fecharModal();
+        }
     });
-    registrarEvento('compartilhamento_instagram', 'painel');
-}
-
-function compartilharFacebook() {
-    const url = encodeURIComponent(URL_PRINCIPAL);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-    registrarEvento('compartilhamento_facebook', 'painel');
-}
-
-function copiarLink() {
-    const texto = '📖 "Perdão, por que não?"\nUm guia prático para descomplicar o perdão.\n\n' + URL_PRINCIPAL;
-    navigator.clipboard.writeText(texto).then(() => {
-        alert('Link + texto copiados! Agora é só colar onde quiser.');
+    
+    // Toggle Formulário/GitHub
+    df.toggleForm?.addEventListener('click', ativarFormulario);
+    df.toggleGit?.addEventListener('click', ativarGithub);
+    
+    // Submit do formulário
+    df.formEl?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('✅ Mensagem enviada! (simulação)');
+        df.formEl.reset();
+        fecharModal();
     });
-    registrarEvento('copiar_link', 'painel');
-}
-
-function faleComAutor() {
-    const numeroWhatsApp = '5511997979597';
-    const texto = encodeURIComponent('Olá! Vim pelo site "Perdão, por que não?"');
-    window.open(`https://wa.me/${numeroWhatsApp}?text=${texto}`, '_blank');
-    registrarEvento('fale_com_autor', 'painel');
+    
+    // Compartilhamento
+    df.shareWhatsApp?.addEventListener('click', () => {
+        window.open(`https://wa.me/?text=${encodeURIComponent('📖 Estou lendo "Perdão, por que não?"\n' + URL_PRINCIPAL)}`, '_blank');
+        registrarEvento('compartilhamento_whatsapp', 'modal');
+    });
+    
+    df.shareInstagram?.addEventListener('click', async () => {
+        await navigator.clipboard.writeText('📖 "Perdão, por que não?"\n' + URL_PRINCIPAL);
+        alert('Link + texto copiados!');
+        registrarEvento('compartilhamento_instagram', 'modal');
+    });
+    
+    df.shareFacebook?.addEventListener('click', () => {
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(URL_PRINCIPAL)}`, '_blank');
+        registrarEvento('compartilhamento_facebook', 'modal');
+    });
+    
+    df.shareCopy?.addEventListener('click', async () => {
+        await navigator.clipboard.writeText('📖 "Perdão, por que não?"\n' + URL_PRINCIPAL);
+        alert('Link + texto copiados!');
+        registrarEvento('copiar_link', 'modal');
+    });
+    
+    // Fale com o autor
+    df.authorWhats?.addEventListener('click', () => {
+        window.open(`https://wa.me/5511997979597?text=${encodeURIComponent('Olá! Vim pelo site "Perdão, por que não?"')}`, '_blank');
+        registrarEvento('fale_com_autor', 'modal');
+    });
+    
+    // Prevenir fechamento ao clicar dentro do modal
+    df.modal?.addEventListener('click', (e) => e.stopPropagation());
+    
+    console.log('✅ Modal DF- inicializado');
 }
 
 // ============================================
-// ✅ AJUSTE DE FONTE (A+/A-) - FUNÇÃO GLOBAL
+// DETECÇÃO DE ORIENTAÇÃO (MOBILE)
 // ============================================
-function ajustarFonte(delta) {
-    fonteEscala = Math.max(0.8, Math.min(1.5, fonteEscala + (delta * 0.02)));
-    document.documentElement.style.setProperty('--fonte-escala', fonteEscala);
-    localStorage.setItem('fonte-escala', fonteEscala);
+function initOrientationWarning() {
+    const warning = document.getElementById('dfOrientationWarning');
+    if (!warning) return;
+    
+    function checkOrientation() {
+        const isMobile = window.innerWidth <= 768;
+        const isLandscape = window.matchMedia('(orientation: landscape)').matches;
+        
+        if (isMobile && isLandscape) {
+            warning.classList.add('active');
+            document.body.classList.add('df-locked');
+        } else {
+            warning.classList.remove('active');
+            document.body.classList.remove('df-locked');
+        }
+    }
+    
+    checkOrientation();
+    window.addEventListener('orientationchange', checkOrientation);
+    window.addEventListener('resize', checkOrientation);
+    
+    console.log('✅ Aviso de orientação inicializado');
 }
 
 // ============================================
-// ✅ INICIALIZAÇÃO ÚNICA (DOMContentLoaded)
+// INICIALIZAÇÃO ÚNICA
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Observar capítulos para analytics
-    document.querySelectorAll('.capitulo').forEach(cap => {
-        observer.observe(cap);
-    });
-
-    // 2. Inicializar curtidas
+    document.querySelectorAll('.capitulo').forEach(cap => observer.observe(cap));
     inicializarCurtidas();
-
-    // 3. Atualizar barra de progresso
     atualizarProgressBar();
-
-    // 4. ✅ Carregar escala de fonte salva (DEPOIS que a função existe)
-    const salva = localStorage.getItem('fonte-escala');
-    if (salva) {
-        fonteEscala = parseFloat(salva);
-        document.documentElement.style.setProperty('--fonte-escala', fonteEscala);
-    }
-
+    initModal();
+    initOrientationWarning();
     console.log('✅ Site carregado com todas as funcionalidades');
 });

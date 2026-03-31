@@ -7,12 +7,24 @@
     
     <!-- Fontes Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Fira+Sans+Extra+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Fira+Sans+Extra+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+    <!-- ============================================
+         AVISO DE ORIENTAÇÃO (MOBILE LANDSCAPE)
+         ============================================ -->
+    <div id="dfOrientationWarning" class="df-orientation-warning" role="alert" aria-live="polite">
+        <div>
+            <span class="df-orientation-warning__icon" aria-hidden="true">📱↕️</span>
+            <p class="df-orientation-warning__text">Visibilidade melhor na vertical</p>
+            <p class="df-orientation-warning__subtext">Gire seu dispositivo para aproveitar melhor a leitura</p>
+        </div>
+    </div>
+
     <!-- Barra de Progresso -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
@@ -21,7 +33,7 @@
     <!-- Hero / Capa -->
     <header class="hero">
         <div class="container">
-            <img src="assets/perdaopqn_capa_v30.png" width="100%">
+            <img src="assets/perdaopqn_capa_v30.png" width="100%" alt="Capa do livro Perdão, por que não?">
             <h1>Perdão, por que não?</h1>
             <p class="subtitle">...um guia prático para descomplicar o perdão.</p>
             <div class="meta-info">
@@ -32,6 +44,7 @@
 
     <!-- Conteúdo Principal -->
     <main class="container">
+        
         <!-- Legenda de Cores -->
         <section class="legenda-cores">
             <h3>Guia de Cores</h3>
@@ -47,45 +60,40 @@
             </div>
         </section>
 
-        <!-- Capítulos -->
+        <!-- Capítulo 1 -->
         <article class="capitulo" id="capitulo-1">
-    <!-- Header: Título + Botões (Áudio, A-, A+) -->
-    <div class="capitulo-header">
-        <h2>(1) Prefácio</h2>
-        <div class="capitulo-botoes">
-            <button class="btn-audio" onclick="toggleAudio('audio-1')">🔊 Ouvir</button>
-            <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
-            <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
-        </div>
-    </div>
-    
-    <!-- Texto (só isso escala) -->
-    <div class="capitulo-texto"><p>Ensinar é um dos meus prazeres e, com o interesse de ajudar alguém a aprender como perdoar, resolvi perguntar ao próprio Deus como isso funcionava; afinal, ninguém melhor do que Ele entende esse assunto.</p>
-            <p>Como parte do meu estudo, preparei uma lista com textos bíblicos que falavam do relacionamento interpessoal e, um deles, Mateus 6:15, me fez perceber que quem precisava perdoar era eu.</p>
-            <p>Duas semanas perdoando a tudo e a todos me proporcionaram olhar para trás e não ver mais ninguém para ser perdoado...</p>
-            <p>...Agradeci a Deus e então voltei ao estudo.</p>
-            <p>O bem-estar que isso me causou virou assunto de conversas nos dias seguintes e eu, percebendo que à minha volta existia um número muito grande de pessoas envolvidas por problemas com a falta de perdão, passei a me aprofundar cada vez mais no assunto.</p>
-            <p>A simples prática de perdoar sempre e logo e o entendimento do que era e, especialmen-te, do que não era perdão, começaram a me trazer novas sensações: minha alma estava leve e pessoas que não viviam estavam, por causa do perdão, passando a viver.</p>
-            <p>Com a visão que Deus me acrescentava dia após dia, ensinar sobre o perdão ganhou uma nova dimensão quando eu comecei a escrever o que pretendia ser "Perdão, por que não? - o livro", com muitas páginas, experiências e o assunto aprofundado; a orientação divina, porém, me fez enxergar a urgência e a necessidade de algo rápido, simples e prático, capaz de levar as pessoas ao perdão em poucos minutos de leitura; nasceu, então, "Perdão, por que não? - a cartilha", esse material que eu espero que seja capaz de imprimir leveza à sua alma.</p>
-            <p>Para aprender bem, o melhor ainda continua sendo buscar a Deus e à sua Palavra; desejo, porém, que Ele use essa cartilha para abençoar você e que, ao final, tenhamos mais um testemunho de vitória.</p>
-        <!-- mais parágrafos -->
-    </div>
-    
-    <!-- Interação (fixo, não escala) -->
-    <div class="interacao-linha">
-        <button class="btn-curtir-inline" id="btn-curtida-capitulo-1" onclick="toggleCurtida('capitulo-1')">
-            <span class="icone-curtida">🤍</span>
-            <span id="curtidas-capitulo-1">0</span>
-        </button>
-        <button class="btn-painel-capitulo" onclick="abrirPainel()">💬 Compartilhe/Comente</button>
-    </div>
-    
-    <!-- Áudio (oculto) -->
-    <audio id="audio-1" src="./audios/1%20Pref%C3%A1cio.mp3"></audio>
-</article>
+            <div class="capitulo-header">
+                <h2>(1) Prefácio</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-1')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Ensinar é um dos meus prazeres e, com o interesse de ajudar alguém a aprender como perdoar, resolvi perguntar ao próprio Deus como isso funcionava; afinal, ninguém melhor do que Ele entende esse assunto.</p>
+                <p>Como parte do meu estudo, preparei uma lista com textos bíblicos que falavam do relacionamento interpessoal e, um deles, Mateus 6:15, me fez perceber que quem precisava perdoar era eu.</p>
+                <p>Duas semanas perdoando a tudo e a todos me proporcionaram olhar para trás e não ver mais ninguém para ser perdoado...</p>
+                <p>...Agradeci a Deus e então voltei ao estudo.</p>
+                <p>O bem-estar que isso me causou virou assunto de conversas nos dias seguintes e eu, percebendo que à minha volta existia um número muito grande de pessoas envolvidas por problemas com a falta de perdão, passei a me aprofundar cada vez mais no assunto.</p>
+                <p>A simples prática de perdoar sempre e logo e o entendimento do que era e, especialmente, do que não era perdão, começaram a me trazer novas sensações: minha alma estava leve e pessoas que não viviam estavam, por causa do perdão, passando a viver.</p>
+                <p>Com a visão que Deus me acrescentava dia após dia, ensinar sobre o perdão ganhou uma nova dimensão quando eu comecei a escrever o que pretendia ser "Perdão, por que não? - o livro", com muitas páginas, experiências e o assunto aprofundado; a orientação divina, porém, me fez enxergar a urgência e a necessidade de algo rápido, simples e prático, capaz de levar as pessoas ao perdão em poucos minutos de leitura; nasceu, então, "Perdão, por que não? - a cartilha", esse material que eu espero que seja capaz de imprimir leveza à sua alma.</p>
+                <p>Para aprender bem, o melhor ainda continua sendo buscar a Deus e à sua Palavra; desejo, porém, que Ele use essa cartilha para abençoar você e que, ao final, tenhamos mais um testemunho de vitória.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-1" onclick="toggleCurtida('capitulo-1')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-1">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-1" src="./audios/1%20Pref%C3%A1cio.mp3"></audio>
+        </article>
 
-        <!-- (Repita a estrutura acima para os capítulos 2 a 23, mudando o ID: cap2, cap3, etc.) -->
-        <!-- Para economizar espaço, estou mostrando apenas o cap1 como exemplo -->
+        <!-- Repita a estrutura acima para os capítulos 2 a 23 -->
 
     </main>
 
@@ -96,79 +104,89 @@
     </footer>
 
     <!-- ============================================
-         PAINEL FLUTUANTE DE INTERAÇÃO (INTEGRADO)
+         MODAL DF- (PAINEL FLUTUANTE DE INTERAÇÃO)
          ============================================ -->
-<div id="overlay" class="overlay" onclick="togglePainelInteracao()"></div>
 
-<div id="overlay" class="df-overlay" onclick="fecharPainel()"></div>
+    <!-- Overlay (fechar ao clicar fora) -->
+    <div id="dfOverlay" class="df-overlay" aria-hidden="true"></div>
 
-<div id="painelInteracao" class="df-painel-interacao">
-    <div class="df-fundo">
-        <img src="assets/painel-capa-degrade.png" class="df-img-fundo" alt="Fundo do painel">
+    <!-- Painel Modal -->
+    <div id="dfModal" class="df-modal" role="dialog" aria-modal="true" aria-labelledby="dfModalTitle" aria-hidden="true">
         
-    <div class="df-container">
-    <!-- Seção AA: Toggles -->
-        <div class="df-AA">
-        <div class="df-AAA-Form" onclick="toggleFormulario()">
-        <span class="df-texto-superior">Enviar feedback</span>
-        <span class="df-texto-inferior">Feedback</span>
-        </div>
-        <div class="df-AAA-Git" onclick="toggleGithub()">
-        <span class="df-texto-superior">Enviar mensagem no</span>
-        <span class="df-texto-inferior">GitHub</span>
-        </div>
-        </div>
+        <!-- Fundo visual -->
+        <div class="df-modal__bg"></div>
+        
+        <!-- Conteúdo scrollável -->
+        <div class="df-modal__content">
             
-<!-- Seção BB: Compartilhamento -->
-    <div class="df-BB">
-        <div class="df-BBB-1" onclick="compartilharWhatsApp()">
-        <img src="./assets/share-whatsapp.png" alt="WhatsApp">
-        <span class="df-texto-rede">WhatsApp</span>
-        </div>
-        <div class="df-BBB-2" onclick="compartilharInstagram()">
-        <img src="./assets/share-instagram.png" alt="Instagram">
-        <span class="df-texto-rede">Instagram</span>
-        </div>
-        <div class="df-BBB-3" onclick="compartilharFacebook()">
-        <img src="./assets/share-facebook.png" alt="Facebook">
-        <span class="df-texto-rede">Facebook</span>
-        </div>
-        <div class="df-BBB-4" onclick="copiarLink()">
-        <img src="./assets/share-link.png" alt="Copiar Link">
-        <span class="df-texto-rede">Copiar Link</span>
-        </div>
-    </div>
+            <!-- AA: Toggle Formulário / GitHub -->
+            <div class="df-toggle-group">
+                <button class="df-toggle-btn df-toggle-btn--active" 
+                        id="dfToggleForm" 
+                        aria-controls="dfForm dfGithubView"
+                        aria-expanded="true">
+                    <span>Enviar feedback</span>
+                    <span>Feedback</span>
+                </button>
+                <button class="df-toggle-btn" 
+                        id="dfToggleGit"
+                        aria-controls="dfForm dfGithubView"
+                        aria-expanded="false">
+                    <span>Enviar mensagem no</span>
+                    <span>GitHub</span>
+                </button>
+            </div>
             
+            <!-- Formulário (visível por padrão) -->
+            <form class="df-form active" id="dfForm" novalidate>
+                <input type="text" class="df-form__input" placeholder="Seu nome" required>
+                <input type="email" class="df-form__input" placeholder="Seu email" required>
+                <textarea class="df-form__textarea" placeholder="Sua mensagem, dúvida ou testemunho" required></textarea>
+                <button type="submit" class="df-form__submit">Enviar</button>
+            </form>
             
-<!-- Seção CC: Fale com o Autor -->
-    <div class="df-CC" onclick="faleComAutor()">
-        <img src="./assets/fale-com.png" alt="Fale com o autor">
-        <span class="df-texto-whats">Fale direto<br>com o autor</span>
-    </div>
+            <!-- View GitHub (oculta por padrão) -->
+            <div class="df-github-view" id="dfGithubView">
+                <p style="margin-bottom:1dvh;">Redirecionando para o repositório...</p>
+                <a href="https://github.com/AlmaPPG/perdaopqn/issues/new" target="_blank" rel="noopener">
+                    Abrir nova Issue →
+                </a>
+            </div>
             
-<!-- Seção DD: Voltar à Leitura -->
-    <div class="df-DD" onclick="fecharPainel()">
-        <p>Clique aqui para <strong>voltar à leitura</strong></p>
+            <!-- BB: Compartilhamento -->
+            <div class="df-share-grid">
+                <button class="df-share-btn" id="dfShareWhatsApp" aria-label="Compartilhar no WhatsApp">
+                    <img src="./assets/share-whatsapp.png" alt="" aria-hidden="true">
+                    <span class="df-share-btn__label">WhatsApp</span>
+                </button>
+                <button class="df-share-btn" id="dfShareInstagram" aria-label="Compartilhar no Instagram">
+                    <img src="./assets/share-instagram.png" alt="" aria-hidden="true">
+                    <span class="df-share-btn__label">Instagram</span>
+                </button>
+                <button class="df-share-btn" id="dfShareFacebook" aria-label="Compartilhar no Facebook">
+                    <img src="./assets/share-facebook.png" alt="" aria-hidden="true">
+                    <span class="df-share-btn__label">Facebook</span>
+                </button>
+                <button class="df-share-btn" id="dfShareCopy" aria-label="Copiar link">
+                    <img src="./assets/share-link.png" alt="" aria-hidden="true">
+                    <span class="df-share-btn__label">Copiar Link</span>
+                </button>
+            </div>
+            
+            <!-- CC: Fale com o autor -->
+            <button class="df-author-cta" id="dfAuthorWhats" aria-label="Falar com o autor no WhatsApp">
+                <img src="./assets/fale-com.png" alt="" aria-hidden="true">
+                <span class="df-author-cta__text">Fale direto<br>com o autor</span>
+            </button>
+            
+            <!-- DD: Voltar à leitura -->
+            <button class="df-close-cta" id="dfCloseModal">
+                <p>Clique aqui para <strong>voltar à leitura</strong></p>
+            </button>
+            
+        </div>
     </div>
 
-    <!-- Conteúdos Ocultos -->
-    <div id="conteudo-formulario" class="df-toggle-conteudo">
-        <input type="text" class="df-form-input" placeholder="Seu nome">
-        <input type="email" class="df-form-input" placeholder="Seu email">
-        <textarea class="df-form-input" placeholder="Sua mensagem" style="min-height:80px;"></textarea>
-        <button class="df-btn-enviar" onclick="event.stopPropagation(); alert('Enviado!')">ENVIAR</button>
-    </div>
-
-    <div id="conteudo-github" class="df-toggle-conteudo">
-        <p style="color:#C6C76D; margin-bottom:10px;">Redirecionando para o GitHub...</p>
-        <a href="https://github.com/AlmaPPG/perdaopqn" target="_blank" style="color:#fff;" onclick="event.stopPropagation();">Abrir Issues</a>
-    </div>
-    </div>
-    </div>
-</div>
-
-<!-- Link do CSS do Painel (df-) -->
-<link rel="stylesheet" href="css/df-div_flutuante.css">
     <script src="js/main.js"></script>
 </body>
 </html>
