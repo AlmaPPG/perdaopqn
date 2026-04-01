@@ -188,8 +188,8 @@ function abrirModal() {
     df.overlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     
- //   if (df.form?.classList.contains('active')) {
-  //      df.form.querySelector('.df-form__input')?.focus();
+    if (df.form?.classList.contains('active')) {
+    df.form.querySelector('.df-form__input')?.focus();
     }
 }
 
