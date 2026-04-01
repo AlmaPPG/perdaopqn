@@ -286,7 +286,7 @@ footer {
         touch-action: none;
     }
     .df-orientation-warning {
-    display: flex;    
+    display: flex; }
 }
 @keyframes dfFadeIn {
     from { opacity: 0; }
