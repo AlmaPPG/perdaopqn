@@ -209,7 +209,7 @@ function ativarFormulario() {
     df.toggleGit?.classList.remove('df-toggle-btn--active');
     df.toggleForm?.setAttribute('aria-expanded', 'true');
     df.toggleGit?.setAttribute('aria-expanded', 'false');
-    df.form?.querySelector('.df-form__input')?.focus();
+  //  df.form?.querySelector('.df-form__input')?.focus();
 }
 
 function ativarGithub() {
