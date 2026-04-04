@@ -289,32 +289,31 @@ function verificarOrientacao() {
     const aviso = document.getElementById('dfOrientationWarning');
     if (!aviso) return;
 
-    const ehLandscape = window.innerWidth > window.innerHeight;
-    const ehMobile = window.innerWidth < 768;
+    // Se já foi escondido pelo timer, não interfere
+    if (aviso.classList.contains('df-hidden')) return;
 
-    if (ehLandscape && ehMobile) {
-        // Só mostra se já não estiver ativo
-        if (!aviso.classList.contains('active')) {
-            aviso.classList.remove('fade-out');
-            aviso.classList.add('active');
+    const ehMobile = window.matchMedia('(max-width: 768px)').matches;
+    const ehLandscape = window.matchMedia('(orientation: landscape)').matches;
+
+    if (ehMobile && ehLandscape) {
+        if (!aviso.classList.contains('df-active')) {
+            aviso.classList.remove('df-hidden');
+            aviso.classList.add('df-active');
             document.body.classList.add('df-locked');
 
             if (orientationTimer) clearTimeout(orientationTimer);
 
-            // Agenda o fade-out após 7s
+            // Some em 7s mesmo se continuar em landscape
             orientationTimer = setTimeout(() => {
-                aviso.classList.add('fade-out');
-                // Espera a transição de 0.5s terminar para esconder de vez
-                setTimeout(() => {
-                    aviso.classList.remove('active', 'fade-out');
-                    document.body.classList.remove('df-locked');
-                    orientationTimer = null;
-                }, 500);
+                aviso.classList.add('df-hidden');
+                aviso.classList.remove('df-active');
+                document.body.classList.remove('df-locked');
+                orientationTimer = null;
             }, 7000);
         }
     } else {
-        // Saiu do landscape: esconde imediatamente e libera scroll
-        aviso.classList.remove('active', 'fade-out');
+        // Saiu do landscape: esconde imediatamente
+        aviso.classList.remove('df-active', 'df-hidden');
         document.body.classList.remove('df-locked');
         if (orientationTimer) {
             clearTimeout(orientationTimer);
@@ -323,6 +322,6 @@ function verificarOrientacao() {
     }
 }
 
-window.addEventListener('load', verificarOrientacao);
-window.addEventListener('resize', verificarOrientacao);
+window.addEventListener('load', () => setTimeout(verificarOrientacao, 100));
 window.addEventListener('orientationchange', verificarOrientacao);
+window.addEventListener('resize', verificarOrientacao);

@@ -286,20 +286,23 @@ footer {
     text-align: center;
     padding: 2rem;
     opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s ease;
 }
 
-.df-orientation-warning.active {
-    display: flex;
-    opacity: 1;
-    pointer-events: all;
-    animation: dfFadeIn 0.3s ease;
+/* Ativa apenas se JS permitir E estiver em landscape mobile */
+@media (orientation: landscape) and (max-width: 768px) {
+    .df-orientation-warning.df-active {
+        display: flex;
+        opacity: 1;
+        animation: dfFadeIn 0.3s ease;
+    }
 }
 
-.df-orientation-warning.fade-out {
+/* Força esconder após 7s (ignora @media e destrava navegação) */
+.df-orientation-warning.df-hidden {
+    display: none !important;
     opacity: 0;
-    pointer-events: none;
+    animation: none;
 }
 
 .df-orientation-warning__icon {
@@ -308,7 +311,6 @@ footer {
     display: block;
     color: var(--cor-destaque);
 }
-
 .df-orientation-warning__text {
     font-family: var(--fonte-titulo);
     font-size: 1.3rem;
@@ -317,7 +319,6 @@ footer {
     letter-spacing: 1px;
     margin-bottom: 0.5rem;
 }
-
 .df-orientation-warning__subtext {
     font-family: var(--fonte-corpo);
     font-size: 0.95rem;
@@ -325,8 +326,15 @@ footer {
     font-weight: 300;
 }
 
-/* Regra removida: @media (orientation: landscape) { ... } */
-/* Motivo: sobrescrevia o JS e impedia o aviso de sumir após 7s. */
+body.df-locked {
+    overflow: hidden;
+    touch-action: none;
+}
+
+@keyframes dfFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
 body.df-locked {
     overflow: hidden;
