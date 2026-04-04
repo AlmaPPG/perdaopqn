@@ -77,9 +77,9 @@ body {
     color: var(--texto-secundario);
 }
 .meta-info {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 0.87rem;
     color: var(--texto-secundario);
 }
 
@@ -91,22 +91,39 @@ body {
     margin-bottom: 40px;
     border: 1px solid var(--borda-suave);
 }
-.legenda-cores h3 { color: var(--texto-principal); }
-.grid-legenda { display: flex; flex-wrap: wrap; gap: 15px; }
+.legenda-cores h3 { 
+    color: var(--texto-principal); 
+}
+
+.grid-legenda { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 15px; 
+}
+
 .item-legenda {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
     font-size: 0.9rem;
     color: var(--texto-secundario);
 }
+
+/* === DOT PADRONIZADO (14x14px, redondo, protegido) === */
 .dot {
     width: 14px;
     height: 14px;
-    border-radius: 0;
     display: inline-block;
-    border: 1px solid #555;
+    flex-shrink: 0; /* ← não é espremido pelo flex container */
+    box-sizing: border-box; /* ← padding/border não alteram o tamanho */
+    border: none;
+    padding: 0;
+    margin: 0;
+    line-height: 0; /* ← remove espaço fantasma em alguns browsers */
+    vertical-align: middle;
 }
+
+/* Cores dos dots (mantidas como estavam) */
 .dot.titulo-antes { background-color: var(--cor-antes); }
 .dot.titulo-alerta { background-color: var(--cor-alerta); }
 .dot.titulo-entende { background-color: var(--cor-entende); }
@@ -115,6 +132,19 @@ body {
 .dot.titulo-naoeh { background-color: var(--cor-naoeh); }
 .dot.titulo-consequencia-ruim { background-color: var(--cor-consequencia-ruim); }
 .dot.titulo-pratica { background-color: var(--cor-pratica); }
+
+/* -------------- Correção dos dots */
+/* === CORREÇÃO: Dots herdando padding de classes de texto === */
+.dot.titulo-antes,
+.dot.titulo-alerta,
+.dot.titulo-entende,
+.dot.titulo-consequencia,
+.dot.titulo-define,
+.dot.titulo-naoeh,
+.dot.titulo-consequencia-ruim,
+.dot.titulo-pratica {
+    padding: 0 !important;
+}
 
 /* Capítulos */
 .capitulo {
@@ -255,17 +285,30 @@ footer {
     justify-content: center;
     text-align: center;
     padding: 2rem;
-    animation: dfFadeIn 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
 }
+
 .df-orientation-warning.active {
     display: flex;
+    opacity: 1;
+    pointer-events: all;
+    animation: dfFadeIn 0.3s ease;
 }
+
+.df-orientation-warning.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .df-orientation-warning__icon {
     font-size: 3rem;
     margin-bottom: 1rem;
     display: block;
     color: var(--cor-destaque);
 }
+
 .df-orientation-warning__text {
     font-family: var(--fonte-titulo);
     font-size: 1.3rem;
@@ -274,21 +317,22 @@ footer {
     letter-spacing: 1px;
     margin-bottom: 0.5rem;
 }
+
 .df-orientation-warning__subtext {
     font-family: var(--fonte-corpo);
     font-size: 0.95rem;
     color: var(--texto-secundario);
     font-weight: 300;
 }
-@media (max-width: 768px) and (orientation: landscape) {
-    body.df-locked {
-        overflow: hidden;
-        touch-action: none;
-    }
-    .df-orientation-warning {
-    display: flex;
+
+/* Regra removida: @media (orientation: landscape) { ... } */
+/* Motivo: sobrescrevia o JS e impedia o aviso de sumir após 7s. */
+
+body.df-locked {
+    overflow: hidden;
+    touch-action: none;
 }
-}
+
 @keyframes dfFadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -573,4 +617,17 @@ footer {
 .df-author-cta:focus {
     outline: 2px solid var(--cor-destaque);
     outline-offset: 2px;
+}
+
+/* ================ Textos */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

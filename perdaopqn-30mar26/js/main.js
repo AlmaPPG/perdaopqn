@@ -152,7 +152,7 @@ function enviarWebhook(tipo, capituloId) {
 function enviarCurtidaWebhook(capituloId) { enviarWebhook('curtida', capituloId); }
 
 // ============================================
-// MODAL DF- (LÓGICA LIMPA E ISOLADA)
+// MODAL DF- (ABRIR/FECHAR)
 // ============================================
 const df = {
     overlay: document.getElementById('dfOverlay'),
@@ -173,24 +173,13 @@ const df = {
 function abrirModal() {
     if (!df.modal || !df.overlay) return;
     
-    // Verifica orientação antes de abrir
-    const warning = document.getElementById('dfOrientationWarning');
-    const isMobile = window.innerWidth <= 768;
-    const isLandscape = window.matchMedia('(orientation: landscape)').matches;
-    
-    if (isMobile && isLandscape && warning?.classList.contains('active')) {
-        return; // Não abre o modal se o aviso estiver visível
-    }
-    
     df.modal.classList.add('active');
     df.overlay.classList.add('active');
     df.modal.setAttribute('aria-hidden', 'false');
     df.overlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     
-    if (df.form?.classList.contains('active')) {
-    df.form.querySelector('.df-form__input')?.focus();
-    }
+    // ✅ SEM FOCO AUTOMÁTICO (teclado não abre no mobile)
 }
 
 function fecharModal() {
@@ -209,7 +198,6 @@ function ativarFormulario() {
     df.toggleGit?.classList.remove('df-toggle-btn--active');
     df.toggleForm?.setAttribute('aria-expanded', 'true');
     df.toggleGit?.setAttribute('aria-expanded', 'false');
-//  df.form?.querySelector('.df-form__input')?.focus();
 }
 
 function ativarGithub() {
@@ -224,7 +212,7 @@ function ativarGithub() {
 function initModal() {
     if (!df.modal) return;
     
-    // Tornar função global para o HTML chamar
+    // ✅ Torna a função global para o HTML chamar
     window.abrirModalDF = abrirModal;
     
     // Fechar: overlay, botão fechar ou ESC
@@ -284,33 +272,6 @@ function initModal() {
 }
 
 // ============================================
-// DETECÇÃO DE ORIENTAÇÃO (MOBILE)
-// ============================================
-function initOrientationWarning() {
-    const warning = document.getElementById('dfOrientationWarning');
-    if (!warning) return;
-    
-    function checkOrientation() {
-        const isMobile = window.innerWidth <= 768;
-        const isLandscape = window.matchMedia('(orientation: landscape)').matches;
-        
-        if (isMobile && isLandscape) {
-            warning.classList.add('active');
-            document.body.classList.add('df-locked');
-        } else {
-            warning.classList.remove('active');
-            document.body.classList.remove('df-locked');
-        }
-    }
-    
-    checkOrientation();
-    window.addEventListener('orientationchange', checkOrientation);
-    window.addEventListener('resize', checkOrientation);
-    
-    console.log('✅ Aviso de orientação inicializado');
-}
-
-// ============================================
 // INICIALIZAÇÃO ÚNICA
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
@@ -318,6 +279,50 @@ document.addEventListener('DOMContentLoaded', function() {
     inicializarCurtidas();
     atualizarProgressBar();
     initModal();
-    initOrientationWarning();
     console.log('✅ Site carregado com todas as funcionalidades');
 });
+
+// === CONTROLE DE ORIENTAÇÃO (7s) ===
+let orientationTimer = null;
+
+function verificarOrientacao() {
+    const aviso = document.getElementById('dfOrientationWarning');
+    if (!aviso) return;
+
+    const ehLandscape = window.innerWidth > window.innerHeight;
+    const ehMobile = window.innerWidth < 768;
+
+    if (ehLandscape && ehMobile) {
+        // Só mostra se já não estiver ativo
+        if (!aviso.classList.contains('active')) {
+            aviso.classList.remove('fade-out');
+            aviso.classList.add('active');
+            document.body.classList.add('df-locked');
+
+            if (orientationTimer) clearTimeout(orientationTimer);
+
+            // Agenda o fade-out após 7s
+            orientationTimer = setTimeout(() => {
+                aviso.classList.add('fade-out');
+                // Espera a transição de 0.5s terminar para esconder de vez
+                setTimeout(() => {
+                    aviso.classList.remove('active', 'fade-out');
+                    document.body.classList.remove('df-locked');
+                    orientationTimer = null;
+                }, 500);
+            }, 7000);
+        }
+    } else {
+        // Saiu do landscape: esconde imediatamente e libera scroll
+        aviso.classList.remove('active', 'fade-out');
+        document.body.classList.remove('df-locked');
+        if (orientationTimer) {
+            clearTimeout(orientationTimer);
+            orientationTimer = null;
+        }
+    }
+}
+
+window.addEventListener('load', verificarOrientacao);
+window.addEventListener('resize', verificarOrientacao);
+window.addEventListener('orientationchange', verificarOrientacao);
