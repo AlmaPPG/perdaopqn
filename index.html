@@ -3,16 +3,28 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perdão, por que não? - versão digital</title>
+    <title>Perdão, por que não? v3</title>
     
     <!-- Fontes Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Fira+Sans+Extra+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+    <!-- ============================================
+         AVISO DE ORIENTAÇÃO (MOBILE LANDSCAPE)
+         ============================================ -->
+    <div id="dfOrientationWarning" class="df-orientation-warning" role="alert" aria-live="polite">
+        <div>
+            <span class="df-orientation-warning__icon" aria-hidden="true">📱↕️</span>
+            <p class="df-orientation-warning__text">Visibilidade melhor na vertical</p>
+            <p class="df-orientation-warning__subtext">Gire seu dispositivo para aproveitar melhor a leitura</p>
+        </div>
+    </div>
+
     <!-- Barra de Progresso -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
@@ -21,17 +33,18 @@
     <!-- Hero / Capa -->
     <header class="hero">
         <div class="container">
-            <img src="perdao_capa_site.png" width="100%">
-            <h1>Perdão, por que não?</h1>
+            <img src="assets/perdaopqn_capa_v30.png" width="100%" alt="Capa do livro Perdão, por que não?">
+            <h1 class="visually-hidden">Perdão, por que não?</h1>
             <p class="subtitle">...um guia prático para descomplicar o perdão.</p>
             <div class="meta-info">
-                <p>Livro: Perdão, por que não? - Edição 3.0 📚 Autor: Heitor Nickel (@heitornickel) ⏱️ 40 min de leitura</p>
+                <p>Livro: Perdão, por que não? - Edição 3.0</p><p>Autor: Heitor Nickel (@heitornickel) ⏱️ 40 min de leitura</p>
             </div>
         </div>
     </header>
 
     <!-- Conteúdo Principal -->
     <main class="container">
+        
         <!-- Legenda de Cores -->
         <section class="legenda-cores">
             <h3>Guia de Cores</h3>
@@ -47,131 +60,834 @@
             </div>
         </section>
 
-        <!-- Capítulos -->
-        <article id="cap1" class="capitulo">
+        <!-- Capítulo 1 -->
+        <article class="capitulo" id="capitulo-1">
             <div class="capitulo-header">
-                <h2 class="titulo-antes">(1) Prefácio</h2>
-                <button class="btn-audio" onclick="toggleAudio('audio-cap1')">🔊 Ouvir</button>
+                <h2>(1) Prefácio</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-1')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
             </div>
-            <audio id="audio-cap1" src="assets/audio/cap1.mp3"></audio>
             
-            <p>Ensinar é um dos meus prazeres e, com o interesse de ajudar alguém a aprender como perdoar, resolvi perguntar ao próprio Deus como isso funcionava; afinal, ninguém melhor do que Ele entende esse assunto.</p>
-            <p>Como parte do meu estudo, preparei uma lista com textos bíblicos que falavam do relacionamento interpessoal e, um deles, Mateus 6:15, me fez perceber que quem precisava perdoar era eu.</p>
-            <p>Duas semanas perdoando a tudo e a todos me proporcionaram olhar para trás e não ver mais ninguém para ser perdoado...</p>
-            <p>...Agradeci a Deus e então voltei ao estudo.</p>
-            <p>O bem-estar que isso me causou virou assunto de conversas nos dias seguintes e eu, percebendo que à minha volta existia um número muito grande de pessoas envolvidas por problemas com a falta de perdão, passei a me aprofundar cada vez mais no assunto.</p>
-            <p>A simples prática de perdoar sempre e logo e o entendimento do que era e, especialmen-te, do que não era perdão, começaram a me trazer novas sensações: minha alma estava leve e pessoas que não viviam estavam, por causa do perdão, passando a viver.</p>
-            <p>Com a visão que Deus me acrescentava dia após dia, ensinar sobre o perdão ganhou uma nova dimensão quando eu comecei a escrever o que pretendia ser "Perdão, por que não? - o livro", com muitas páginas, experiências e o assunto aprofundado; a orientação divina, porém, me fez enxergar a urgência e a necessidade de algo rápido, simples e prático, capaz de levar as pessoas ao perdão em poucos minutos de leitura; nasceu, então, "Perdão, por que não? - a cartilha", esse material que eu espero que seja capaz de imprimir leveza à sua alma.</p>
-            <p>Para aprender bem, o melhor ainda continua sendo buscar a Deus e à sua Palavra; desejo, porém, que Ele use essa cartilha para abençoar você e que, ao final, tenhamos mais um testemunho de vitória.</p>
-
-            <!-- Interações do Capítulo -->
+            <div class="capitulo-texto">
+                <p>Ensinar é um dos meus prazeres e, com o interesse de ajudar alguém a aprender como perdoar, resolvi perguntar ao próprio Deus como isso funcionava; afinal, ninguém melhor do que Ele entende esse assunto.</p>
+                <p>Como parte do meu estudo, preparei uma lista com textos bíblicos que falavam do relacionamento interpessoal e, um deles, Mateus 6:15, me fez perceber que quem precisava perdoar era eu.</p>
+                <p>Duas semanas perdoando a tudo e a todos me proporcionaram olhar para trás e não ver mais ninguém para ser perdoado...</p>
+                <p>...Agradeci a Deus e então voltei ao estudo.</p>
+                <p>O bem-estar que isso me causou virou assunto de conversas nos dias seguintes e eu, percebendo que à minha volta existia um número muito grande de pessoas envolvidas por problemas com a falta de perdão, passei a me aprofundar cada vez mais no assunto.</p>
+                <p>A simples prática de perdoar sempre e logo e o entendimento do que era e, especialmente, do que não era perdão, começaram a me trazer novas sensações: minha alma estava leve e pessoas que não viviam estavam, por causa do perdão, passando a viver.</p>
+                <p>Com a visão que Deus me acrescentava dia após dia, ensinar sobre o perdão ganhou uma nova dimensão quando eu comecei a escrever o que pretendia ser “Perdão, por que não? - o livro”, com muitas páginas, experiências e o assunto aprofundado; a orientação divina, porém, me fez enxergar a urgência e a necessidade de algo rápido, simples e prático, capaz de levar as pessoas ao perdão em poucos minutos de leitura; nasceu, então, “Perdão, por que não? - a cartilha”, esse material que eu espero que seja capaz de imprimir leveza à sua alma.</p>
+                <p>Para aprender bem, o melhor ainda continua sendo buscar a Deus e à sua Palavra; desejo, porém, que Ele use essa cartilha para abençoar você e que, ao final, tenhamos mais um testemunho de vitória.</p>
+            </div>
+            
             <div class="interacao-linha">
-                <button id="btn-curtida-cap1" class="btn-curtir-inline" onclick="toggleCurtida('cap1')">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-1" onclick="toggleCurtida('capitulo-1')">
                     <span class="icone-curtida">🤍</span>
-                    <span id="curtidas-cap1">0</span>
+                    <span id="curtidas-capitulo-1">0</span>
                 </button>
-                <button class="btn-painel-capitulo" onclick="togglePainelInteracao()">💬 Compartilhe/Comente</button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
             </div>
             
+            <audio id="audio-1" src="./audios/01_Prefacio.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 2 -->
+        <article class="capitulo" id="capitulo-2">
+            <div class="capitulo-header">
+                <h2>(2) Respeitando o momento, uma lição completa</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-2')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>A cozinha é um lugar necessário a todos e, no meu caso, também um lugar de diversão.</p>
+                <p>Em meio a muitas outras peculiaridades do cozinhar, as habilidades com o fogo, o calor e as lâminas afiadas dão um tom lúdico à tarefa de produzir algo que satisfará nosso estômago.</p>
+                <p>Como não podia ser diferente, nosso maior inimigo é o descuido; por menor que seja, ele pode nos causar danos capazes de comprometer todo o prazer desses momentos que ali passamos.</p>
+                <p>Fatiar batatas não demanda grandes habilidades, e acho que justamente por isso naquela tarde eu o fazia com uma certa displicência. O descuido numa fração de segundo e lá estava o meu dedo com um corte relativamente profundo e o meu almoço comprometido.</p>
+                <p>Imediatamente tratei de estancar o sangue e de fazer um curativo, mas, por mais que eu soubesse lidar com essa situação, tive que respeitar a fragilidade do dedo que, além de ferido, tinha agora um incômodo curativo.</p>
+                <p>Meu almoço saiu mais tarde. Prepará-lo foi mais demorado pois eu tinha que fazer as coisas com cuidado para não me ferir mais; além de um pouco de dor, ainda tinha que me acostumar a pegar as coisas com aquele incômodo curativo. Tive que desistir de lavar a roupa programada para logo depois do almoço e digitar também era algo incômodo. Um simples corte no dedo atrapalhou minha rotina por vários dias.</p>
+                <p>Devido aos cuidados imediatos, o processo de cicatrização foi rápido, mas o ritmo era natural e, se eu não respeitasse isso e tentasse forçar algo, provavelmente provocaria a abertura do ferimento e retardaria sua cicatrização. Hoje, alguns dias depois, vejo que meu dedo não tem “nem marca” do que me incomodou por vários dias.</p>
+                <p>Esse acontecimento tem todos os ingredientes para se entender o perdão: o descuido, o ferimento, a necessidade do curativo, a decisão de tratar (exatamente o perdão), o início do tratamento, os cuidados em função da fragilidade, a rotina comprometida pelo ferimento e também pelos cuidados, o tempo atuando como remédio em função da naturalidade do processo de cicatrização e a cicatrização completa.</p>
+                <p>Parece complicado mas é muito simples. As coisas acontecem numa sequência fácil de ser entendida e cada fase tem seu valor; reconhecê-las nos dará condições de estabelecer o equilíbrio necessário à nossa vida.</p>
+                <p>O perdão é simples, fácil, prático e seus resultados são extremamente positivos.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-2" onclick="toggleCurtida('capitulo-2')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-2">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-2" src="./audios/02_Respeitando_o_momento.mp3"></audio>
         </article>
 
-        <!-- (Repita a estrutura acima para os capítulos 2 a 23, mudando o ID: cap2, cap3, etc.) -->
-        <!-- Para economizar espaço, estou mostrando apenas o cap1 como exemplo -->
+        <!-- Capítulo 3 -->
+        <article class="capitulo" id="capitulo-3">
+            <div class="capitulo-header">
+                <h2>(3) Precisamos do perdão de Deus</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-3')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p><em>“Mas as vossas iniquidades fazem separação entre vós e o vosso Deus; e os vossos pecados encobrem o seu rosto de vós, para que vos não ouça”  (Isaías 59:2)</em></p>
+                <br>
+                <p><em>“Todos pecaram e destituídos estão da glória de Deus”
+                (Romanos 3:23)</em></p>
+                <br>
+                <p>Deus, em sua infinita misericórdia criou uma condição para nos livrar das consequências dos nossos pecados; Ele enviou Jesus para remissão dos nossos pecados. O mecanismo utilizado para isso é muito simples: primeiro nos arrependemos do mal que fizemos, em seguida o confessamos a Deus e Ele nos perdoa. Há, porém, algumas situações mencionadas em Mateus 6 que podem impedir Deus de nos perdoar, pois Deus não pode ir contra sua própria palavra. Veja a seguir.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-3" onclick="toggleCurtida('capitulo-3')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-3">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-3" src="./audios/03_Precisamos_do_perdao_de_Deus.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 4 -->
+        <article class="capitulo" id="capitulo-4">
+            <div class="capitulo-header">
+                <h2>(4) Deus faz aquilo que pedimos</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-4')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Quando Jesus nos deu a base da oração, em Mateus 6, muito conhecida como o “Pai Nosso”, no verso 12, nos ensinou o seguinte: <br> <em>“...e perdoa as nossas dívidas, assim como nós perdoamos aos nossos devedores...”.</em></p>
+                <p>Muitas pessoas repetem exatamente o que diz o texto sem pensar em suas conseqüências; e isso, muitas vezes, significa pedir a Deus que não nos perdoe pelos nossos pecados. <br>Mas como? <br>A expressão do verso 12 significa exatamente: perdoe os meus pecados da mesma forma que eu perdoo aqueles que têm feito algo contra mim. Sendo assim, se temos o hábito de perdoar tudo, estamos pedindo a Deus que nos perdoe por tudo, se perdoamos pela metade, estamos pedindo que Deus nos perdoe pela metade e, se não perdoamos nada, estamos pedindo que Deus não nos perdoe.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-4" onclick="toggleCurtida('capitulo-4')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-4">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-4" src="./audios/04_Deus_faz_aquilo_que_pedimos.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 5 -->
+        <article class="capitulo" id="capitulo-5">
+            <div class="capitulo-header">
+                <h2>(5) Se não perdoamos as pessoas, Deus também não nos perdoa</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-5')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Como se não bastasse o fato de nós mesmos pedirmos errado, Jesus, pela importância que dava ao assunto, voltou a ele logo após o “Amém” do “Pai Nosso”. Nos versos 14 e 15 de Mateus 6 Ele afirma o seguinte: <br>
+                <em>“Porque se perdoardes aos homens as suas ofensas, também vosso Pai celeste vos perdoará; se, porém, não perdoardes aos homens as suas ofensas, tampouco vosso Pai vos perdoará as vossas ofensas.”</em></p>
+                <p>Não há necessidade de explicarmos nada, o texto é muito claro e foi dito por Jesus, ou seja, o próprio Deus. E Deus não torna atrás. O que disse há de se cumprir.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-5" onclick="toggleCurtida('capitulo-5')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-5">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-5" src="./audios/05_Se_nao_perdoamos.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 6 -->
+        <article class="capitulo" id="capitulo-6">
+            <div class="capitulo-header">
+                <h2>(6) É mais importante perdoar as pessoas do que receber o perdão delas</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-6')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Desde pequenos aprendemos a importância de se pedir perdão ou desculpas pelo que fazemos de errado, isso nos faz educados. Mas, de todos os textos que li, de tudo o que pesquisei e de todas as pessoas que questionei, entre elas alguns líderes religiosos, pude perceber que a Bíblia menciona poucas vezes o “pedir perdão”, mas cita de diversas formas o “perdoar”; entre elas a que mais me preocupou foi Mateus 6:15, me fazendo parar este estudo por mais ou menos duas semanas especificamente para rever minha vida e perdoar a todos.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-6" onclick="toggleCurtida('capitulo-6')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-6">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-6" src="./audios/06_Eh_mais_importante_perdoar.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 7 -->
+        <article class="capitulo" id="capitulo-7">
+            <div class="capitulo-header">
+                <h2>(7) Perdão é o início de uma mudança de valores</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-7')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Os valores da vida que aprendemos desde o nascimento determinam as nossas reações diante das mais diversas situações; dentre eles, sempre aprendemos alguns de maneira errada, capazes de prejudicar o nosso relacionamento com as pessoas. Coisas sem importância a que damos valores muito altos acabam por causar em nós  a mágoa, o rancor, o receio ou o medo.</p>
+                <p>Com o tempo e o decorrer dos fatos, somos capazes de identificar e corrigir essas falhas na formação de nosso caráter; aquilo que normalmente nos fere precisamos diminuir seu valor até o ponto em que não nos fira mais, o ponto da assimilação. Isso é possível com treinamento e o melhor treinamento é o próprio perdão.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-7" onclick="toggleCurtida('capitulo-7')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-7">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-7" src="./audios/07_Perdao_eh_o_inicio_de_uma_mudanca_de_valores.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 8 -->
+        <article class="capitulo" id="capitulo-8">
+            <div class="capitulo-header">
+                <h2>(8) Uma mudança só acontece depois da decisão</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-8')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>O exemplo que vamos usar aqui é o da mudança de uma casa para outra: somente depois de decidir mudar é que se vai consultar as finanças, definir a região, consultar imobiliárias, escolher a casa, procurar o fiador, preparar os papéis, contratar a mudança, desmontar os móveis, jogar alguns fora, comprar alguns novos, carregar o caminhão, ir para a nova casa, descarregar o caminhão, montar os móveis, limpar tudo, acertar os últimos detalhes e pronto!</p>
+                <p>Sentar-se no sofá parece ser a última etapa, porém há um detalhe importante: agora começa a fase de adaptação à nova casa; alguns hábitos vão mudar pelo simples fato de a casa ser nova e, depois de algum tempo, poderemos dizer que se adaptou à nova casa, o que determina a real mudança.</p>
+                <p>Assim como qualquer mudança, o perdão funciona da mesma forma. Ele é exatamente a decisão, o primeiro passo para uma mudança; nesse caso, agora, uma mudança de valores que vai determinar a maneira como encara os fatos e as pessoas, uma mudança que faz levantar a cabeça e que treina você a assimilar os golpes que recebe na vida. Uma mudança que faz entender as pessoas e os seus defeitos e que faz atentar muito mais para as suas qualidades. Tudo isso só acontece depois da decisão. Tudo isso só acontece depois do perdão.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-8" onclick="toggleCurtida('capitulo-8')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-8">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-8" src="./audios/08_Uma_mudanca.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 9 -->
+        <article class="capitulo" id="capitulo-9">
+            <div class="capitulo-header">
+                <h2>(9) Perdão é, exatamente, a decisão de transformar algo que nos feriu em nada ou, no máximo, em um exercício de fortalecimento das nossas reações.</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-9')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Mesmo que ainda não entenda a questão, repita isso em pensamento:</p>
+                <p>Eu declaro, agora, 
+                perdoadas todas as pessoas <br>
+                por todas as coisas feitas contra mim; <br>
+                quer eu saiba ou não; <br>quer tenha sido de propósito ou sem querer; <br>quer tenha sido grave ou leve. <br>
+                Faço isso com o desejo de aliviar o meu coração!</p>
+                <br>
+                <p>Tenha a certeza de que barreiras estão caindo agora e, se você percebeu alguma, não se esforce para reerguê-la; logo você perceberá o grande poder dessa declaração e desfrutará dos seus benefícios.</p>
+                <p>Declare isso de tempos em tempos para o seu íntimo; além de promover uma limpeza importante, fará com que ele se fortaleça.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-9" onclick="toggleCurtida('capitulo-9')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-9">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-9" src="./audios/09_Perdao_eh.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 10 -->
+        <article class="capitulo" id="capitulo-10">
+            <div class="capitulo-header">
+                <h2>(10) Grande parte das nossas decepções são em função da nossa própria expectativa com relação às pessoas</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-10')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Já parou para pensar que as pessoas que mais nos decepcionam são aquelas que estão à nossa volta?  Sim! Pais, irmãos, parentes, amigos íntimos, cônjuges, professores, patrões e até o cachorro; é incrível como “eles” são capazes de nos decepcionar!</p>
+                <p>Mas, por que será?</p>
+                <p>Sugiro uma análise por outro ângulo: nossa expectativa em relação às pessoas que nos cercam nunca é de que elas vão errar. Parece, muitas vezes, que são perfeitos e, especialmente, as pessoas de quem aprendemos algo, como nossos pais ou professores, chegam a parecer extraterrestres de tão perfeitos.</p>
+                <p>Jamais eles poderiam errar...<br>
+                ...mas não é assim, eles são seres humanos normais, de natureza pecaminosa e passíveis de erro.</p>
+                <p>Como se isso não bastasse, nós também temos expectativas em relação às ações e reações das pessoas. Beijos, abraços, carinho, elogios, agradecimentos, flores, cartões, telefonemas, convites, atenção. Quem não gosta dessas coisas? É natural que se goste. E é natural que se espere de alguém. Porém, se a nossa expectativa não for correspondida, certamente virá a decepção.</p>
+                <p>Temos que tomar cuidado; nem sempre as pessoas agem como gostaríamos, e grandes expectativas podem gerar grandes decepções; às vezes suficientes para nos impedir de perceber que as ações e reações das pessoas são tão naturais quanto elas.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-10" onclick="toggleCurtida('capitulo-10')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-10">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-10" src="./audios/10_Grande_parte.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 11 -->
+        <article class="capitulo" id="capitulo-11">
+            <div class="capitulo-header">
+                <h2>(11) Não perdoamos alguém pelo que é, nem pelo que faz e sim pelo que fez</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-11')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Se conseguirmos entender essa questão, todas as outras que surgirão serão respondidas e entendidas com facilidade.</p>
+                <p>Suponhamos que uma pessoa, pela natureza pecaminosa que tem, seja má. Por piores que sejam as suas ações, se elas não nos atingirem, nunca precisaremos perdoá-la. Porém, se alguma dessas ações nos atingir negativamente, precisaremos, então, perdoá-la.</p>
+                <p>Note que só precisamos perdoar depois que uma ação nos atingiu. Logo, precisamos perdoar pelo que foi feito e não pela índole da pessoa.</p>
+                <p>Usando o ladrão como exemplo, não precisamos perdoá-lo por ele ser ladrão, nem pelos roubos que ele comete; só precisamos perdoar um ladrão se ele nos roubou.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-11" onclick="toggleCurtida('capitulo-11')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-11">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-11" src="./audios/11_Nao_perdoamos_alguem_pelo_que_eh.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 12 -->
+        <article class="capitulo" id="capitulo-12">
+            <div class="capitulo-header">
+                <h2>(12) Brincadeira fora de hora</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-12')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Quem brinca, normalmente o faz com a intenção de agradar; no entanto, não é incomum vermos pessoas incomodadas com essas brincadeiras, seja pelo teor, pela intensidade ou, muitas vezes, pelo momento. Isso mesmo! Uma brincadeira é capaz de criar uma nuvem negra no relacionamento.</p>
+                <p>Além disso, se procurarmos os motivos que levam alguém a ficar magoado, encontraremos um pacote muito grande de bobeiras que, se as pessoas quisessem, poderiam perfeitamente deixar passar. Coisas como “passou por mim e não me cumprimentou”, “fez que não me viu” ou “fez de propósito” normalmente são conclusões precipitadas de situações que muitas vezes nem querem significar nada.</p>
+                <p>Por falta de cuidado, muitas vezes nos colocamos em situações que desagradam as pessoas e, nesse caso, há dois lados a serem observados e corrigidos: primeiro, o de quem involuntariamente desagrada as pessoas; esse precisa treinar de tal forma que elimine seus maus hábitos, como o da falta de atenção, o do tapa nas costas, o da correção em público e outros. Evitando esses maus hábitos também se evitará irritar as pessoas; segundo, o lado daquele que, por qualquer coisinha se magoa ou irrita. Nesse caso, é necessário treinar para não se irritar com tanta facilidade.</p>
+                <p>Há algum tempo, antes de aprender essas coisas, eu me irritava com pessoas que comiam de boca aberta ou que fizessem qualquer barulho enquanto comiam, mesmo que esse barulho acontecesse com a boca fechada. Não precisava muito para eu começar a olhar feio para a pessoa que, muitas vezes, nem sabia o que estava acontecendo.</p>
+                <p>Em outras situações, acontece a mesma coisa; as pessoas agem dentro da naturalidade e nós, que ficamos irritados, queremos que as pessoas mudem, que fechem a boca ou parem de fazer barulho e não nos irritem mais; porém, nesse caso, a mudança precisa acontecer em nós e não nas pessoas. Eu, por exemplo, não deixei de detestar que as pessoas comam de boca aberta, isso continua sendo um mau hábito, mas eu não me irrito mais por causa disso.</p>
+                <p>Talvez você queira saber como eu consegui essa mudança: no começo foi difícil, primeiro eu tive que tomar a decisão de não me irritar mais com isso, até aí foi só uma questão de conscientização, eu não podia e nem queria me irritar; daí pra frente, quando eu ouvia aquele barulho de mastigação, vinha a vontade de mandar que a pessoa fechasse a boca, mas imediatamente minha mente me acusava e eu conseguia me controlar. Conforme o tempo foi passando, a ideia de que eu estava mudando foi se fortalecendo e, aquilo que me irritava já não irrita mais. Foi um processo que levou algum tempo e que começou a partir do momento em que eu decidi que não podia e não ia mais me irritar com pouca coisa. É incrível, mas hoje, pode comer de boca aberta na minha frente, fazer barulho e até babar. Por mais feio que eu ache já não me irrito mais.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-12" onclick="toggleCurtida('capitulo-12')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-12">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-12" src="./audios/12_Brincadeira_fora_de_hora.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 13 -->
+        <article class="capitulo" id="capitulo-13">
+            <div class="capitulo-header">
+                <h2>(13) É preciso distinguir perdoar de assimilar/suportar</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-13')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Três coisas podem acontecer quando somos atingidos. Para ficar claro, vamos usar o exemplo de uma pedrada. Uma pedrada pode não doer, pode doer um pouco ou pode nos ferir... <br>
+                Qual dos casos merece curativo? <br>
+                ...só o último, onde houve ferimento.</p>
+                <p>É exatamente assim que acontece conosco. Somos bombardeados a todo instante pelas ações e reações das pessoas e, se qualquer coisinha nos ferir, gastaremos muito tempo de nossa vida cuidando dos ferimentos.</p>
+                <p>Com certeza você já ouviu falar de Mike Tyson e Evander Hollyfield. Antes de treinar, provavelmente apanharam do saco de areia. Hoje, suportam socos um do outro.</p>
+                <p>Não sei quanto a você, mas o menor dos socos que eles suportam com certeza me desmontaria.</p>
+                <p>Para ganhar uma luta,  mais importante do que a potência dos seus socos talvez seja a capacidade de assimilar os socos potentes do adversário.</p>
+                <p>Quanto maior a capacidade de assimilação dos golpes, menor a chance de ser derrubado, menor a chance de se ferir.</p>
+                <p>Voltando ao perdão, quanto maior a capacidade de assimilação dos golpes desferidos pelas ações e reações das pessoas, menor a chance de nos ferirmos; consequentemente, menor a necessidade de perdão.</p>
+                <p><strong><em>“Perdoar é o melhor treinamento. Quanto mais assimilamos os golpes da vida, menos precisamos perdoar.”</em></strong></p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-13" onclick="toggleCurtida('capitulo-13')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-13">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-13" src="./audios/13_Eh_preciso_distinguir.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 14 -->
+        <article class="capitulo" id="capitulo-14">
+            <div class="capitulo-header">
+                <h2>(14) Quem treina não perde tempo com pequenos problemas</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-14')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Depois que um lutador treina e alcança o status de campeão ele não volta mais a lutar com aqueles que não estão no mesmo nível dele, a não ser que tenha fracassado. Assim também nós, em relação ao perdão; se conseguirmos treinar ao ponto de assimilarmos grandes golpes será inadmissível que pequenos golpes nos derrubem.</p>
+                <p>Vale lembrar o Salmo 37:23-24:</p>
+                <p><em>“O SENHOR firma os passos do homem bom e no seu caminho se compraz; se cair, não ficará prostrado, porque o SENHOR o segura pela mão.”</em></p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-14" onclick="toggleCurtida('capitulo-14')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-14">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-14" src="./audios/14_Pequenos_problemas.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 15 -->
+        <article class="capitulo" id="capitulo-15">
+            <div class="capitulo-header">
+                <h2>(15) Podemos perdoar à distância e sem que as pessoas saibam</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-15')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>O perdão não é e nem depende de um acordo entre as pessoas envolvidas na situação. É uma decisão única e exclusiva de quem foi ferido ou ofendido. Por mais que uma pessoa implore pelo perdão de outra, ele só vai acontecer quando esta decidir positivamente. Saber ou não que se foi perdoado não é requisito para que o perdão aconteça de fato. Portanto, se você perdoou está perdoado e pronto!</p>
+<p>Vamos refrescar a memória. Quem precisa de curativo, quem causou a ferida ou quem foi ferido? E o que acontece se não tratarmos a ferida?</p>
+<p>Digamos que quem feriu tenha ido embora para bem longe e que dificilmente vá voltar. O que fazer? Tratar logo ou ficar esperando infeccionar a ferida?</p>
+<p>O perdão é a decisão de tratar a ferida e não depende de quem feriu. Quanto antes se começar a tratar, mais cedo cicatrizará.</p>
+<p>(leia o tópico 2 e relembre a ordem das coisas)</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-15" onclick="toggleCurtida('capitulo-15')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-15">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-15" src="./audios/15_Podemos_perdoar_aa_distancia.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 16 -->
+        <article class="capitulo" id="capitulo-16">
+            <div class="capitulo-header">
+                <h2>(16) Podemos perdoar quem já morreu</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-16')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Muitos têm mágoas relacionadas a pessoas que já morreram, o que causa um mal estar muito grande, pois pensa-se ser impossível qualquer atitude com relação a tais pessoas.</p>
+<p>Quero confortá-las lembrando mais uma vez um detalhe importante em relação a isso: o perdão não depende dos outros, e sim de nós mesmos; não é decisão dos outros, e sim nossa decisão.</p>
+<p>Portanto, anime-se e perdoe as pessoas agora mesmo por tudo aquilo que um dia tenha ferido você.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-16" onclick="toggleCurtida('capitulo-16')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-16">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-16" src="./audios/16_Perdoar_quem_ja_morreu.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 17 -->
+        <article class="capitulo" id="capitulo-17">
+            <div class="capitulo-header">
+                <h2>(17) Perdão não é uma solenidade</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-17')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <ul><li>Decisão (sem ela ninguém faz nada);</li>
+<li>agendamento;</li>
+<li>convocação dos interessados; 
+<li>momento de reflexão (os envolvidos precisam pensar no que fizeram e em suas reações);</li>
+<li> identificação dos motivos;</li>
+<li>declaração das culpas;</li>
+<li>pagamento da dívida;</li>
+<li>momento emotivo (todos choram e se abraçam);</li>
+<li>declaração das obrigações; 
+<li>momento da pancada na cabeça (todos devem esquecer);</li>
+<li>saída solene de braços dados.</li></ul>
+<p>Nããoo!!! Felizmente o perdão não é uma solenidade; e desse programa impossível, criado na cabeça de muitas pessoas, a única coisa necessária para que o perdão de fato aconteça é a decisão. Nem mesmo a declaração da página 15 é necessária se a decisão acontecer no íntimo.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-17" onclick="toggleCurtida('capitulo-17')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-17">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-17" src="./audios/17_Perdao_nao_eh_uma_solenidade.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 18 -->
+        <article class="capitulo" id="capitulo-18">
+            <div class="capitulo-header">
+                <h2>(18) Quem perdoa não precisa esquecer</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-18')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Nossa memória existe para lembrarmos e não para esquecermos!</p>
+<p>Dos erros que aprendemos sobre o perdão talvez esse seja o mais importante, pois, se aprendemos que quem perdoa esquece e a nossa mente trabalha no sentido de nos fazer lembrar, então, está formada a confusão, que precisa ficar clara em nossa mente.</p>
+<p>Quando queremos lembrar algum fato, data ou qualquer outra coisa, a melhor forma é utilizarmos uma associação. Logo, se associamos uma pessoa a um fato, mesmo que involuntariamente, isso provavelmente ficará gravado em nossa mente para sempre.</p>
+<p>O que podemos e devemos fazer é alterar o valor do fato na nossa mente, minimizando os seus efeitos prejudiciais; ou seja, aquilo que nos incomodava passa, pelo nosso próprio esforço, a não nos incomodar mais.</p>
+<p>Uma forma interessante de lidarmos com isso é, toda vez que lembrarmos do fato, relembrarmos que já perdoamos. Por mais grave que tenha sido, ao longo do tempo essa lembrança deixará de ser pesada.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-18" onclick="toggleCurtida('capitulo-18')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-18">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-18" src="./audios/18_Quem_perdoa_nao_precisa_esquecer.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 19 -->
+        <article class="capitulo" id="capitulo-19">
+            <div class="capitulo-header">
+                <h2>(19) Não se perdoa mais de uma vez a mesma coisa</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-19')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>É simples entender! O perdão de verdade acontece na primeira vez e <strong><em>não existe “desperdão”.</em></strong></p>
+<p>Só precisamos perdoar de novo se houver uma nova “ofensa”; nesse caso, o perdão deve funcionar na proporção de um para cada ofensa.</p>
+<p>O que muitas vezes nos confunde é a questão mencionada em Mateus 18:21 e 22 a respeito das “setenta vezes sete”; se alguém nos ofender várias vezes e da mesma forma, teremos que perdoar por todas as vezes, mesmo que isso se repita quatrocentos e oitenta e nove vezes. O texto é claro no propósito de nos mostrar que nós nunca teremos motivos para não perdoar.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-19" onclick="toggleCurtida('capitulo-19')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-19">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-19" src="./audios/19_Nao_se_perdoa_mais_de_uma_vez.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 20 -->
+        <article class="capitulo" id="capitulo-20">
+            <div class="capitulo-header">
+                <h2>(20) Quando perdoamos assumimos o prejuízo</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-20')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Curiosamente, entender isso será muito recompensador.</p>
+<p>Imagine duas pessoas, uma que tenha $20 em sua própria conta e outra que tenha $1000; imagine também que alguém deva $10 a cada uma delas e esteja pedindo perdão da dívida às duas...</p>
+<p>Qual delas perdoará mais facilmente?</p>
+<p>...$10 é um valor importante pra quem só tem 20; já pra quem tem 1000, os 10 são irrisórios; o que torna mais fácil perdoar a dívida.</p>
+<p>A comparação nesse caso é a mais simples: se alguém nos deve algum dinheiro e perdoamos sua dívida, não poderemos mais cobrar esse dinheiro. Isso significa que assumimos o prejuízo.</p>
+<p>Assim funciona com qualquer aspecto da nossa vida e, quando alguém faz algo contra nós, se perdoamos, assumimos o prejuízo. Daí a necessidade de revermos os valores da vida. Quanto mais desvalorizarmos os fatos que nos ferem, menor será o prejuízo; 
+e, quanto menor for o prejuízo, mais fácil será assumirmos.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-20" onclick="toggleCurtida('capitulo-20')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-20">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-20" src="./audios/20_Quando_perdoamos_assumimos_o_prejuizo.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 21 -->
+        <article class="capitulo" id="capitulo-21">
+            <div class="capitulo-header">
+                <h2>(21) As pessoas não deixam de errar porque as perdoamos</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-21')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>É natural que nós queiramos que as pessoas mudem e sejam melhores. Todas as pessoas querem ser melhores, mas nem sempre sabem como ou conseguem.</p>
+<p>As coisas aqui funcionam como no exemplo da mudança de casa: primeiro tomamos a decisão, depois mudamos. Mas só podemos tomar decisões em relação a nós mesmos; jamais podemos decidir que o nosso vizinho vai mudar, nem nosso amigo, nem nosso inimigo. Só podemos decidir em relação a nós mesmos. Podemos, sim, influenciar as pessoas, e a melhor forma de influenciarmos alguém no que diz respeito a alguma mudança é termos nós mesmos uma boa experiência em relação a ela. Ou seja, cabe a nós perdoar e dar bom exemplo de que valeu a pena. Mas, volto a lembrar, o simples fato de termos perdoado não significa que a pessoa vai deixar de errar.</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-21" onclick="toggleCurtida('capitulo-21')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-21">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-21" src="./audios/21_As_pessoas_nao_deixam_de_errar.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 22 -->
+        <article class="capitulo" id="capitulo-22">
+            <div class="capitulo-header">
+                <h2>(22) Quem perdoa cria,  imediatamente, condições para ajudar quem o está ofendendo</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-22')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Quando perdoamos quebramos barreiras importantes no nosso relacionamento com as pessoas.</p>
+<p>Olhar nos olhos, estender a mão ou mesmo dar um abraço são quase impossíveis antes do perdão. A nuvem negra formada em nossa mente pela supervalorização dos fatos impede-nos de agir no sentido de resolver a situação. Quando perdoamos, essa nuvem é destruída, nos permite enxergar os motivos que levaram tal pessoa a agir contra nós, se foi voluntariamente ou não e até mesmo se nós mesmos não provocamos isso.</p>
+<p>O bem-estar provocado pelo perdão nos dá condições para ajudar a resolver qualquer que seja o problema causado. Veja, porém, que resolver não é parte do perdão e sim consequência dele.</p>
+<br>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-22" onclick="toggleCurtida('capitulo-22')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-22">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-22" src="./audios/22_Quem_perdoa_cria_condicoes_para_ajudar.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 23 -->
+        <article class="capitulo" id="capitulo-23">
+            <div class="capitulo-header">
+                <h2>(23) Perdoe todos agora mesmo. O lucro é seu!</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-23')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>O único capaz de lucrar com a falta de perdão e, consequentemente, com a desunião entre as pessoas nas famílias, nas igrejas e na sociedade em geral é o Diabo. Tudo que ele puder fazer contra esse momento, com certeza, ele vai fazer. Portanto, não se intimide,</p>
+                    <p><em>"maior é o que está em nós do que o que está no mundo" ( I João 4:4)</em>, <br> 
+                chegou a hora de você perdoar.</p>
+                <p>Uma vez que o perdão está exatamente na decisão que tomamos de perdoar, a única coisa que você precisa fazer agora é decidir e pronto.</p>
+                <p>Perdoe sem distinção e sem exceção. Comece a lembrar das coisas que as pessoas fizeram e vá declarando: Está perdoado! Fulano está perdoado! Sicrano está perdoado! <br>
+                Gaste tempo com isso.</p>
+                <p>Comece a viver agora como quem perdoou, afinal, você perdoou! As mudanças começam a partir de agora.</p>
+                <p>Que Deus abençoe essa mudança na sua vida. <br>
+                Não deixe de testemunhar isso!</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-23" onclick="toggleCurtida('capitulo-23')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-23">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-23" src="./audios/23_Perdoe_todos_agora_mesmo.mp3"></audio>
+        </article>
+        
+        <!-- Capítulo 24 -->
+        <article class="capitulo" id="capitulo-24">
+            <div class="capitulo-header">
+                <h2>(24) Conclusão</h2>
+                <div class="capitulo-botoes">
+                    <button class="btn-audio" onclick="toggleAudio('audio-24')">🔊 Ouvir</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(-1)">A-</button>
+                    <button class="btn-fonte" onclick="ajustarFonte(1)">A+</button>
+                </div>
+            </div>
+            
+            <div class="capitulo-texto">
+                <p>Como eu disse, era uma leitura rápida; se você fez a leitura acompanhando o áudio, isso significou menos de 25 minutos. Minha esperança é que você tenha assimilado o perdão tão rápido quanto a leitura; no entanto, muitas vezes estamos falando de décadas de mágoas e eu respeito você se, por algum motivo, o perdão ainda não foi, pra você, um fato.</p>
+                <p>Provocado pela IA que me auxiliou com o código desse site, meditei nessa questão do tempo de assimilação e gostaria de destacar aqui, alguns pontos importantes:</p>
+                <p>- Você não precisa entender o perdão para poder perdoar. Então, perdoe mesmo sem entender direito; enquanto você vai aprendendo, já vai desfrutando dos seus bons efeitos.</p>
+                <p>- A declaração (eu perdoo...), no seu íntimo, é a mais importante de todas; mesmo sem dizer uma palavra você pode transformar o perdão em um fato;</p>
+                <p>- O perdão não é um processo; o aprendizado sobre o perdão, sim; o treinamento, sim; o fortalecimento, sim; o cuidado, sim; o curativo, sim; a mudança, sim; a cicatrização sim; mas o perdão não... <br>
+                ... o perdão é a decisão que desencadeia os processos de mudança de valores, de fortalecimento, de cuidados e de cicatrização.</p>
+                <p>Respire fundo! Isso é importante para colocar as coisas no lugar.</p>
+                <p>Na medida do possível, livre-se das ideias nocivas que atrapalhavam o seu entendimento e a sua relação com as pessoas.</p>
+                <p>Permita-se meditar no que aprendeu aqui e, tão logo seja possível, releia o livro; tenho certeza que uma segunda leitura já será bem mais leve.</p>
+                <p>Faça do perdão uma prática diária; logo você também estará entre os que desejam ajudar a descomplicar o perdão.</p>
+                <p>Sucesso!</p>
+            </div>
+            
+            <div class="interacao-linha">
+                <button class="btn-curtir-inline" id="btn-curtida-capitulo-24" onclick="toggleCurtida('capitulo-24')">
+                    <span class="icone-curtida">🤍</span>
+                    <span id="curtidas-capitulo-24">0</span>
+                </button>
+                <button class="btn-painel-capitulo" onclick="abrirModalDF()">💬 Compartilhe/Comente</button>
+            </div>
+            
+            <audio id="audio-24" src="./audios/24_Conclusao.mp3"></audio>
+        </article>
+        <!-- Repita a estrutura acima para os capítulos 2 a 23 -->
 
     </main>
 
     <!-- Footer -->
     <footer>
-        <p>© 2024 Perdão, por que não? - Todos os direitos reservados.</p>
-        <p>Desenvolvido com ❤ para facilitar o perdão.</p>
+        <p>© 2026 Perdão, por que não? - Todos os direitos reservados.</p>
+        <p>Desenvolvido para descomplicar o perdão.</p>
     </footer>
 
     <!-- ============================================
-         PAINEL FLUTUANTE DE INTERAÇÃO (INTEGRADO)
+         MODAL DF- (PAINEL FLUTUANTE DE INTERAÇÃO)
          ============================================ -->
-    <div id="overlay" class="overlay" onclick="togglePainelInteracao()"></div>
 
-    <!-- BOTÃO DE TESTE - PAINEL COMO PÁGINA SEPARADA
-    <a href="div_flutuante.html" target="_self" 
-       style="position: fixed; bottom: 20px; left: 20px; z-index: 99999; 
-              background: #C6C76D; color: #000; text-decoration: none;
-              padding: 15px 25px; font-weight: 700; 
-              box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-              font-family: 'Fira Sans Extra Condensed', sans-serif;">
-        🧪 TESTAR PAINEL (LINK)
-    </a> -->
-    <!-- ============================================
-     PAINEL FLUTUANTE DE INTERAÇÃO (df-)
-     ============================================ -->
-<div id="overlay" class="df-overlay" onclick="fecharPainel()"></div>
+    <!-- Overlay (fechar ao clicar fora) -->
+    <div id="dfOverlay" class="df-overlay" aria-hidden="true"></div>
 
-<div id="painelInteracao" class="df-painel-interacao">
-    <div class="df-fundo">
-        <img src="assets/painel-capa-degrade.png" class="df-img-fundo" alt="Fundo do painel">
+    <!-- Painel Modal -->
+    <div id="dfModal" class="df-modal" role="dialog" aria-modal="true" aria-labelledby="dfModalTitle" aria-hidden="true">
         
-        <div class="df-container">
-            <!-- Seção AA: Toggles -->
-            <div class="df-AA">
-                <div class="df-AAA-Form" onclick="toggleFormulario()">
-                    <span class="df-texto-superior">Enviar feedback</span>
-                    <span class="df-texto-inferior">Feedback</span>
-                </div>
-                <div class="df-AAA-Git" onclick="toggleGithub()">
-                    <span class="df-texto-superior">Enviar mensagem no</span>
-                    <span class="df-texto-inferior">GitHub</span>
-                </div>
+        <!-- Fundo visual -->
+        <div class="df-modal__bg"></div>
+        
+        <!-- Conteúdo scrollável -->
+        <div class="df-modal__content">
+            
+            <!-- AA: Toggle Formulário / GitHub -->
+            <div class="df-toggle-group">
+                <button class="df-toggle-btn df-toggle-btn--active" 
+                        id="dfToggleForm" 
+                        aria-controls="dfForm dfGithubView"
+                        aria-expanded="true">
+                    <span>Enviar feedback</span>
+                    <span>Feedback</span>
+                </button>
+                <button class="df-toggle-btn" 
+                        id="dfToggleGit"
+                        aria-controls="dfForm dfGithubView"
+                        aria-expanded="false">
+                    <span>Enviar mensagem no</span>
+                    <span>GitHub</span>
+                </button>
             </div>
             
-            <!-- Seção BB: Compartilhamento -->
-            <div class="df-BB">
-                <div class="df-BBB-1" onclick="compartilharWhatsApp()">
-                    <img src="./assets/share-whatsapp.png" alt="WhatsApp">
-                    <span class="df-texto-rede">WhatsApp</span>
-                </div>
-                <div class="df-BBB-2" onclick="compartilharInstagram()">
-                    <img src="./assets/share-instagram.png" alt="Instagram">
-                    <span class="df-texto-rede">Instagram</span>
-                </div>
-                <div class="df-BBB-3" onclick="compartilharFacebook()">
-                    <img src="./assets/share-facebook.png" alt="Facebook">
-                    <span class="df-texto-rede">Facebook</span>
-                </div>
-                <div class="df-BBB-4" onclick="copiarLink()">
-                    <img src="./assets/share-link.png" alt="Copiar Link">
-                    <span class="df-texto-rede">Copiar Link</span>
-                </div>
+            <!-- Formulário (visível por padrão) -->
+            <form class="df-form active" id="dfForm" novalidate>
+                <input type="text" class="df-form__input" placeholder="Seu nome" required>
+                <input type="email" class="df-form__input" placeholder="Seu email" required>
+                <textarea class="df-form__textarea" placeholder="Sua mensagem, dúvida ou testemunho" required></textarea>
+                <button type="submit" class="df-form__submit">Enviar</button>
+            </form>
+            
+            <!-- View GitHub (oculta por padrão) -->
+            <div class="df-github-view" id="dfGithubView">
+                <p style="margin-bottom:1dvh;">Redirecionando para o repositório...</p>
+                <a href="https://github.com/AlmaPPG/perdaopqn/issues/new" target="_blank" rel="noopener">
+                    Abrir nova Issue →
+                </a>
             </div>
             
-            
-            <!-- Seção CC: Fale com o Autor -->
-            <div class="df-CC" onclick="faleComAutor()">
-                <img src="./assets/fale-com.png" alt="Fale com o autor">
-                <span class="df-texto-whats">Fale direto<br>com o autor</span>
+            <!-- BB: Compartilhamento -->
+            <div class="df-share-grid">
+                <button class="df-share-btn" id="dfShareWhatsApp" aria-label="Compartilhar no WhatsApp">
+                    <img src="./assets/share-whatsapp.png" alt="" aria-hidden="true">
+                    <span class="df-share-btn__label">WhatsApp</span>
+                </button>
+                <button class="df-share-btn" id="dfShareInstagram" aria-label="Compartilhar no Instagram">
+                    <img src="./assets/share-instagram.png" alt="" aria-hidden="true">
+                    <span class="df-share-btn__label">Instagram</span>
+                </button>
+                <button class="df-share-btn" id="dfShareFacebook" aria-label="Compartilhar no Facebook">
+                    <img src="./assets/share-facebook.png" alt="" aria-hidden="true">
+                    <span class="df-share-btn__label">Facebook</span>
+                </button>
+                <button class="df-share-btn" id="dfShareCopy" aria-label="Copiar link">
+                    <img src="./assets/share-link.png" alt="" aria-hidden="true">
+                    <span class="df-share-btn__label">Copiar Link</span>
+                </button>
             </div>
             
-            <!-- Seção DD: Voltar à Leitura -->
-            <div class="df-DD" onclick="fecharPainel()">
+            <!-- CC: Fale com o autor -->
+            <button class="df-author-cta" id="dfAuthorWhats" aria-label="Falar com o autor no WhatsApp">
+                <img src="./assets/fale-com.png" alt="" aria-hidden="true">
+                <span class="df-author-cta__text">Fale direto<br>com o autor</span>
+            </button>
+            
+            <!-- DD: Voltar à leitura -->
+            <button class="df-close-cta" id="dfCloseModal">
                 <p>Clique aqui para <strong>voltar à leitura</strong></p>
-            </div>
-
-            <!-- Conteúdos Ocultos -->
-            <div id="conteudo-formulario" class="df-toggle-conteudo">
-                <input type="text" class="df-form-input" placeholder="Seu nome">
-                <input type="email" class="df-form-input" placeholder="Seu email">
-                <textarea class="df-form-input" placeholder="Sua mensagem" style="min-height:80px;"></textarea>
-                <button class="df-btn-enviar" onclick="event.stopPropagation(); alert('Enviado!')">ENVIAR</button>
-            </div>
-
-            <div id="conteudo-github" class="df-toggle-conteudo">
-                <p style="color:#C6C76D; margin-bottom:10px;">Redirecionando para o GitHub...</p>
-                <a href="https://github.com/AlmaPPG/perdaopqn" target="_blank" style="color:#fff;" onclick="event.stopPropagation();">Abrir Issues</a>
-            </div>
+            </button>
+            
         </div>
     </div>
-</div>
 
-<!-- Link do CSS do Painel (df-) -->
-<link rel="stylesheet" href="css/df-div_flutuante.css">
     <script src="js/main.js"></script>
 </body>
 </html>

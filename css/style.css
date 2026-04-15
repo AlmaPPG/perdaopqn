@@ -9,6 +9,7 @@
     --cor-consequencia-ruim: #FFFF66;
     --cor-pratica: #777777;
     --cor-padrao: #CCCCCC;
+    --cor-destaque: #C6C76D;
     
     /* Tema Escuro */
     --fundo-site: #121212;
@@ -22,12 +23,9 @@
     /* Tipografia */
     --fonte-titulo: 'Fira Sans Extra Condensed', sans-serif;
     --fonte-corpo: 'Fira Sans Condensed', sans-serif;
-
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
-
 
 body {
     font-family: var(--fonte-corpo);
@@ -55,16 +53,16 @@ body {
 
 /* Container */
 .container {
-    max-width: 800px;
+    max-width: 550px;
     margin: 0 auto;
-    padding: 0px;
+    padding: 0;
 }
 
 /* Hero / Capa */
 .hero {
     text-align: center;
     background: #121212;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 .hero h1 {
     font-family: var(--fonte-titulo);
@@ -79,9 +77,9 @@ body {
     color: var(--texto-secundario);
 }
 .meta-info {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 0.87rem;
     color: var(--texto-secundario);
 }
 
@@ -89,26 +87,43 @@ body {
 .legenda-cores {
     background: var(--fundo-card);
     padding: 20px;
-    border-radius: 0px;
+    border-radius: 0;
     margin-bottom: 40px;
     border: 1px solid var(--borda-suave);
 }
-.legenda-cores h3 { color: var(--texto-principal); }
-.grid-legenda { display: flex; flex-wrap: wrap; gap: 15px; }
+.legenda-cores h3 { 
+    color: var(--texto-principal); 
+}
+
+.grid-legenda { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 15px; 
+}
+
 .item-legenda {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
     font-size: 0.9rem;
     color: var(--texto-secundario);
 }
+
+/* === DOT PADRONIZADO (14x14px, redondo, protegido) === */
 .dot {
     width: 14px;
     height: 14px;
-    border-radius: 0;
     display: inline-block;
-    border: 1px solid #555;
+    flex-shrink: 0; /* ← não é espremido pelo flex container */
+    box-sizing: border-box; /* ← padding/border não alteram o tamanho */
+    border: none;
+    padding: 0;
+    margin: 0;
+    line-height: 0; /* ← remove espaço fantasma em alguns browsers */
+    vertical-align: middle;
 }
+
+/* Cores dos dots (mantidas como estavam) */
 .dot.titulo-antes { background-color: var(--cor-antes); }
 .dot.titulo-alerta { background-color: var(--cor-alerta); }
 .dot.titulo-entende { background-color: var(--cor-entende); }
@@ -118,7 +133,20 @@ body {
 .dot.titulo-consequencia-ruim { background-color: var(--cor-consequencia-ruim); }
 .dot.titulo-pratica { background-color: var(--cor-pratica); }
 
-/* Capítulos */
+/* -------------- Correção dos dots */
+/* === CORREÇÃO: Dots herdando padding de classes de texto === */
+.dot.titulo-antes,
+.dot.titulo-alerta,
+.dot.titulo-entende,
+.dot.titulo-consequencia,
+.dot.titulo-define,
+.dot.titulo-naoeh,
+.dot.titulo-consequencia-ruim,
+.dot.titulo-pratica {
+    padding: 0 !important;
+}
+
+/* ============================ Capítulos ============================ */
 .capitulo {
     text-align: left;
     font-weight: 300;
@@ -161,333 +189,469 @@ body {
 }
 .titulo-padrao { color: var(--cor-padrao); }
 
-/* Player de Áudio */
+/* Header do Capítulo + Botões */
 .capitulo-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
-.btn-audio {
-    background: #2a2a2a;
-    border: 1px solid var(--borda-suave);
-    color: var(--texto-principal);
-    padding: 8px 15px;
-    cursor: pointer;
+.capitulo-botoes {
+    display: flex;
+    gap: 8px;
+}
+.capitulo-botoes button {
+    background: rgba(198, 199, 109, 0.2);
+    color: var(--cor-destaque);
+    border: 1px solid var(--cor-destaque);
+    padding: 5px 12px;
     font-family: var(--fonte-corpo);
-    font-size: 0.9rem;
-    transition: all 0.3s;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
 }
-.btn-audio:hover {
-    background: #3a3a3a;
-    border-color: var(--cor-antes);
-}
-audio {
-    width: 100%;
-    margin-top: 15px;
-    display: none;
-}
-audio.active { display: block; }
-
-/* Links */
-a {
-    color: var(--cor-antes);
-    text-decoration: none;
-    transition: color 0.3s;
-}
-a:hover {
-    color: var(--cor-entende);
-    text-decoration: underline;
+.capitulo-botoes button:hover {
+    background: var(--cor-destaque);
+    color: #000;
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--texto-secundario);
-    font-size: 0.9rem;
-    border-top: 1px solid var(--borda-suave);
-    margin-top: 40px;
+/* Texto do Capítulo (escala com --fonte-escala) */
+.capitulo-texto p {
+    font-size: calc(18px * var(--fonte-escala, 1));
+    margin-bottom: 1.2em;
 }
 
-/* Curtidas Inline */
+/* Linha de Interação (Curtir + Modal) */
 .interacao-linha {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 15px;
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid var(--borda-suave);
-    flex-wrap: wrap;
 }
 .btn-curtir-inline {
     background: transparent;
     border: 1px solid var(--borda-suave);
     color: var(--texto-principal);
-    padding: 10px 18px;
-    cursor: pointer;
+    padding: 8px 15px;
     font-family: var(--fonte-corpo);
-    font-size: 0.95rem;
-    transition: all 0.3s;
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
-    white-space: nowrap;
-}
-.btn-curtir-inline:hover {
-    border-color: #e25555;
-    background: #2a1a1a;
+    transition: all 0.2s;
 }
 .btn-curtir-inline.curtido {
-    border-color: #e25555;
-    background: #2a1a1a;
+    border-color: #FF6666;
+    color: #FF6666;
 }
-.icone-curtida { font-size: 1.2rem; }
-
 .btn-painel-capitulo {
-    background: var(--cor-antes);
-    color: #FFFFFF;
+    background: var(--cor-destaque);
+    color: #000;
     border: none;
-    padding: 10px 18px;
+    padding: 8px 20px;
+    font-family: var(--fonte-titulo);
+    font-weight: 700;
+    text-transform: uppercase;
     cursor: pointer;
-    font-family: var(--fonte-corpo);
-    font-size: 0.95rem;
-    transition: all 0.3s;
-    white-space: nowrap;
+    transition: background 0.2s;
 }
-.btn-painel-capitulo:hover { background: #5a8ab8; }
+.btn-painel-capitulo:hover {
+    background: #D4D58A;
+}
+/* ============================ Parágrafo padrão (não lido) */
+.capitulo p {
+    opacity: 0.7;
+    transition: opacity 0.5s ease;
+}
+
+/* Parágrafo lido (após 7s na tela) */
+.capitulo p.lido {
+    opacity: 0.9;
+}
+
+/* Destaques (sempre 100%) */
+.capitulo mark,
+.capitulo strong,
+.capitulo .destaque {
+    opacity: 1;
+}
+/* ============================ Footer ============================ */
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--texto-secundario);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--borda-suave);
+}
 
 /* ============================================
-   PAINEL FLUTUANTE DE INTERAÇÃO (VISUAL APROVADO)
+   AVISO DE ORIENTAÇÃO (MOBILE LANDSCAPE)
    ============================================ */
-.overlay {
+.df-orientation-warning {
+    display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
+    background: rgba(18, 18, 18, 0.98);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+/* Ativa apenas se JS permitir E estiver em landscape mobile */
+@media (orientation: landscape) and (max-width: 768px) {
+    .df-orientation-warning.df-active {
+        display: flex;
+        opacity: 1;
+        animation: dfFadeIn 0.3s ease;
+    }
+}
+
+/* Força esconder após 7s (ignora @media e destrava navegação) */
+.df-orientation-warning.df-hidden {
+    display: none !important;
+    opacity: 0;
+    animation: none;
+}
+
+.df-orientation-warning__icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+    color: var(--cor-destaque);
+}
+.df-orientation-warning__text {
+    font-family: var(--fonte-titulo);
+    font-size: 1.3rem;
+    color: var(--texto-destaque);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+.df-orientation-warning__subtext {
+    font-family: var(--fonte-corpo);
+    font-size: 0.95rem;
+    color: var(--texto-secundario);
+    font-weight: 300;
+}
+
+body.df-locked {
+    overflow: hidden;
+    touch-action: none;
+}
+
+@keyframes dfFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+body.df-locked {
+    overflow: hidden;
+    touch-action: none;
+}
+
+@keyframes dfFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ============================================
+   MODAL DF- (ESTRUTURA LIMPA - BEM SIMPLIFICADO)
+   Prefixo: df- (Div Flutuante)
+   ============================================ */
+
+/* ============================================
+   MODAL DF- (FLUIDO E PROPORCIONAL)
+   ============================================ */
+
+/* Overlay */
+.df-overlay {
+    position: fixed;
+    inset: 0;
     background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(3px);
     z-index: 10000;
     display: none;
-    backdrop-filter: blur(3px);
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
-.overlay.active { display: block; }
+.df-overlay.active {
+    display: block;
+    opacity: 1;
+}
 
-.painel-interacao {
+/* Painel Principal (Proporcional) */
+.df-modal {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.95);
     z-index: 10001;
     display: none;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    
+    /* ✅ Proporção Fluida (Baseado na Altura da Viewport) */
+    width: min(95vw, 50.1dvh);      /* Largura base */
+    height: min(169vw, 89.2dvh);    /* Largura x 1.78 */
+    max-height: 92dvh;              /* Teto de segurança */
 }
-.painel-interacao.active { display: block; }
-
-/* Estrutura Visual do Painel */
-.fundo {
-    width: 340px;
-    height: 640px;
-    max-width: 95vw;
-    max-height: 95dvh;
-    aspect-ratio: 340 / 640;
-    background-color: rgba(0, 0, 0, 0.5);
-    position: relative;
-}
-.img-fundo {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+.df-modal.active {
     display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
 }
-.container-painel {
+
+/* Fundo Visual */
+.df-modal__bg {
+    position: absolute;
+    inset: 0;
+    background: url('../assets/painel-capa-degrade.png') center top / contain no-repeat;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Conteúdo Scrollável (Unidades Relativas) */
+.df-modal__content {
     position: relative;
     z-index: 1;
-    width: 320px;
-    height: 620px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    margin: 10px;
+    gap: 1dvh;          /* ✅ Relativo à viewport */
+    padding: 2dvh;      /* ✅ Relativo à viewport */
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
-/* Seção AA */
-.AA {
-    background-color: rgba(0, 0, 0, 0.3);
-    height: 340px;
+/* Toggle Group (Altura Proporcional) */
+.df-toggle-group {
     display: flex;
-    gap: 7px;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 7px;
-    margin-bottom: 7px;
+    gap: 1dvh;
+    height: 4.6dvh;     /* ✅ Relativo à viewport */
 }
-.AAA-Form, .AAA-Git {
-    background: black;
-    width: 148.7px;
-    height: 32.73px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex-shrink: 0;
-    cursor: pointer;
-}
-
-/* Seção BB */
-.BB {
-    display: flex;
-    gap: 7px;
-}
-.BBB-1, .BBB-2, .BBB-3, .BBB-4 {
+.df-toggle-btn {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
+    padding: 0 1dvh;
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--cor-destaque);
+    font-family: var(--fonte-corpo);
+    font-size: clamp(12px, 2.5vw, 14px); /* ✅ Escala fluida */
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+    border: none;
+}
+.df-toggle-btn--active,
+.df-toggle-btn:hover {
+    background: rgba(198, 199, 109, 0.2);
+}
+.df-toggle-btn span:last-child {
+    font-weight: 700;
+    font-family: var(--fonte-titulo);
+    text-transform: uppercase;
+    font-size: clamp(14px, 3vw, 16px);
+}
+
+/* Formulário */
+.df-form {
+    display: none;
+    flex-direction: column;
+    gap: 1dvh;
+}
+.df-form.active { display: flex; }
+.df-form__input,
+.df-form__textarea {
+    width: 100%;
+    padding: 7px 15px;
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--texto-principal);
+    border: none;
+    outline: none;
+    font-family: var(--fonte-corpo);
+    font-size: clamp(14px, 2.5vw, 16px);
+    box-sizing: border-box;
+}
+.df-form__input { height: 4.6dvh; }
+.df-form__textarea { 
+    height: 13.6dvh; 
+    resize: none; 
+    vertical-align: top;
+}
+.df-form__input::placeholder,
+.df-form__textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+}
+.df-form__input:focus,
+.df-form__textarea:focus {
+    background: rgba(0, 0, 0, 0.7);
+    border-bottom: 1px solid var(--cor-destaque);
+}
+.df-form__submit {
+    align-self: flex-end;
+    height: 4.6dvh;
+    padding: 0 25px;
+    background: var(--cor-destaque);
+    color: #000;
+    border: none;
+    font-family: var(--fonte-titulo);
+    font-size: clamp(16px, 3vw, 18px);
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.df-form__submit:hover {
+    background: #D4D58A;
+}
+
+/* GitHub View */
+.df-github-view {
+    display: none;
+    color: var(--cor-destaque);
+    text-align: center;
+    padding: 2dvh;
+}
+.df-github-view.active { display: block; }
+.df-github-view a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Seção BB: Compartilhamento (Grid Proporcional) */
+.df-share-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1dvh;
+    width: 100%;
+    margin-top: auto;
+}
+.df-share-btn {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: flex-end;
     position: relative;
     cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: 100%;
+    /* ✅ Proporção 1 : 1.2 */
+    aspect-ratio: 1 / 1.2;
+    min-height: 50px;
 }
-.BBB-1 img, .BBB-2 img, .BBB-3 img, .BBB-4 img,
-.texto-rede {
-    pointer-events: none; /* ✅ Toda a div é clicável */
-}
-.BBB-1 img, .BBB-2 img, .BBB-3 img, .BBB-4 img {
+.df-share-btn img {
+    /* ✅ Escala com o botão (60% do espaço) */
     width: 100%;
     height: auto;
+    object-fit: contain;
     display: block;
 }
-.texto-rede {
-    font-family: 'Fira Sans Extra Condensed', sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    color: #C6C76D;
-    text-align: center;
+.df-share-btn__label {
     position: absolute;
-    bottom: 5px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
+    font-family: var(--fonte-titulo);
+    font-size: clamp(9px, 3vw, 12px);
+    color: var(--cor-destaque);
+    text-align: center;
     white-space: nowrap;
+    width: 100%;
     line-height: 1;
 }
 
-/* Seção CC */
-.CC {
-    height: 87.21px;
-    margin-top: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Seção CC: Fale com o Autor (Proporcional) */
+.df-author-cta {
     position: relative;
+    height: auto;   /* ✅ Relativo à viewport */
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: 100%;
 }
-.CC img {
+.df-author-cta img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     display: block;
 }
-.texto-whats {
-    font-family: 'Fira Sans Extra Condensed', sans-serif;
-    font-size: 24px;
-    font-weight: 400;
-    color: #000000;
-    text-align: left;
+.df-author-cta__text {
     position: absolute;
-    bottom: 86px;
-    left: 180px;
+    bottom: 3dvh;
+    left: 20%;
     transform: translateX(-50%);
-    width: 100%;
+    font-family: var(--fonte-titulo);
+    font-size: clamp(18px, 4vw, 24px);
+    color: #000;
+    text-align: left;
+    align-content: center;
     white-space: nowrap;
-    line-height: 1;
 }
 
-/* Seção DD */
-.DD {
-    height: 76.93px;
-    margin-top: 7px;
-    background-color: #C6C76D;
+/* Seção DD: Voltar à Leitura (Proporcional) */
+.df-close-cta {
+    height: 7.7dvh;   /* ✅ Relativo à viewport */
+    background: var(--cor-destaque);
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
     cursor: pointer;
+    transition: background 0.2s;
+    border: none;
+    width: 100%;
+    padding: 0;
 }
-.DD p {
-    font-family: 'Fira Sans Extra Condensed', sans-serif;
-    font-size: 20px;
-    font-weight: 400;
+.df-close-cta:hover {
+    background: #D4D58A;
+}
+.df-close-cta p {
+    font-family: var(--fonte-titulo);
+    font-size: clamp(16px, 3.5vw, 20px);
     color: #000;
     text-transform: uppercase;
     line-height: 1.2;
+    text-align: center;
 }
-.DD strong { font-weight: 800; }
-
-/* Textos da AA */
-.texto-superior {
-    font-family: 'Fira Sans Extra Condensed', sans-serif;
-    font-size: 14px;
-    font-weight: 300;
-    color: #FFFFFF;
-    margin-left: 7px;
-    text-align: left;
-    line-height: 1;
-}
-.texto-inferior {
-    font-family: 'Fira Sans Extra Condensed', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: #C6C76D;
-    margin-right: 14px;
-    text-align: right;
-    line-height: 1;
+.df-close-cta strong {
+    font-weight: 800;
 }
 
-/* Conteúdos Ocultos (Form/Git) */
-.toggle-conteudo {
-    position: absolute;
-    top: 10%;
-    left: 5%;
-    width: 90%;
-    background: #000;
-    padding: 10px;
-    z-index: 10;
-}
-.form-input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid #C6C76D;
-    color: #C6C76D;
-    padding: 8px 0;
-    margin-bottom: 10px;
-    font-family: 'Fira Sans Extra Condensed', sans-serif;
-}
-.btn-enviar {
-    width: 100%;
-    background: #C6C76D;
-    border: none;
-    padding: 10px;
-    color: #000;
-    font-weight: 700;
-    cursor: pointer;
+/* Acessibilidade */
+.df-toggle-btn:focus,
+.df-form__input:focus,
+.df-form__textarea:focus,
+.df-form__submit:focus,
+.df-share-btn:focus,
+.df-close-cta:focus,
+.df-author-cta:focus {
+    outline: 2px solid var(--cor-destaque);
+    outline-offset: 2px;
 }
 
-/* Responsivo */
-@media (max-width: 600px) {
-    .hero h1 { font-size: 2rem; }
-    .capitulo h2 { font-size: 1.4rem; }
-    .capitulo-header { flex-direction: column; align-items: flex-start; }
-    .btn-audio { width: 100%; text-align: center; }
-    .interacao-linha { gap: 10px; }
-    .btn-curtir-inline, .btn-painel-capitulo {
-        padding: 8px 15px;
-        font-size: 0.9rem;
-        flex: 1 1 auto;
-        justify-content: center;
-    }
+/* ================ Textos */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
