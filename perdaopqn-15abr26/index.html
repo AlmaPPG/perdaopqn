@@ -17,14 +17,11 @@
     <!-- ============================================
          AVISO DE ORIENTAÇÃO (MOBILE LANDSCAPE)
          ============================================ -->
-    <div id="dfOrientationWarning" class="df-orientation-warning" role="alert" aria-live="polite">
-        <div>
-            <span class="df-orientation-warning__icon" aria-hidden="true">📱↕️</span>
-            <p class="df-orientation-warning__text">Visibilidade melhor na vertical</p>
-            <p class="df-orientation-warning__subtext">Gire seu dispositivo para aproveitar melhor a leitura</p>
-        </div>
+    <div class="orientation-warning" id="orientation-warning">
+        <img src="./assets/orientation-warning.png" alt="Gire seu dispositivo para o modo vertical" class="orientation-image">
     </div>
 
+    
     <!-- Barra de Progresso -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
@@ -882,12 +879,13 @@ e, quanto menor for o prejuízo, mais fácil será assumirmos.</p>
             
             <!-- DD: Voltar à leitura -->
             <button class="df-close-cta" id="dfCloseModal">
-                <p>Clique aqui para <strong>voltar à leitura</strong></p>
+                Clique aqui para <strong>voltar à leitura</strong>
             </button>
             
         </div>
     </div>
 
-    <script src="js/main.js"></script>
+
+    <script src="./js/main.js"></script>
 </body>
 </html>

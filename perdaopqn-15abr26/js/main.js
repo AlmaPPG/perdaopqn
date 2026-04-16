@@ -1,39 +1,54 @@
 // ============================================
-// CONFIGURAÇÕES GERAIS
+// CONFIGURAÇÕES GLOBAIS
 // ============================================
-const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwXqGw9mlS5B0B-u1qnCdKR98BDoYUEteI8agW-GPZ-HnG0sPA-YW7zs3c5FRmBdEJZlg/exec';
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwXqGw9mlS5B0B-u1qnCdKR98BDoYUEteI8agW-GPZ-HnG0sPA-YW7zs3c5FRmBdEJZlg/exec'; // <--- URL REAL AQUI
 const URL_PRINCIPAL = 'https://perdaopqn.com.br';
 
 // ============================================
-// ANALYTICS & WEBHOOK (Unificado)
+// FUNÇÕES DE ANALYTICS (DEFINIDAS PRIMEIRO)
 // ============================================
 
-function registrarEvento(tipo, elementoId, tempo = null) {
-    // 1. Identificar o leitor
-    const readerId = getReaderId();
+// Gera ou recupera o ID anônimo do leitor
+function getReaderId() {
+    let id = localStorage.getItem('reader_id');
+    if (!id) {
+        id = 'reader-' + Math.random().toString(36).substr(2, 8);
+        localStorage.setItem('reader_id', id);
+    }
+    return id;
+}
 
-    // 2. Identificar o capítulo (busca o ancestral .capitulo)
+// Envia dados para o Google Sheets
+function enviarWebhook(payload) {
+    if (!WEBHOOK_URL || WEBHOOK_URL.includes('AKfycbwXqGw9mlS5B0B-u1qnCdKR98BDoYUEteI8agW-GPZ-HnG0sPA-YW7zs3c5FRmBdEJZlg')) {
+        console.warn('⚠️ Webhook não configurado.');
+        return;
+    }
+
+    fetch(WEBHOOK_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    })
+    .catch(err => console.error('❌ Erro webhook:', err));
+}
+
+// Registra eventos de forma padronizada
+function registrarEvento(tipo, elementoId, tempo = null) {
+    const readerId = getReaderId();
     let capituloId = 'desconhecido';
     let paragrafoId = '';
-    
+
     if (elementoId) {
         const el = document.getElementById(elementoId);
         if (el) {
             const capituloEl = el.closest('.capitulo');
-            if (capituloEl) {
-                capituloId = capituloEl.id;
-            }
-            // Se for evento de parágrafo, guarda o ID do parágrafo
-            if (elementoId.startsWith('p-')) {
-                paragrafoId = elementoId;
-            } else {
-                // Se for evento de capítulo ou outro, usa o ID como referência
-                paragrafoId = ''; 
-            }
+            if (capituloEl) capituloId = capituloEl.id;
+            if (elementoId.startsWith('p-')) paragrafoId = elementoId;
         }
     }
 
-    // 3. Montar o payload
     const payload = {
         reader_id: readerId,
         capitulo: capituloId,
@@ -44,25 +59,150 @@ function registrarEvento(tipo, elementoId, tempo = null) {
         utm_source: new URLSearchParams(window.location.search).get('utm_source') || 'direto'
     };
 
-    // 4. Enviar para o webhook
     enviarWebhook(payload);
 }
 
-function enviarWebhook(payload) {
-    if (!WEBHOOK_URL || WEBHOOK_URL.includes('AKfycbwXqGw9mlS5B0B-u1qnCdKR98BDoYUEteI8agW-GPZ-HnG0sPA-YW7zs3c5FRmBdEJZlg')) {
-        console.log('⚠️ Webhook não configurado');
-        return;
-    }
+// ============================================
+// LÓGICA DE LEITURA (OBSERVER)
+// ============================================
 
-    fetch(WEBHOOK_URL, {
-        method: 'POST',
-        mode: 'no-cors', // Importante para Google Apps Script
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-    })
-    .then(() => console.log('✅ Evento enviado:', payload.evento))
-    .catch(err => console.error('❌ Erro no webhook:', err));
+const paragrafosLidos = new Set();
+const timersParagrafos = {};
+
+// Observer para detectar parágrafos na tela
+const observerParagrafos = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        const paragrafo = entry.target;
+        const paragrafoId = paragrafo.id;
+
+        // Entrada na tela (>50% visível)
+        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+            if (!paragrafosLidos.has(paragrafoId) && !timersParagrafos[paragrafoId]) {
+                
+                timersParagrafos[paragrafoId] = setTimeout(() => {
+                    // Marca visualmente (adiciona classe CSS)
+                    paragrafo.classList.add('lido');
+                    paragrafosLidos.add(paragrafoId);
+                    
+                    // Registra no analytics
+                    registrarEvento('paragrafo_lido', paragrafoId, 7);
+                    
+                    delete timersParagrafos[paragrafoId];
+                }, 7000); // 7 segundos
+            }
+        
+        // Saída da tela (cancela timer se não completou)
+        } else if (!entry.isIntersecting && timersParagrafos[paragrafoId]) {
+            clearTimeout(timersParagrafos[paragrafoId]);
+            delete timersParagrafos[paragrafoId];
+        }
+    });
+}, { threshold: 0.5 });
+
+// Inicializa a leitura
+function initLeituraParagrafos() {
+    // 1. Gerar IDs automáticos se não existirem
+    document.querySelectorAll('.capitulo p').forEach((p, index) => {
+        if (!p.id) {
+            p.id = `p-${index}`;
+        }
+    });
+
+    // 2. Observar todos os parágrafos
+    document.querySelectorAll('.capitulo p').forEach(p => {
+        observerParagrafos.observe(p);
+    });
+
+    console.log('✅ Leitura de parágrafos inicializada (timer: 7s)');
 }
+
+// ============================================
+// BARRA DE PROGRESSO
+// ============================================
+function atualizarProgressBar() {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    const progressBar = document.getElementById('progressBar');
+    if (progressBar) progressBar.style.width = scrolled + '%';
+}
+window.onscroll = function() { atualizarProgressBar(); };
+
+// ============================================
+// AJUSTE DE FONTE (A+/A-)
+// ============================================
+let fonteEscala = parseFloat(localStorage.getItem('fonte-escala')) || 1;
+document.documentElement.style.setProperty('--fonte-escala', fonteEscala);
+
+function ajustarFonte(delta) {
+    fonteEscala = Math.max(0.8, Math.min(1.5, fonteEscala + (delta * 0.02)));
+    document.documentElement.style.setProperty('--fonte-escala', fonteEscala);
+    localStorage.setItem('fonte-escala', fonteEscala);
+}
+
+// ============================================
+// PLAYER DE ÁUDIO
+// ============================================
+function toggleAudio(id) {
+    document.querySelectorAll('audio').forEach(audio => {
+        if (audio.id !== id) {
+            audio.pause();
+            audio.classList.remove('active');
+            const btn = audio.previousElementSibling?.querySelector('.btn-audio');
+            if (btn) btn.textContent = '🔊 Ouvir';
+        }
+    });
+    const audio = document.getElementById(id);
+    const btn = event.target;
+    if (!audio || !btn) return;
+    if (audio.paused) {
+        audio.play();
+        audio.classList.add('active');
+        btn.textContent = '⏸️ Pausar';
+    } else {
+        audio.pause();
+        audio.classList.remove('active');
+        btn.textContent = '🔊 Ouvir';
+    }
+}
+
+// ============================================
+// === CONTROLE DE ORIENTAÇÃO (7s) ===
+// ============================================
+//        let warningTimeout;
+//        let fadeTimeout;
+
+//        function verificarOrientacao() {
+//            const aviso = document.getElementById('orientation-warning');
+//            const ehLandscape = window.innerWidth > window.innerHeight;
+            
+//            if (ehLandscape) {
+//                aviso.classList.add('active');
+//                aviso.classList.remove('fade-out');
+//                document.body.style.overflow = 'hidden';
+                
+//                clearTimeout(fadeTimeout);
+//                fadeTimeout = setTimeout(() => {
+//                    aviso.classList.add('fade-out');
+                    
+//                    clearTimeout(warningTimeout);
+//                    warningTimeout = setTimeout(() => {
+//                        aviso.classList.remove('active');
+//                        document.body.style.overflow = '';
+//                    }, 500);
+//                }, 4500);
+//            } else {
+//                aviso.classList.remove('active');
+//                aviso.classList.remove('fade-out');
+//                document.body.style.overflow = '';
+//                clearTimeout(warningTimeout);
+//                clearTimeout(fadeTimeout);
+//            }
+//        }
+
+//        window.addEventListener('load', verificarOrientacao);
+//        window.addEventListener('resize', verificarOrientacao);
+//        window.addEventListener('orientationchange', verificarOrientacao);
 
 // ============================================
 // SISTEMA DE CURTIDAS
@@ -113,119 +253,6 @@ function toggleCurtida(capituloId) {
 }
 
 
-
-
-
-
-// ============================================
-// LEITURA DE PARÁGRAFOS (7s Timer)
-// ============================================
-
-const paragrafosLidos = new Set();  // Evita recontar
-const timersParagrafos = {};        // Armazena timers ativos
-
-// Gera IDs automáticos nos parágrafos (se não tiver)
-function gerarIdsParagrafos() {
-    document.querySelectorAll('.capitulo p').forEach((p, index) => {
-        if (!p.id) {
-            p.id = `p-${index}`;
-        }
-    });
-}
-
-// Observer para detectar parágrafos na tela
-const observerParagrafos = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        const paragrafo = entry.target;
-        const paragrafoId = paragrafo.id;
-        
-        // ✅ Entrada: parágrafo visível (>50%)
-        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-            
-            // Se ainda não foi lido, inicia timer de 7s
-            if (!paragrafosLidos.has(paragrafoId) && !timersParagrafos[paragrafoId]) {
-                
-                timersParagrafos[paragrafoId] = setTimeout(() => {
-                    // ✅ 7s completados: marca como lido
-                    paragrafo.classList.add('lido');
-                    paragrafosLidos.add(paragrafoId);
-                    
-                    // Registra no analytics
-                    registrarEvento('paragrafo_lido', paragrafoId, 7);
-                    
-                    delete timersParagrafos[paragrafoId];
-                }, 7000);  // 7 segundos
-            }
-            
-        // ❌ Saída: parágrafo saiu da tela antes de 7s
-        } else if (!entry.isIntersecting && timersParagrafos[paragrafoId]) {
-            
-            // Cancela timer (não contou como lido)
-            clearTimeout(timersParagrafos[paragrafoId]);
-            delete timersParagrafos[paragrafoId];
-        }
-    });
-}, { threshold: 0.5 });
-
-// Inicializa ao carregar a página
-function initLeituraParagrafos() {
-    gerarIdsParagrafos();
-    document.querySelectorAll('.capitulo p').forEach(p => observerParagrafos.observe(p));
-    console.log('✅ Leitura de parágrafos inicializada (timer: 7s)');
-}
-
-// Chamar no DOMContentLoaded
-document.addEventListener('DOMContentLoaded', initLeituraParagrafos);
-
-// ============================================
-// AJUSTE DE FONTE (A+/A-)
-// ============================================
-let fonteEscala = parseFloat(localStorage.getItem('fonte-escala')) || 1;
-document.documentElement.style.setProperty('--fonte-escala', fonteEscala);
-
-function ajustarFonte(delta) {
-    fonteEscala = Math.max(0.8, Math.min(1.5, fonteEscala + (delta * 0.02)));
-    document.documentElement.style.setProperty('--fonte-escala', fonteEscala);
-    localStorage.setItem('fonte-escala', fonteEscala);
-}
-
-// ============================================
-// BARRA DE PROGRESSO
-// ============================================
-function atualizarProgressBar() {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (winScroll / height) * 100;
-    const progressBar = document.getElementById('progressBar');
-    if (progressBar) progressBar.style.width = scrolled + '%';
-}
-window.onscroll = function() { atualizarProgressBar(); };
-
-// ============================================
-// PLAYER DE ÁUDIO
-// ============================================
-function toggleAudio(id) {
-    document.querySelectorAll('audio').forEach(audio => {
-        if (audio.id !== id) {
-            audio.pause();
-            audio.classList.remove('active');
-            const btn = audio.previousElementSibling?.querySelector('.btn-audio');
-            if (btn) btn.textContent = '🔊 Ouvir';
-        }
-    });
-    const audio = document.getElementById(id);
-    const btn = event.target;
-    if (!audio || !btn) return;
-    if (audio.paused) {
-        audio.play();
-        audio.classList.add('active');
-        btn.textContent = '⏸️ Pausar';
-    } else {
-        audio.pause();
-        audio.classList.remove('active');
-        btn.textContent = '🔊 Ouvir';
-    }
-}
 
 // ============================================
 // MODAL DF- (ABRIR/FECHAR)
@@ -349,57 +376,16 @@ function initModal() {
 
 
 
-// === CONTROLE DE ORIENTAÇÃO (7s) ===
-let orientationTimer = null;
-
-function verificarOrientacao() {
-    const aviso = document.getElementById('dfOrientationWarning');
-    if (!aviso) return;
-
-    // Se já foi escondido pelo timer, não interfere
-    if (aviso.classList.contains('df-hidden')) return;
-
-    const ehMobile = window.matchMedia('(max-width: 768px)').matches;
-    const ehLandscape = window.matchMedia('(orientation: landscape)').matches;
-
-    if (ehMobile && ehLandscape) {
-        if (!aviso.classList.contains('df-active')) {
-            aviso.classList.remove('df-hidden');
-            aviso.classList.add('df-active');
-            document.body.classList.add('df-locked');
-
-            if (orientationTimer) clearTimeout(orientationTimer);
-
-            // Some em 7s mesmo se continuar em landscape
-            orientationTimer = setTimeout(() => {
-                aviso.classList.add('df-hidden');
-                aviso.classList.remove('df-active');
-                document.body.classList.remove('df-locked');
-                orientationTimer = null;
-            }, 7000);
-        }
-    } else {
-        // Saiu do landscape: esconde imediatamente
-        aviso.classList.remove('df-active', 'df-hidden');
-        document.body.classList.remove('df-locked');
-        if (orientationTimer) {
-            clearTimeout(orientationTimer);
-            orientationTimer = null;
-        }
-    }
-}
-
-window.addEventListener('load', () => setTimeout(verificarOrientacao, 100));
-window.addEventListener('orientationchange', verificarOrientacao);
-window.addEventListener('resize', verificarOrientacao);
-
 // ============================================
-// INICIALIZAÇÃO ÚNICA
+// INICIALIZAÇÃO AO CARREGAR A PÁGINA
 // ============================================
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.capitulo').forEach(cap => observer.observe(cap));
-    inicializarCurtidas();
-    atualizarProgressBar();
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Inicia o sistema de leitura
+    initLeituraParagrafos();
     initModal();
-    console.log('✅ Site carregado com todas as funcionalidades');
+    
+    // SE VOCÊ TIVER OUTRAS FUNÇÕES (MODAL, CURTIDAS, ETC.), CHAME-AS AQUI
+    // ex: initModal();
+    // ex: initCurtidas();
 });
