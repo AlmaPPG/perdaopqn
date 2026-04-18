@@ -1,11 +1,11 @@
 // ============================================
-// CONFIGURAÇÕES GLOBAIS
+// 1. CONFIGURAÇÕES GLOBAIS
 // ============================================
 const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwXqGw9mlS5B0B-u1qnCdKR98BDoYUEteI8agW-GPZ-HnG0sPA-YW7zs3c5FRmBdEJZlg/exec'; // <--- URL REAL AQUI
 const URL_PRINCIPAL = 'https://perdaopqn.com.br';
 
 // ============================================
-// FUNÇÕES DE ANALYTICS (DEFINIDAS PRIMEIRO)
+// 2. FUNÇÕES DE ANALYTICS (DEFINIDAS PRIMEIRO)
 // ============================================
 
 // Gera ou recupera o ID anônimo do leitor
@@ -20,7 +20,7 @@ function getReaderId() {
 
 // Envia dados para o Google Sheets
 function enviarWebhook(payload) {
-    if (!WEBHOOK_URL || WEBHOOK_URL.includes('AKfycbwXqGw9mlS5B0B-u1qnCdKR98BDoYUEteI8agW-GPZ-HnG0sPA-YW7zs3c5FRmBdEJZlg')) {
+    if (!WEBHOOK_URL || WEBHOOK_URL.includes('SEU-CODIGO-AQUI')) {
         console.warn('⚠️ Webhook não configurado.');
         return;
     }
@@ -63,7 +63,7 @@ function registrarEvento(tipo, elementoId, tempo = null) {
 }
 
 // ============================================
-// LÓGICA DE LEITURA (OBSERVER)
+// 3. LÓGICA DE LEITURA (OBSERVER)
 // ============================================
 
 const paragrafosLidos = new Set();
@@ -166,43 +166,6 @@ function toggleAudio(id) {
     }
 }
 
-// ============================================
-// === CONTROLE DE ORIENTAÇÃO (7s) ===
-// ============================================
-//        let warningTimeout;
-//        let fadeTimeout;
-
-//        function verificarOrientacao() {
-//            const aviso = document.getElementById('orientation-warning');
-//            const ehLandscape = window.innerWidth > window.innerHeight;
-            
-//            if (ehLandscape) {
-//                aviso.classList.add('active');
-//                aviso.classList.remove('fade-out');
-//                document.body.style.overflow = 'hidden';
-                
-//                clearTimeout(fadeTimeout);
-//                fadeTimeout = setTimeout(() => {
-//                    aviso.classList.add('fade-out');
-                    
-//                    clearTimeout(warningTimeout);
-//                    warningTimeout = setTimeout(() => {
-//                        aviso.classList.remove('active');
-//                        document.body.style.overflow = '';
-//                    }, 500);
-//                }, 4500);
-//            } else {
-//                aviso.classList.remove('active');
-//                aviso.classList.remove('fade-out');
-//                document.body.style.overflow = '';
-//                clearTimeout(warningTimeout);
-//                clearTimeout(fadeTimeout);
-//            }
-//        }
-
-//        window.addEventListener('load', verificarOrientacao);
-//        window.addEventListener('resize', verificarOrientacao);
-//        window.addEventListener('orientationchange', verificarOrientacao);
 
 // ============================================
 // SISTEMA DE CURTIDAS
@@ -251,8 +214,6 @@ function toggleCurtida(capituloId) {
         enviarCurtidaWebhook(capituloId);
     }
 }
-
-
 
 // ============================================
 // MODAL DF- (ABRIR/FECHAR)
@@ -374,10 +335,8 @@ function initModal() {
     console.log('✅ Modal DF- inicializado');
 }
 
-
-
 // ============================================
-// INICIALIZAÇÃO AO CARREGAR A PÁGINA
+// 4. INICIALIZAÇÃO AO CARREGAR A PÁGINA
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
