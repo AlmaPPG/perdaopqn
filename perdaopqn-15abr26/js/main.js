@@ -66,35 +66,54 @@ function registrarEvento(tipo, elementoId, tempo = null) {
 // 3. LÓGICA DE LEITURA (OBSERVER)
 // ============================================
 
-const paragrafosLidos = new Set();
-const timersParagrafos = {};
+// ============================================
+// 3. LÓGICA DE LEITURA (OBSERVER - TEMPO TOTAL)
+// ============================================
 
-// Observer para detectar parágrafos na tela
+const paragrafosLidos = new Set();
+const timersUI = {};      // Só para o efeito visual (acender em 7s)
+const entryTimes = {};    // Para calcular o tempo real
+
 const observerParagrafos = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        const paragrafo = entry.target;
-        const paragrafoId = paragrafo.id;
+        const p = entry.target;
+        const id = p.id;
 
-        // Entrada na tela (>50% visível)
+        // ✅ ENTRADA NA TELA (>50% visível)
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-            if (!paragrafosLidos.has(paragrafoId) && !timersParagrafos[paragrafoId]) {
+            if (!entryTimes[id]) {
+                entryTimes[id] = Date.now(); // Marca hora de entrada
                 
-                timersParagrafos[paragrafoId] = setTimeout(() => {
-                    // Marca visualmente (adiciona classe CSS)
-                    paragrafo.classList.add('lido');
-                    paragrafosLidos.add(paragrafoId);
-                    
-                    // Registra no analytics
-                    registrarEvento('paragrafo_lido', paragrafoId, 7);
-                    
-                    delete timersParagrafos[paragrafoId];
-                }, 7000); // 7 segundos
+                // Timer só para a UI (acender suavemente após 7s)
+                if (!paragrafosLidos.has(id) && !timersUI[id]) {
+                    timersUI[id] = setTimeout(() => {
+                        p.classList.add('lido');
+                        paragrafosLidos.add(id);
+                    }, 7000);
+                }
             }
-        
-        // Saída da tela (cancela timer se não completou)
-        } else if (!entry.isIntersecting && timersParagrafos[paragrafoId]) {
-            clearTimeout(timersParagrafos[paragrafoId]);
-            delete timersParagrafos[paragrafoId];
+            
+        // ❌ SAÍDA DA TELA
+        } else if (entryTimes[id]) {
+            const tempoTotal = ((Date.now() - entryTimes[id]) / 1000).toFixed(1);
+            
+            // Só registra se ficou >= 7s (leitura real)
+            if (tempoTotal >= 7) {
+                // Garante que a classe visual está ativa (caso o timer não tenha disparado ainda)
+                if (!paragrafosLidos.has(id)) {
+                    p.classList.add('lido');
+                    paragrafosLidos.add(id);
+                }
+                // Envia o tempo EXATO para o analytics
+                registrarEvento('paragrafo_lido', id, tempoTotal);
+            }
+            
+            // Limpa memória para próxima vez
+            delete entryTimes[id];
+            if (timersUI[id]) {
+                clearTimeout(timersUI[id]);
+                delete timersUI[id];
+            }
         }
     });
 }, { threshold: 0.5 });
@@ -166,6 +185,43 @@ function toggleAudio(id) {
     }
 }
 
+// ============================================
+// CONTROLE DE ORIENTAÇÃO MOBILE
+// ============================================
+        let warningTimeout;
+        let fadeTimeout;
+
+        function verificarOrientacao() {
+            const aviso = document.getElementById('orientation-warning');
+            const ehLandscape = window.innerWidth > window.innerHeight;
+            
+            if (ehLandscape) {
+                aviso.classList.add('active');
+                aviso.classList.remove('fade-out');
+                document.body.style.overflow = 'hidden';
+                
+                clearTimeout(fadeTimeout);
+                fadeTimeout = setTimeout(() => {
+                    aviso.classList.add('fade-out');
+                    
+                    clearTimeout(warningTimeout);
+                    warningTimeout = setTimeout(() => {
+                        aviso.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }, 500);
+                }, 4500);
+            } else {
+                aviso.classList.remove('active');
+                aviso.classList.remove('fade-out');
+                document.body.style.overflow = '';
+                clearTimeout(warningTimeout);
+                clearTimeout(fadeTimeout);
+            }
+        }
+
+        window.addEventListener('load', verificarOrientacao);
+        window.addEventListener('resize', verificarOrientacao);
+        window.addEventListener('orientationchange', verificarOrientacao);
 
 // ============================================
 // SISTEMA DE CURTIDAS
