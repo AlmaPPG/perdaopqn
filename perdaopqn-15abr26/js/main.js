@@ -351,10 +351,37 @@ function initModal() {
     // Submit do formulário
     df.formEl?.addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('✅ Mensagem enviada! (simulação)');
+        alert('✅ Mensagem enviada!');
         df.formEl.reset();
         fecharModal();
     });
+    
+    // ==================== FETCH
+    document.getElementById('df-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    
+    try {
+        const res = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        });
+        
+        if (res.ok) {
+            form.reset();
+            alert('✅ Enviado com sucesso! Obrigado.');
+        } else {
+            const err = await res.json();
+            alert('❌ Erro: ' + (err.error || 'Tente novamente.'));
+        }
+    } catch (err) {
+        console.error('Formspree error:', err);
+        alert('❌ Falha na conexão.');
+    }
+    });
+    
     
     // Compartilhamento
     df.shareWhatsApp?.addEventListener('click', () => {
