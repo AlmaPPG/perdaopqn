@@ -1,11 +1,11 @@
 // ============================================
-// CONFIGURAÇÕES GLOBAIS
+// 1. CONFIGURAÇÕES GLOBAIS
 // ============================================
 const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwXqGw9mlS5B0B-u1qnCdKR98BDoYUEteI8agW-GPZ-HnG0sPA-YW7zs3c5FRmBdEJZlg/exec'; // <--- URL REAL AQUI
 const URL_PRINCIPAL = 'https://perdaopqn.com.br';
 
 // ============================================
-// FUNÇÕES DE ANALYTICS (DEFINIDAS PRIMEIRO)
+// 2. FUNÇÕES DE ANALYTICS (DEFINIDAS PRIMEIRO)
 // ============================================
 
 // Gera ou recupera o ID anônimo do leitor
@@ -63,38 +63,57 @@ function registrarEvento(tipo, elementoId, tempo = null) {
 }
 
 // ============================================
-// LÓGICA DE LEITURA (OBSERVER)
+// 3. LÓGICA DE LEITURA (OBSERVER)
+// ============================================
+
+// ============================================
+// 3. LÓGICA DE LEITURA (OBSERVER - TEMPO TOTAL)
 // ============================================
 
 const paragrafosLidos = new Set();
-const timersParagrafos = {};
+const timersUI = {};      // Só para o efeito visual (acender em 7s)
+const entryTimes = {};    // Para calcular o tempo real
 
-// Observer para detectar parágrafos na tela
 const observerParagrafos = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        const paragrafo = entry.target;
-        const paragrafoId = paragrafo.id;
+        const p = entry.target;
+        const id = p.id;
 
-        // Entrada na tela (>50% visível)
+        // ✅ ENTRADA NA TELA (>50% visível)
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-            if (!paragrafosLidos.has(paragrafoId) && !timersParagrafos[paragrafoId]) {
+            if (!entryTimes[id]) {
+                entryTimes[id] = Date.now(); // Marca hora de entrada
                 
-                timersParagrafos[paragrafoId] = setTimeout(() => {
-                    // Marca visualmente (adiciona classe CSS)
-                    paragrafo.classList.add('lido');
-                    paragrafosLidos.add(paragrafoId);
-                    
-                    // Registra no analytics
-                    registrarEvento('paragrafo_lido', paragrafoId, 7);
-                    
-                    delete timersParagrafos[paragrafoId];
-                }, 7000); // 7 segundos
+                // Timer só para a UI (acender suavemente após 7s)
+                if (!paragrafosLidos.has(id) && !timersUI[id]) {
+                    timersUI[id] = setTimeout(() => {
+                        p.classList.add('lido');
+                        paragrafosLidos.add(id);
+                    }, 7000);
+                }
             }
-        
-        // Saída da tela (cancela timer se não completou)
-        } else if (!entry.isIntersecting && timersParagrafos[paragrafoId]) {
-            clearTimeout(timersParagrafos[paragrafoId]);
-            delete timersParagrafos[paragrafoId];
+            
+        // ❌ SAÍDA DA TELA
+        } else if (entryTimes[id]) {
+            const tempoTotal = ((Date.now() - entryTimes[id]) / 1000).toFixed(1);
+            
+            // Só registra se ficou >= 7s (leitura real)
+            if (tempoTotal >= 7) {
+                // Garante que a classe visual está ativa (caso o timer não tenha disparado ainda)
+                if (!paragrafosLidos.has(id)) {
+                    p.classList.add('lido');
+                    paragrafosLidos.add(id);
+                }
+                // Envia o tempo EXATO para o analytics
+                registrarEvento('paragrafo_lido', id, tempoTotal);
+            }
+            
+            // Limpa memória para próxima vez
+            delete entryTimes[id];
+            if (timersUI[id]) {
+                clearTimeout(timersUI[id]);
+                delete timersUI[id];
+            }
         }
     });
 }, { threshold: 0.5 });
@@ -167,51 +186,42 @@ function toggleAudio(id) {
 }
 
 // ============================================
-// === CONTROLE DE ORIENTAÇÃO (7s) ===
+// CONTROLE DE ORIENTAÇÃO MOBILE
 // ============================================
+        let warningTimeout;
+        let fadeTimeout;
 
-let orientationTimer = null;
-
-function verificarOrientacao() {
-    const aviso = document.getElementById('dfOrientationWarning');
-    if (!aviso) return;
-
-    // Se já foi escondido pelo timer, não interfere
-    if (aviso.classList.contains('df-hidden')) return;
-
-    const ehMobile = window.matchMedia('(max-width: 768px)').matches;
-    const ehLandscape = window.matchMedia('(orientation: landscape)').matches;
-
-    if (ehMobile && ehLandscape) {
-        if (!aviso.classList.contains('df-active')) {
-            aviso.classList.remove('df-hidden');
-            aviso.classList.add('df-active');
-            document.body.classList.add('df-locked');
-
-            if (orientationTimer) clearTimeout(orientationTimer);
-
-            // Some em 7s mesmo se continuar em landscape
-            orientationTimer = setTimeout(() => {
-                aviso.classList.add('df-hidden');
-                aviso.classList.remove('df-active');
-                document.body.classList.remove('df-locked');
-                orientationTimer = null;
-            }, 7000);
+        function verificarOrientacao() {
+            const aviso = document.getElementById('orientation-warning');
+            const ehLandscape = window.innerWidth > window.innerHeight;
+            
+            if (ehLandscape) {
+                aviso.classList.add('active');
+                aviso.classList.remove('fade-out');
+                document.body.style.overflow = 'hidden';
+                
+                clearTimeout(fadeTimeout);
+                fadeTimeout = setTimeout(() => {
+                    aviso.classList.add('fade-out');
+                    
+                    clearTimeout(warningTimeout);
+                    warningTimeout = setTimeout(() => {
+                        aviso.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }, 500);
+                }, 4500);
+            } else {
+                aviso.classList.remove('active');
+                aviso.classList.remove('fade-out');
+                document.body.style.overflow = '';
+                clearTimeout(warningTimeout);
+                clearTimeout(fadeTimeout);
+            }
         }
-    } else {
-        // Saiu do landscape: esconde imediatamente
-        aviso.classList.remove('df-active', 'df-hidden');
-        document.body.classList.remove('df-locked');
-        if (orientationTimer) {
-            clearTimeout(orientationTimer);
-            orientationTimer = null;
-        }
-    }
-}
 
-window.addEventListener('load', () => setTimeout(verificarOrientacao, 100));
-window.addEventListener('orientationchange', verificarOrientacao);
-window.addEventListener('resize', verificarOrientacao);
+        window.addEventListener('load', verificarOrientacao);
+        window.addEventListener('resize', verificarOrientacao);
+        window.addEventListener('orientationchange', verificarOrientacao);
 
 // ============================================
 // SISTEMA DE CURTIDAS
@@ -261,8 +271,6 @@ function toggleCurtida(capituloId) {
     }
 }
 
-
-
 // ============================================
 // MODAL DF- (ABRIR/FECHAR)
 // ============================================
@@ -279,7 +287,7 @@ const df = {
     shareFacebook: document.getElementById('dfShareFacebook'),
     shareCopy: document.getElementById('dfShareCopy'),
     authorWhats: document.getElementById('dfAuthorWhats'),
-    formEl: document.querySelector('.df-form')
+    formEl: document.querySelector('dfform')
 };
 
 function abrirModal() {
@@ -343,10 +351,37 @@ function initModal() {
     // Submit do formulário
     df.formEl?.addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('✅ Mensagem enviada! (simulação)');
+        alert('✅ Mensagem enviada!');
         df.formEl.reset();
         fecharModal();
     });
+    
+    // ==================== FETCH
+    document.getElementById('df-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    
+    try {
+        const res = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        });
+        
+        if (res.ok) {
+            form.reset();
+            alert('✅ Enviado com sucesso! Obrigado.');
+        } else {
+            const err = await res.json();
+            alert('❌ Erro: ' + (err.error || 'Tente novamente.'));
+        }
+    } catch (err) {
+        console.error('Formspree error:', err);
+        alert('❌ Falha na conexão.');
+    }
+    });
+    
     
     // Compartilhamento
     df.shareWhatsApp?.addEventListener('click', () => {
@@ -383,15 +418,14 @@ function initModal() {
     console.log('✅ Modal DF- inicializado');
 }
 
-
-
 // ============================================
-// INICIALIZAÇÃO AO CARREGAR A PÁGINA
+// 4. INICIALIZAÇÃO AO CARREGAR A PÁGINA
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
     // Inicia o sistema de leitura
     initLeituraParagrafos();
+    initModal();
     
     // SE VOCÊ TIVER OUTRAS FUNÇÕES (MODAL, CURTIDAS, ETC.), CHAME-AS AQUI
     // ex: initModal();
