@@ -287,7 +287,7 @@ const df = {
     shareFacebook: document.getElementById('dfShareFacebook'),
     shareCopy: document.getElementById('dfShareCopy'),
     authorWhats: document.getElementById('dfAuthorWhats'),
-    formEl: document.querySelector('.df-form')
+    formEl: document.querySelector('dfform')
 };
 
 function abrirModal() {
