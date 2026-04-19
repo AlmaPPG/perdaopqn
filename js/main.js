@@ -348,39 +348,42 @@ function initModal() {
     df.toggleForm?.addEventListener('click', ativarFormulario);
     df.toggleGit?.addEventListener('click', ativarGithub);
     
-    // Submit do formulário
-    df.formEl?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('✅ Mensagem enviada!');
-        df.formEl.reset();
-        fecharModal();
-    });
-    
-    // ==================== FETCH
-    document.getElementById('df-form')?.addEventListener('submit', async (e) => {
+
+// ============================================
+// FORMULÁRIO → FORMSPREE (DELEGAÇÃO + CAPTURE)
+// ============================================
+document.addEventListener('submit', async (e) => {
+    const form = e.target.closest('#dfForm');
+    if (!form) return;
+
     e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    
+    e.stopPropagation();
+
+    const btn = form.querySelector('button[type="submit"]');
+    if (btn) btn.disabled = true;
+
     try {
         const res = await fetch(form.action, {
             method: 'POST',
-            body: formData,
+            body: new FormData(form),
             headers: { 'Accept': 'application/json' }
         });
-        
+
         if (res.ok) {
+            alert('✅ Mensagem enviada!');
             form.reset();
-            alert('✅ Enviado com sucesso! Obrigado.');
+            if (typeof fecharModal === 'function') fecharModal();
         } else {
-            const err = await res.json();
+            const err = await res.json().catch(() => ({}));
             alert('❌ Erro: ' + (err.error || 'Tente novamente.'));
         }
     } catch (err) {
         console.error('Formspree error:', err);
         alert('❌ Falha na conexão.');
+    } finally {
+        if (btn) btn.disabled = false;
     }
-    });
+}, { capture: true });
     
     
     // Compartilhamento
