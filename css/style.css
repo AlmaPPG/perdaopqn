@@ -1,13 +1,13 @@
 :root {
     /* Paleta de Cores Semânticas */
-    --cor-antes: #6496C8;
+    --cor-antes: #7590c7;
     --cor-alerta: #FF6633;
     --cor-entende: #99FFFF;
     --cor-consequencia: #CCFF66;
     --cor-define: #F7F7F7;
     --cor-naoeh: #FFCC00;
     --cor-consequencia-ruim: #FFFF66;
-    --cor-pratica: #777777;
+    --cor-pratica: #4182c2;
     --cor-padrao: #CCCCCC;
     --cor-destaque: #C6C76D;
     
@@ -159,7 +159,7 @@ body {
 }
 .capitulo h2 {
     font-family: var(--fonte-titulo);
-    font-weight: 400;
+    font-weight: 600;
     font-size: 1.8rem;
     margin-bottom: 20px;
     text-transform: uppercase;
@@ -219,6 +219,7 @@ body {
 
 /* Texto do Capítulo (escala com --fonte-escala) */
 .capitulo-texto p {
+    font-family: var(--fonte-corpo);
     font-size: calc(18px * var(--fonte-escala, 1));
     margin-bottom: 1.2em;
 }

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Player - Perdão, por que não? v3</title>
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --surface: #1a1a20;
+      --text: #e6e6eb;
+      --accent: #C6C76D;
+      --muted: #8a8a9a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 20px; }
+    
+    .player {
+      max-width: 300px;
+      margin: 40px auto;
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+    }
+    #track-title {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      text-align: center;
+      min-height: 1.4em;
+      line-height: 1.3;
+    }
+    .progress-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    #progress {
+      flex: 1;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #333;
+      border-radius: 3px;
+      outline: none;
+    }
+    #progress::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px; height: 16px;
+      background: var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .times { font-size: 0.75rem; color: var(--muted); min-width: 36px; text-align: center; }
+    
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+    .controls button {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.6rem;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 50%;
+      transition: background 0.2s;
+      touch-action: manipulation;
+    }
+    .controls button:hover, .controls button:active { background: rgba(255,255,255,0.1); }
+
+    .extra-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .extra-controls button {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #444;
+      color: var(--muted);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .extra-controls button:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+    .playlist {
+      list-style: none;
+      max-height: 240px;
+      overflow-y: auto;
+      border-top: 1px solid #333;
+      padding-top: 12px;
+      scrollbar-width: thin;
+    }
+    .playlist li {
+      padding: 10px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .playlist li:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+    .playlist li.active { color: var(--accent); font-weight: 500; background: rgba(79,140,255,0.1); }
+
+    /* 🚗 MODO DIREÇÃO */
+    .player.driving {
+      max-width: 100%;
+      margin: 0;
+      border-radius: 0;
+      padding: 30px 16px;
+      background: #000;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .player.driving #track-title { font-size: 1.5rem; margin-bottom: 24px; }
+    .player.driving .progress-container { margin-bottom: 28px; }
+    .player.driving .times { font-size: 1rem; }
+    .player.driving #progress { height: 10px; }
+    .player.driving .controls button { font-size: 2.8rem; padding: 24px; }
+    .player.driving .extra-controls button { font-size: 1.1rem; padding: 14px 20px; }
+    .player.driving .playlist { display: none; }
+
+    @media (max-width: 480px) {
+      .player { margin: 20px auto; padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="player" id="player-container">
+  <div><img src="./assets/perdaopqn_capa_v30.png" width=100% alt="Leia em perdaopqn.com.br"></div>
+  <h2 id="track-title">Carregando...</h2>
+  <div class="progress-container">
+    <span class="times" id="current-time">0:00</span>
+    <input type="range" id="progress" value="0" step="0.1" aria-label="Progresso">
+    <span class="times" id="duration">0:00</span>
+  </div>
+
+  <div class="controls">
+    <button id="prev" aria-label="Capítulo anterior">⏮</button>
+    <button id="play-pause" aria-label="Tocar ou pausar">▶</button>
+    <button id="next" aria-label="Próximo capítulo">⏭</button>
+  </div>
+
+  <div class="extra-controls">
+    <button id="speed-btn" title="Velocidade de reprodução">1x</button>
+    <button id="mode-btn" title="Alternar modo direção">Modo Carro</button>
+  </div>
+
+  <ul id="playlist" class="playlist"></ul>
+</div>
+
+<audio id="audio" preload="metadata" playsinline></audio>
+
+<script>
+  // 📚 LISTA OFICIAL DOS 24 CAPÍTULOS
+  const chapters = [
+    { title: "01. Prefácio", src: "audios/01_Prefacio.mp3" },
+    { title: "02. Respeitando o momento", src: "audios/02_Respeitando_o_momento.mp3" },
+    { title: "03. Precisamos do perdão de Deus", src: "audios/03_Precisamos_do_perdao_de_Deus.mp3" },
+    { title: "04. Deus faz aquilo que pedimos", src: "audios/04_Deus_faz_aquilo_que_pedimos.mp3" },
+    { title: "05. Se não perdoamos", src: "audios/05_Se_nao_perdoamos.mp3" },
+    { title: "06. É mais importante perdoar", src: "audios/06_Eh_mais_importante_perdoar.mp3" },
+    { title: "07. Perdão é o início de uma mudança de valores", src: "audios/07_Perdao_eh_o_inicio_de_uma_mudanca_de_valores.mp3" },
+    { title: "08. Uma mudança", src: "audios/08_Uma_mudanca.mp3" },
+    { title: "09. Perdão é", src: "audios/09_Perdao_eh.mp3" },
+    { title: "10. Grande parte", src: "audios/10_Grande_parte.mp3" },
+    { title: "11. Não perdoamos alguém pelo que é", src: "audios/11_Nao_perdoamos_alguem_pelo_que_eh.mp3" },
+    { title: "12. Brincadeira fora de hora", src: "audios/12_Brincadeira_fora_de_hora.mp3" },
+    { title: "13. É preciso distinguir", src: "audios/13_Eh_preciso_distinguir.mp3" },
+    { title: "14. Pequenos problemas", src: "audios/14_Pequenos_problemas.mp3" },
+    { title: "15. Podemos perdoar à distância", src: "audios/15_Podemos_perdoar_aa_distancia.mp3" },
+    { title: "16. Perdoar quem já morreu", src: "audios/16_Perdoar_quem_ja_morreu.mp3" },
+    { title: "17. Perdão não é uma solenidade", src: "audios/17_Perdao_nao_eh_uma_solenidade.mp3" },
+    { title: "18. Quem perdoa não precisa esquecer", src: "audios/18_Quem_perdoa_nao_precisa_esquecer.mp3" },
+    { title: "19. Não se perdoa mais de uma vez", src: "audios/19_Nao_se_perdoa_mais_de_uma_vez.mp3" },
+    { title: "20. Quando perdoamos, assumimos o prejuízo", src: "audios/20_Quando_perdoamos_assumimos_o_prejuizo.mp3" },
+    { title: "21. As pessoas não deixam de errar", src: "audios/21_As_pessoas_nao_deixam_de_errar.mp3" },
+    { title: "22. Quem perdoa cria condições para ajudar", src: "audios/22_Quem_perdoa_cria_condicoes_para_ajudar.mp3" },
+    { title: "23. Perdoe todos agora mesmo", src: "audios/23_Perdoe_todos_agora_mesmo.mp3" },
+    { title: "24. Conclusão", src: "audios/24_Conclusao.mp3" }
+  ];
+
+  let currentIndex = 0;
+  const speeds = [0.8, 1, 1.2];
+  let speedIndex = 1;
+
+  const audio = document.getElementById('audio');
+  const playBtn = document.getElementById('play-pause');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const progress = document.getElementById('progress');
+  const currentTimeEl = document.getElementById('current-time');
+  const durationEl = document.getElementById('duration');
+  const titleEl = document.getElementById('track-title');
+  const playlistEl = document.getElementById('playlist');
+  const speedBtn = document.getElementById('speed-btn');
+  const modeBtn = document.getElementById('mode-btn');
+  const player = document.getElementById('player-container');
+
+  const STORAGE = { state: 'perdao_player_state', speed: 'perdao_player_speed', driving: 'perdao_player_driving' };
+
+  function formatTime(sec) {
+    if (isNaN(sec) || sec === Infinity) return "0:00";
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  }
+
+  function saveState() {
+    localStorage.setItem(STORAGE.state, JSON.stringify({
+      index: currentIndex,
+      time: audio.currentTime
+    }));
+  }
+
+  function loadState() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE.state));
+      return (saved && saved.index >= 0 && saved.index < chapters.length) ? saved : null;
+    } catch { return null; }
+  }
+
+  function loadTrack(index, seekTo = 0) {
+    currentIndex = index;
+    audio.src = chapters[index].src;
+    titleEl.textContent = chapters[index].title;
+    progress.value = 0;
+    currentTimeEl.textContent = "0:00";
+    durationEl.textContent = "0:00";
+    updatePlaylistUI();
+
+    if (seekTo > 0) {
+      audio.addEventListener('loadedmetadata', () => {
+        audio.currentTime = Math.min(seekTo, audio.duration - 0.5);
+      }, { once: true });
+    }
+  }
+
+  function play() {
+    audio.play().then(() => playBtn.textContent = "⏸")
+      .catch(() => console.warn("Autoplay bloqueado pelo navegador. Toque em ▶."));
+  }
+
+  function pause() { audio.pause(); playBtn.textContent = "▶"; }
+  function togglePlay() { audio.paused ? play() : pause(); }
+
+  function nextTrack() {
+    if (currentIndex < chapters.length - 1) {
+      loadTrack(currentIndex + 1);
+      play();
+    }
+  }
+
+  function prevTrack() {
+    if (currentIndex > 0) {
+      loadTrack(currentIndex - 1);
+      play();
+    }
+  }
+
+  function updateProgress() {
+    if (audio.duration) {
+      progress.value = (audio.currentTime / audio.duration) * 100;
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+      durationEl.textContent = formatTime(audio.duration);
+    }
+  }
+
+  function seek(e) {
+    if (!audio.duration) return;
+    audio.currentTime = (e.target.value / 100) * audio.duration;
+  }
+
+  function updatePlaylistUI() {
+    playlistEl.innerHTML = '';
+    chapters.forEach((ch, i) => {
+      const li = document.createElement('li');
+      li.textContent = ch.title;
+      if (i === currentIndex) li.classList.add('active');
+      li.addEventListener('click', () => { loadTrack(i); play(); });
+      playlistEl.appendChild(li);
+    });
+    playlistEl.querySelector('.active')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function cycleSpeed() {
+    speedIndex = (speedIndex + 1) % speeds.length;
+    audio.playbackRate = speeds[speedIndex];
+    speedBtn.textContent = speeds[speedIndex] + 'x';
+    localStorage.setItem(STORAGE.speed, speeds[speedIndex]);
+  }
+
+  function toggleDriving() {
+    player.classList.toggle('driving');
+    localStorage.setItem(STORAGE.driving, player.classList.contains('driving'));
+    modeBtn.textContent = player.classList.contains('driving') ? "Modo Normal" : "Modo Carro";
+  }
+
+  // 💾 RESTAURAÇÃO INICIAL
+  const savedState = loadState();
+  if (savedState) loadTrack(savedState.index, savedState.time);
+  else loadTrack(0);
+
+  const savedSpeed = parseFloat(localStorage.getItem(STORAGE.speed));
+  if (speeds.includes(savedSpeed)) {
+    audio.playbackRate = savedSpeed;
+    speedIndex = speeds.indexOf(savedSpeed);
+    speedBtn.textContent = savedSpeed + 'x';
+  }
+
+  if (localStorage.getItem(STORAGE.driving) === 'true') {
+    toggleDriving();
+  }
+
+  updatePlaylistUI();
+
+  // 🎧 EVENT LISTENERS
+  playBtn.addEventListener('click', togglePlay);
+  nextBtn.addEventListener('click', nextTrack);
+  prevBtn.addEventListener('click', prevTrack);
+  speedBtn.addEventListener('click', cycleSpeed);
+  modeBtn.addEventListener('click', toggleDriving);
+  audio.addEventListener('timeupdate', updateProgress);
+  audio.addEventListener('ended', nextTrack);
+  progress.addEventListener('input', seek);
+  audio.addEventListener('error', () => { titleEl.textContent = "⚠️ Áudio não encontrado. Verifique a pasta /audios"; });
+
+  let saveTimeout;
+  audio.addEventListener('timeupdate', () => {
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(saveState, 500);
+  });
+  audio.addEventListener('pause', saveState);
+  audio.addEventListener('ended', saveState);
+  window.addEventListener('beforeunload', saveState);
+</script>
+
+</body>
+</html>
